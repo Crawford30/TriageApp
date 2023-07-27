@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:triage_app/screens/login_screen.dart';
+import 'package:triage_app/screens/login.dart';
+import 'package:triage_app/screens/register.dart';
+
+
 class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -68,11 +73,11 @@ class WelcomeScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   child: InkWell(
                     onTap: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //       builder: (context) => loginScreen(),
-                      //     ));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Login(),
+                          ));
                     },
                     child: Container(
                       padding:
@@ -93,11 +98,11 @@ class WelcomeScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   child: InkWell(
                     onTap: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //       builder: (context) => SignUpScreen(),
-                      //     ));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Signup(),
+                          ));
                     },
                     child: Container(
                       padding:
