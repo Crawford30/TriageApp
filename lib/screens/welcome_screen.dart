@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:triage_app/screens/login_screen.dart';
 import 'package:triage_app/screens/login.dart';
 import 'package:triage_app/screens/register.dart';
+import 'package:triage_app/widgets/navbar_roots.dart';
+
 
 
 class WelcomeScreen extends StatelessWidget {
@@ -22,11 +24,11 @@ class WelcomeScreen extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: () {
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (context) => NavBarRoots(),
-                  //     ));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NavBarRoots(),
+                      ));
                 },
                 child: Text(
                   "SKIP",
