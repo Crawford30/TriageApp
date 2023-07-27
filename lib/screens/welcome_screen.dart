@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:triage_app/screens/login_screen.dart';
 import 'package:triage_app/screens/login.dart';
 import 'package:triage_app/screens/register.dart';
 import 'package:triage_app/widgets/navbar_roots.dart';
