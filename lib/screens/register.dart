@@ -20,6 +20,7 @@ bool observeText = true;
 bool isChecked = false;
 
 final List<String> userTypeItems = [
+  'Patient',
   'Nurse',
   'Doctor',
 ];
