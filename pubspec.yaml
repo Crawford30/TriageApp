@@ -30,6 +30,8 @@ dependencies:
   flutter:
     sdk: flutter
   dropdown_button2: ^2.3.7
+  firebase_core: ^1.0.4
+  firebase_auth: ^1.1.1
 
 
   # The following adds the Cupertino Icons font to your application.

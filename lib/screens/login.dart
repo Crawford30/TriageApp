@@ -183,20 +183,20 @@ class _LoginState extends State<Login> {
                                     Row(
                                       // mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Checkbox(
-                                            value: isChecked,
-                                            onChanged: (value) {
-                                              isChecked = !isChecked;
-                                              setState(() {});
-                                            },
-                                          ),
-                                        ),
-                                        Text(
-                                          "Remember Me",
-                                          style: TextStyle(color: Colors.black),
-                                        ),
+                                        // Align(
+                                        //   alignment: Alignment.centerLeft,
+                                        //   child: Checkbox(
+                                        //     value: isChecked,
+                                        //     onChanged: (value) {
+                                        //       isChecked = !isChecked;
+                                        //       setState(() {});
+                                        //     },
+                                        //   ),
+                                        // ),
+                                        // Text(
+                                        //   "Remember Me",
+                                        //   style: TextStyle(color: Colors.black),
+                                        // ),
                                       ],
                                     ),
                                     SizedBox(
