@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "363314065821",
+    "project_id": "triage-app-105f5",
+    "storage_bucket": "triage-app-105f5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:363314065821:android:6e9abce5435a5fff7b7f74",
+        "android_client_info": {
+          "package_name": "com.example.triage_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "363314065821-gfa49f5h1k5mpdtnmpjfgokq7vuiqsa5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsyWvtLk-otdx1DYUgzx3Z-4qNryJo-xY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "363314065821-gfa49f5h1k5mpdtnmpjfgokq7vuiqsa5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
