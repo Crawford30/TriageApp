@@ -228,13 +228,14 @@ class AppointmentScreen extends StatelessWidget {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10),
                                   child: Text(
+                                    "Many thanks to Dr. Dear. He is a great and a professional doctor.",
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
-                                    "Many thanks to Dr. Dear. He is a great and a professional doctor.",
                                     style: TextStyle(
                                       color: Colors.black,
                                     ),
                                   ),
+
                                 ),
                               ],
                             ),

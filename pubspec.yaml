@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.18.6 <3.0.0"
+  sdk: ">=2.14.0 <3.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -30,14 +30,34 @@ dependencies:
   flutter:
     sdk: flutter
   dropdown_button2: ^2.3.7
-  firebase_core: ^1.0.4
-  firebase_auth: ^1.1.1
+
+
+
+
+
+
+
+
+  # State Management
+#  provider: ^5.0.0-9
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   custom_clippers: ^2.0.0
+  firebase_core: ^2.15.0
+  firebase_auth: ^4.7.2
+  firebase_auth_platform_interface: ^6.16.1
+#  firebase_core: ^1.10.0
+#  firebase_auth: ^3.4.0
+#  firebase_auth_platform_interface: ^6.0.0
+
+
+
+
+
+
 
 
 dev_dependencies:

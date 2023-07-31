@@ -3,6 +3,8 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:triage_app/utils/Constants.dart';
 import 'login.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);
@@ -28,14 +30,68 @@ final List<String> userTypeItems = [
 String? selectedValue;
 
 class _SignupState extends State<Signup> {
+
+  bool _success = false;
+  String _userEmail = '';
+
+  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _userTypeController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+
   void validation() {
     final FormState? _form = _formKey.currentState;
-    if (_form!.validate()) {
-      print("YES");
+
+    if (_form != null) {
+      if (_form.validate()) {
+        print("YES");
+        _register();
+      } else {
+        print("NO");
+      }
     } else {
-      print("NO");
+      print("Form is not ready.");
     }
   }
+
+
+
+
+
+
+  void _register() async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      User user = userCredential.user!; // Non-null assertion
+
+      setState(() {
+        _success = true;
+        _userEmail = user.email ?? ''; // Null-aware assignment
+      });
+    } catch (e) {
+      // Handle any exceptions that may occur during registration.
+      setState(() {
+        _success = false;
+      });
+      print('Error during registration: $e');
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -112,6 +168,7 @@ class _SignupState extends State<Signup> {
                                     }
                                     return "";
                                   },
+                                  controller: _fullNameController,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     prefixIcon: Icon(Icons.person),
@@ -146,6 +203,7 @@ class _SignupState extends State<Signup> {
                                     return "";
                                   },
                                   keyboardType: TextInputType.emailAddress,
+                                  controller: _emailController,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     prefixIcon: Icon(Icons.email),
@@ -208,6 +266,7 @@ class _SignupState extends State<Signup> {
                                   },
                                   onChanged: (value) {
                                     //Do something when selected item is changed.
+                                    _userTypeController.text = value!;
                                   },
                                   onSaved: (value) {
                                     selectedValue = value.toString();
@@ -257,6 +316,7 @@ class _SignupState extends State<Signup> {
                                     return "";
                                   },
                                   keyboardType: TextInputType.number,
+                                  controller: _phoneNumberController,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     prefixIcon: Icon(Icons.phone),
@@ -269,63 +329,7 @@ class _SignupState extends State<Signup> {
                                 SizedBox(
                                   height: 10,
                                 ),
-                                // SizedBox(
-                                //   height: 10,
-                                // ),
-                                //
-                                // Row(
-                                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                //   children: [
-                                //     Align(
-                                //       alignment: Alignment.centerLeft,
-                                //       child: Container(
-                                //         width: MediaQuery.of(context).size.width * 0.4,
-                                //         child: TextFormField(
-                                //           validator: (value) {
-                                //             if (value == "") {
-                                //               return "Please Enter Zip Code";
-                                //             }
-                                //             return "";
-                                //           },
-                                //           decoration: InputDecoration(
-                                //             border: OutlineInputBorder(),
-                                //             hintText: "Zip Code",
-                                //             hintStyle: TextStyle(
-                                //               color: Colors.black,
-                                //             ),
-                                //           ),
-                                //         ),
-                                //       ),
-                                //     ),
-                                //     SizedBox(
-                                //       width: 10,
-                                //     ),
-                                //     Align(
-                                //       alignment: Alignment.centerRight,
-                                //       child: Container(
-                                //         width: MediaQuery.of(context).size.width * 0.4,
-                                //         child: TextFormField(
-                                //           validator: (value) {
-                                //             if (value == "") {
-                                //               return "Please Enter State";
-                                //             }
-                                //             return "";
-                                //           },
-                                //           decoration: InputDecoration(
-                                //             border: OutlineInputBorder(),
-                                //             hintText: "State",
-                                //             hintStyle: TextStyle(
-                                //               color: Colors.black,
-                                //             ),
-                                //           ),
-                                //         ),
-                                //       ),
-                                //     ),
-                                //   ],
-                                // ),
-                                SizedBox(
-                                  height: 10,
-                                ),
+
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
@@ -340,6 +344,7 @@ class _SignupState extends State<Signup> {
                                 SizedBox(height: 5),
                                 TextFormField(
                                   obscureText: observeText,
+                                  controller: _passwordController,
                                   validator: (value) {
                                     if (value == "") {
                                       return "Password Is Required";
@@ -387,6 +392,7 @@ class _SignupState extends State<Signup> {
                                 SizedBox(height: 5),
                                 TextFormField(
                                   obscureText: observeText,
+                                  controller: _confirmPasswordController,
                                   validator: (value) {
                                     if (value == "") {
                                       return "Confirm Password Is Required";
@@ -437,9 +443,19 @@ class _SignupState extends State<Signup> {
                                     style: ElevatedButton.styleFrom(
                                       primary: Color(Constants.COLOR_DARK_GREEN),
                                     ),
-                                    onPressed: () {
+
+                                    onPressed: ()  {
+                                      // Dismiss the keyboard
+                                      FocusScope.of(context).unfocus();
+
                                       validation();
+
+
                                     },
+                                    // onPressed: () {
+                                    //   validation();
+                                    //
+                                    // },
                                   ),
                                 ),
                                 SizedBox(
@@ -490,5 +506,20 @@ class _SignupState extends State<Signup> {
         ),
       ),
     );
+  }
+
+  void _signInWithEmail() async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+
+      // Sign-in successful, do something (e.g., navigate to the home screen).
+      print('Sign-in successful: ${userCredential.user?.email}');
+    } catch (e) {
+      // Handle sign-in errors.
+      print('Error signing in: $e');
+    }
   }
 }
