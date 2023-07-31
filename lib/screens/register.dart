@@ -42,7 +42,6 @@ class _SignupState extends State<Signup> {
 
   void validation() {
     final FormState? _form = _formKey.currentState;
-
     if (_form != null) {
       if (_form.validate()) {
         print("YES");
@@ -54,7 +53,6 @@ class _SignupState extends State<Signup> {
       print("Form is not ready.");
     }
   }
-
 
   void _register() async {
     try {
