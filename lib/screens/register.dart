@@ -30,7 +30,6 @@ final List<String> userTypeItems = [
 String? selectedValue;
 
 class _SignupState extends State<Signup> {
-
   bool _success = false;
   String _userEmail = '';
 
@@ -57,10 +56,6 @@ class _SignupState extends State<Signup> {
   }
 
 
-
-
-
-
   void _register() async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -68,7 +63,6 @@ class _SignupState extends State<Signup> {
         password: _passwordController.text,
       );
       User user = userCredential.user!; // Non-null assertion
-
       setState(() {
         _success = true;
         _userEmail = user.email ?? ''; // Null-aware assignment
@@ -81,17 +75,6 @@ class _SignupState extends State<Signup> {
       print('Error during registration: $e');
     }
   }
-
-
-
-
-
-
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -168,6 +151,10 @@ class _SignupState extends State<Signup> {
                                     }
                                     return "";
                                   },
+                                  autofocus: false,
+                                  onSaved: (value) {
+                                    _fullNameController.text = value ?? '';
+                                  },
                                   controller: _fullNameController,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
@@ -177,6 +164,7 @@ class _SignupState extends State<Signup> {
                                       color: Colors.black,
                                     ),
                                   ),
+                                  textInputAction: TextInputAction.next,
                                 ),
                                 SizedBox(
                                   height: 10,
@@ -212,6 +200,11 @@ class _SignupState extends State<Signup> {
                                       color: Colors.black,
                                     ),
                                   ),
+                                  textInputAction: TextInputAction.next,
+                                  autofocus: false,
+                                  onSaved: (value) {
+                                    _emailController.text = value ?? '';
+                                  },
                                 ),
                                 SizedBox(
                                   height: 10,
@@ -290,12 +283,9 @@ class _SignupState extends State<Signup> {
                                     padding: EdgeInsets.symmetric(horizontal: 16),
                                   ),
                                 ),
-
                                 SizedBox(
                                   height: 10,
                                 ),
-
-
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
@@ -317,6 +307,10 @@ class _SignupState extends State<Signup> {
                                   },
                                   keyboardType: TextInputType.number,
                                   controller: _phoneNumberController,
+                                  autofocus: false,
+                                  onSaved: (value) {
+                                    _phoneNumberController.text = value ?? '';
+                                  },
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     prefixIcon: Icon(Icons.phone),
@@ -325,6 +319,7 @@ class _SignupState extends State<Signup> {
                                       color: Colors.black,
                                     ),
                                   ),
+                                  textInputAction: TextInputAction.next,
                                 ),
                                 SizedBox(
                                   height: 10,
@@ -345,6 +340,10 @@ class _SignupState extends State<Signup> {
                                 TextFormField(
                                   obscureText: observeText,
                                   controller: _passwordController,
+                                  autofocus: false,
+                                  onSaved: (value) {
+                                    _passwordController.text = value ?? '';
+                                  },
                                   validator: (value) {
                                     if (value == "") {
                                       return "Password Is Required";
@@ -374,6 +373,7 @@ class _SignupState extends State<Signup> {
                                       color: Colors.black,
                                     ),
                                   ),
+                                  textInputAction: TextInputAction.next,
                                 ),
                                 SizedBox(
                                   height: 10,
@@ -393,6 +393,10 @@ class _SignupState extends State<Signup> {
                                 TextFormField(
                                   obscureText: observeText,
                                   controller: _confirmPasswordController,
+                                  autofocus: false,
+                                  onSaved: (value) {
+                                    _confirmPasswordController.text = value ?? '';
+                                  },
                                   validator: (value) {
                                     if (value == "") {
                                       return "Confirm Password Is Required";
@@ -422,12 +426,11 @@ class _SignupState extends State<Signup> {
                                       color: Colors.black,
                                     ),
                                   ),
+                                  textInputAction: TextInputAction.done,
                                 ),
                                 SizedBox(
                                   height: 20,
                                 ),
-
-
                                 Container(
                                   height: 45,
                                   width: double.infinity,
@@ -514,7 +517,6 @@ class _SignupState extends State<Signup> {
         email: _emailController.text,
         password: _passwordController.text,
       );
-
       // Sign-in successful, do something (e.g., navigate to the home screen).
       print('Sign-in successful: ${userCredential.user?.email}');
     } catch (e) {
