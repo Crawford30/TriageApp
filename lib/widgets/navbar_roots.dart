@@ -15,6 +15,7 @@ class _NavBarRootsState extends State<NavBarRoots> {
   int _selectedIndex = 0;
   final _screens = [
     DoctorHomeScreen(),
+    PatientHomeScreen(),
     MessagesScreen(),
     ScheduleScreen(),
     SettingScreen(),

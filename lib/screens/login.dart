@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:triage_app/utils/Constants.dart';
 import 'register.dart';
 import 'reset_password.dart';
+import 'doctor_home_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:triage_app/widgets/navbar_roots.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -20,9 +24,21 @@ bool observeText = true;
 bool isChecked = false;
 
 class _LoginState extends State<Login> {
+
+  // editing controller
+  final TextEditingController emailController = new TextEditingController();
+  final TextEditingController passwordController = new TextEditingController();
+
+  // firebase
+  final _auth = FirebaseAuth.instance;
+
+  // string for displaying the error Message
+  String? errorMessage;
+
   void validation() {
     final FormState? _form = _formKey.currentState;
     if (_form!.validate()) {
+      signIn(emailController.text, passwordController.text);
       print("YES");
       // Navigator.of(context).pushReplacement(
       //   MaterialPageRoute(
@@ -32,6 +48,7 @@ class _LoginState extends State<Login> {
 
     } else {
       print("NO");
+      signIn(emailController.text, passwordController.text);
 
       // Navigator.of(context).pushReplacement(
       //   MaterialPageRoute(
@@ -107,6 +124,7 @@ class _LoginState extends State<Login> {
                                 ),
                                 SizedBox(height: 5),
                                 TextFormField(
+                                  controller: emailController,
                                   validator: (value) {
                                     if (value == "") {
                                       return "Please Enter E-mail";
@@ -116,6 +134,10 @@ class _LoginState extends State<Login> {
                                     return "";
                                   },
                                   keyboardType: TextInputType.emailAddress,
+                                  textInputAction: TextInputAction.next,
+                                  onSaved: (value) {
+                                    emailController.text = value!;
+                                  },
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     hintText: "E-mail Address",
@@ -142,7 +164,12 @@ class _LoginState extends State<Login> {
                                 ),
                                 SizedBox(height: 5),
                                 TextFormField(
+                                  controller: passwordController,
                                   obscureText: observeText,
+                                  textInputAction: TextInputAction.done,
+                                  onSaved: (value) {
+                                    passwordController.text = value!;
+                                  },
                                   validator: (value) {
                                     if (value == "") {
                                       return "Password Is Required";
@@ -239,6 +266,10 @@ class _LoginState extends State<Login> {
                                     style: ElevatedButton.styleFrom(
                                         primary: Color(Constants.COLOR_DARK_GREEN) // Set the background color of the button
                                     ),
+
+                                    // onPressed: () {
+                                    //   // signIn(emailController.text, passwordController.text);
+                                    // },
                                     onPressed: () {
                                       validation();
                                     },
@@ -293,4 +324,59 @@ class _LoginState extends State<Login> {
       ),
     );
   }
+
+  void   signIn(String email ,String password ) async {
+
+    if (_formKey.currentState!.validate()) {
+      print( email);
+      print(password);
+      try {
+        await _auth
+            .signInWithEmailAndPassword(email: email, password: password)
+            .then((uid) => {
+          Fluttertoast.showToast(msg: "Login Successful"),
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => DoctorHomeScreen())),
+        });
+      } on FirebaseAuthException catch (error) {
+        switch (error.code) {
+          case "invalid-email":
+            errorMessage = "Your email address appears to be malformed.";
+
+            break;
+          case "wrong-password":
+            errorMessage = "Your password is wrong.";
+            break;
+          case "user-not-found":
+            errorMessage = "User with this email doesn't exist.";
+            break;
+          case "user-disabled":
+            errorMessage = "User with this email has been disabled.";
+            break;
+          case "too-many-requests":
+            errorMessage = "Too many requests";
+            break;
+          case "operation-not-allowed":
+            errorMessage = "Signing in with Email and Password is not enabled.";
+            break;
+          default:
+            errorMessage = "An undefined Error happened.";
+        }
+        Fluttertoast.showToast(msg: errorMessage!);
+        print(error.code);
+      }
+    }
+
+  }
+  //   if(_formKey.currentState.validate()){
+  //     await _auth.signInWithEmailAndPassword(email: email, password: password).
+  //   then((uid) => {
+  //
+  //       Fluttertoast.showToast(msg: "Login Successful"),
+  //       Navigator.of(context).pushReplacement(
+  //           MaterialPageRoute(builder: (context) => DoctorHomeScreen())),
+  //     });
+  //   }
+  //
+  // }
 }

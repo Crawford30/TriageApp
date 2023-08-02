@@ -5,6 +5,17 @@ import 'package:triage_app/utils/Constants.dart';
 import 'login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'doctor_home_screen.dart';
+import 'patient_home_screen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:triage_app/model/user_model.dart';
+import 'package:triage_app/widgets/navbar_roots.dart';
+import 'package:triage_app/utils/helper.dart';
+
+
+
+
 
 class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);
@@ -32,6 +43,10 @@ String? selectedValue;
 class _SignupState extends State<Signup> {
   bool _success = false;
   String _userEmail = '';
+  final _auth = FirebaseAuth.instance;
+
+  // string for displaying the error Message
+  String? errorMessage;
 
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -45,9 +60,12 @@ class _SignupState extends State<Signup> {
     if (_form != null) {
       if (_form.validate()) {
         print("YES");
-        _register();
+         signUpWithEmail(_emailController.text, _passwordController.text);
+        // _register();
       } else {
         print("NO");
+        // _register();
+         signUpWithEmail(_emailController.text, _passwordController.text);
       }
     } else {
       print("Form is not ready.");
@@ -56,7 +74,8 @@ class _SignupState extends State<Signup> {
 
   void _register() async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
       );
@@ -76,7 +95,10 @@ class _SignupState extends State<Signup> {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
+    double screenHeight = MediaQuery
+        .of(context)
+        .size
+        .height;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -127,7 +149,8 @@ class _SignupState extends State<Signup> {
                       children: [
                         Container(
                           child: Padding(
-                            padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 20.0),
+                            padding: const EdgeInsets.fromLTRB(
+                                8.0, 0.0, 8.0, 20.0),
                             child: Column(
                               children: [
                                 Align(
@@ -144,7 +167,7 @@ class _SignupState extends State<Signup> {
                                 SizedBox(height: 5),
                                 TextFormField(
                                   validator: (value) {
-                                    if (value == "") {
+                                    if (value!.isEmpty) {
                                       return "Please Enter Full Name";
                                     }
                                     return "";
@@ -181,7 +204,7 @@ class _SignupState extends State<Signup> {
                                 SizedBox(height: 5),
                                 TextFormField(
                                   validator: (value) {
-                                    if (value == "") {
+                                    if (value!.isEmpty) {
                                       return "Please Enter E-mail";
                                     } else if (!regExp.hasMatch(value!)) {
                                       return "E-mail Is Invalid";
@@ -225,7 +248,8 @@ class _SignupState extends State<Signup> {
                                     prefixIcon: Icon(Icons.person_pin_circle),
                                     // Add Horizontal padding using menuItemStyleData.padding so it matches
                                     // the menu padding when button's width is not specified.
-                                    contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 16),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(4),
                                     ),
@@ -239,15 +263,16 @@ class _SignupState extends State<Signup> {
                                     ),
                                   ),
                                   items: userTypeItems
-                                      .map((item) => DropdownMenuItem<String>(
-                                    value: item,
-                                    child: Text(
-                                      item,
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ))
+                                      .map((item) =>
+                                      DropdownMenuItem<String>(
+                                        value: item,
+                                        child: Text(
+                                          item,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ))
                                       .toList(),
                                   validator: (value) {
                                     if (value == null) {
@@ -278,7 +303,8 @@ class _SignupState extends State<Signup> {
                                     ),
                                   ),
                                   menuItemStyleData: const MenuItemStyleData(
-                                    padding: EdgeInsets.symmetric(horizontal: 16),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 16),
                                   ),
                                 ),
                                 SizedBox(
@@ -393,7 +419,8 @@ class _SignupState extends State<Signup> {
                                   controller: _confirmPasswordController,
                                   autofocus: false,
                                   onSaved: (value) {
-                                    _confirmPasswordController.text = value ?? '';
+                                    _confirmPasswordController.text =
+                                        value ?? '';
                                   },
                                   validator: (value) {
                                     if (value == "") {
@@ -442,16 +469,15 @@ class _SignupState extends State<Signup> {
                                       ),
                                     ),
                                     style: ElevatedButton.styleFrom(
-                                      primary: Color(Constants.COLOR_DARK_GREEN),
+                                      primary: Color(
+                                          Constants.COLOR_DARK_GREEN),
                                     ),
 
-                                    onPressed: ()  {
+                                    onPressed: () {
                                       // Dismiss the keyboard
                                       FocusScope.of(context).unfocus();
 
                                       validation();
-
-
                                     },
                                     // onPressed: () {
                                     //   validation();
@@ -487,7 +513,8 @@ class _SignupState extends State<Signup> {
                                         style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
-                                          color: Color(Constants.COLOR_DARK_GREEN),
+                                          color: Color(
+                                              Constants.COLOR_DARK_GREEN),
                                         ),
                                       ),
                                     ),
@@ -509,17 +536,92 @@ class _SignupState extends State<Signup> {
     );
   }
 
-  void _signInWithEmail() async {
+
+
+  void signUpWithEmail(String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
-      );
-      // Sign-in successful, do something (e.g., navigate to the home screen).
-      print('Sign-in successful: ${userCredential.user?.email}');
-    } catch (e) {
-      // Handle sign-in errors.
-      print('Error signing in: $e');
+      await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      // User registration successful
+      setState(() {
+        _success = true;
+        _userEmail = email;
+      });
+
+
+      String userType = _userTypeController.text.toLowerCase();
+      postDetailsToFirestore(userType);
+
+    } on FirebaseAuthException catch (error) {
+      switch (error.code) {
+        case "invalid-email":
+          errorMessage = "Your email address appears to be malformed.";
+          break;
+        case "wrong-password":
+          errorMessage = "Your password is wrong.";
+          break;
+        case "user-not-found":
+          errorMessage = "User with this email doesn't exist.";
+          break;
+        case "user-disabled":
+          errorMessage = "User with this email has been disabled.";
+          break;
+        case "too-many-requests":
+          errorMessage = "Too many requests";
+          break;
+        case "operation-not-allowed":
+          errorMessage = "Signing in with Email and Password is not enabled.";
+          break;
+        default:
+          errorMessage = "An undefined Error happened.";
+      }
+      Fluttertoast.showToast(msg: errorMessage!);
+      print(error.code);
     }
   }
+
+  postDetailsToFirestore(String userType) async {
+    // calling our firestore
+    // calling our user model
+    // sending these values
+
+
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+
+    UserModel userModel = UserModel();
+
+    userModel.email = user!.email;
+    userModel.uid = user.uid;
+    userModel.name = _fullNameController.text;
+    userModel.userType = _userTypeController.text;
+    userModel.phoneNumber = _phoneNumberController.text;
+
+    String userType = _userTypeController.text.toLowerCase();
+    String randomNumberWithPrefix = generateRandomNumberWithPrefix(userType);
+    userModel.refNumber = randomNumberWithPrefix;
+
+
+
+
+
+    await firebaseFirestore
+        .collection("users")
+        .doc(user.uid)
+        .set(userModel.toMap());
+
+    Fluttertoast.showToast(msg: "Account created successfully :) ");
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => NavBarRoots(),
+        ));
+
+
+  }
+
+
+
+
+
 }
