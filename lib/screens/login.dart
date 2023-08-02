@@ -7,6 +7,7 @@ import 'doctor_home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:triage_app/widgets/navbar_roots.dart';
+import 'package:triage_app/widgets/navbar_roots.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -36,9 +37,8 @@ class _LoginState extends State<Login> {
   String? errorMessage;
 
   void validation() {
-    final FormState? _form = _formKey.currentState;
-    if (_form!.validate()) {
-      signIn(emailController.text, passwordController.text);
+
+      signUserIn(emailController.text, passwordController.text);
       print("YES");
       // Navigator.of(context).pushReplacement(
       //   MaterialPageRoute(
@@ -46,16 +46,7 @@ class _LoginState extends State<Login> {
       //   ),
       // );
 
-    } else {
-      print("NO");
-      signIn(emailController.text, passwordController.text);
 
-      // Navigator.of(context).pushReplacement(
-      //   MaterialPageRoute(
-      //     builder: (ctx) => Dashboard(),
-      //   ),
-      // );
-    }
   }
 
   @override
@@ -267,11 +258,9 @@ class _LoginState extends State<Login> {
                                         primary: Color(Constants.COLOR_DARK_GREEN) // Set the background color of the button
                                     ),
 
-                                    // onPressed: () {
-                                    //   // signIn(emailController.text, passwordController.text);
-                                    // },
                                     onPressed: () {
-                                      validation();
+                                      FocusScope.of(context).unfocus();
+                                      signUserIn(emailController.text, passwordController.text);
                                     },
                                   ),
                                 ),
@@ -325,58 +314,40 @@ class _LoginState extends State<Login> {
     );
   }
 
-  void   signIn(String email ,String password ) async {
 
+
+  // login function
+  void signUserIn(String email, String password) async {
     if (_formKey.currentState!.validate()) {
-      print( email);
-      print(password);
       try {
         await _auth
             .signInWithEmailAndPassword(email: email, password: password)
             .then((uid) => {
           Fluttertoast.showToast(msg: "Login Successful"),
           Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => DoctorHomeScreen())),
+              MaterialPageRoute(builder: (context) => NavBarRoots())),
         });
       } on FirebaseAuthException catch (error) {
-        switch (error.code) {
-          case "invalid-email":
-            errorMessage = "Your email address appears to be malformed.";
+        String errorMessage = "An undefined Error happened.";
 
-            break;
-          case "wrong-password":
-            errorMessage = "Your password is wrong.";
-            break;
-          case "user-not-found":
-            errorMessage = "User with this email doesn't exist.";
-            break;
-          case "user-disabled":
-            errorMessage = "User with this email has been disabled.";
-            break;
-          case "too-many-requests":
-            errorMessage = "Too many requests";
-            break;
-          case "operation-not-allowed":
-            errorMessage = "Signing in with Email and Password is not enabled.";
-            break;
-          default:
-            errorMessage = "An undefined Error happened.";
+        if (error.code == "invalid-email") {
+          errorMessage = "Your email address appears to be malformed.";
+        } else if (error.code == "wrong-password") {
+          errorMessage = "Your password is wrong.";
+        } else if (error.code == "user-not-found") {
+          errorMessage = "User with this email doesn't exist.";
+        } else if (error.code == "user-disabled") {
+          errorMessage = "User with this email has been disabled.";
+        } else if (error.code == "too-many-requests") {
+          errorMessage = "Too many requests";
+        } else if (error.code == "operation-not-allowed") {
+          errorMessage = "Signing in with Email and Password is not enabled.";
         }
-        Fluttertoast.showToast(msg: errorMessage!);
-        print(error.code);
+
+        Fluttertoast.showToast(msg: errorMessage);
+        print("Firebase error code: ${error.code}");
       }
     }
-
   }
-  //   if(_formKey.currentState.validate()){
-  //     await _auth.signInWithEmailAndPassword(email: email, password: password).
-  //   then((uid) => {
-  //
-  //       Fluttertoast.showToast(msg: "Login Successful"),
-  //       Navigator.of(context).pushReplacement(
-  //           MaterialPageRoute(builder: (context) => DoctorHomeScreen())),
-  //     });
-  //   }
-  //
-  // }
+
 }

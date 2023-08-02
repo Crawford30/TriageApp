@@ -32,6 +32,13 @@ RegExp regExp = new RegExp(p);
 bool observeText = true;
 bool isChecked = false;
 
+bool _isNameTouched = false;
+bool _isEmailAddressTouched = false;
+bool _isUserTypeTouched = false;
+bool _isPhoneNumberTouched = false;
+bool _isPasswordTouched = false;
+bool _isConfirmedPasswordTouched = false;
+
 final List<String> userTypeItems = [
   'Patient',
   'Nurse',
@@ -64,10 +71,14 @@ class _SignupState extends State<Signup> {
         // _register();
       } else {
         print("NO");
+        Fluttertoast.showToast(msg: "Please ensure all the required fills are filled");
+        return;
         // _register();
-         signUpWithEmail(_emailController.text, _passwordController.text);
+        //  signUpWithEmail(_emailController.text, _passwordController.text);
       }
     } else {
+      Fluttertoast.showToast(msg: "Form is not valid");
+      return;
       print("Form is not ready.");
     }
   }
@@ -170,7 +181,7 @@ class _SignupState extends State<Signup> {
                                     if (value!.isEmpty) {
                                       return "Please Enter Full Name";
                                     }
-                                    return "";
+                                    return null;
                                   },
                                   autofocus: false,
                                   onSaved: (value) {
@@ -209,7 +220,7 @@ class _SignupState extends State<Signup> {
                                     } else if (!regExp.hasMatch(value!)) {
                                       return "E-mail Is Invalid";
                                     }
-                                    return "";
+                                    return null;
                                   },
                                   keyboardType: TextInputType.emailAddress,
                                   controller: _emailController,
@@ -327,7 +338,7 @@ class _SignupState extends State<Signup> {
                                     if (value == "") {
                                       return "Please Enter Phone Number";
                                     }
-                                    return "";
+                                    return null;
                                   },
                                   keyboardType: TextInputType.number,
                                   controller: _phoneNumberController,
@@ -374,7 +385,7 @@ class _SignupState extends State<Signup> {
                                     } else if (value!.length < 8) {
                                       return "Password is Too Short";
                                     }
-                                    return "";
+                                    return null;
                                   },
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
@@ -422,13 +433,17 @@ class _SignupState extends State<Signup> {
                                     _confirmPasswordController.text =
                                         value ?? '';
                                   },
+
                                   validator: (value) {
                                     if (value == "") {
                                       return "Confirm Password Is Required";
                                     } else if (value!.length < 8) {
                                       return "Confirm Password is Too Short";
+                                    } else if (_confirmPasswordController.text !=
+                                        _passwordController.text) {
+                                      return "Password don't match";
                                     }
-                                    return "";
+                                    return null;
                                   },
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
@@ -601,13 +616,12 @@ class _SignupState extends State<Signup> {
     userModel.refNumber = randomNumberWithPrefix;
 
 
-
-
-
     await firebaseFirestore
         .collection("users")
         .doc(user.uid)
         .set(userModel.toMap());
+
+     _formKey.currentState?.reset();
 
     Fluttertoast.showToast(msg: "Account created successfully :) ");
 
@@ -616,8 +630,6 @@ class _SignupState extends State<Signup> {
         MaterialPageRoute(
           builder: (context) => NavBarRoots(),
         ));
-
-
   }
 
 
