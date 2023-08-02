@@ -31,6 +31,7 @@ String p =
 RegExp regExp = new RegExp(p);
 bool observeText = true;
 bool isChecked = false;
+bool _isSubmitting = false;
 
 bool _isNameTouched = false;
 bool _isEmailAddressTouched = false;
@@ -155,6 +156,7 @@ class _SignupState extends State<Signup> {
                 ),
               ),
               Expanded(
+
                 child: SingleChildScrollView(
                   child: Container(
                     width: double.infinity,
@@ -473,12 +475,29 @@ class _SignupState extends State<Signup> {
                                 SizedBox(
                                   height: 20,
                                 ),
+
                                 Container(
                                   height: 45,
                                   width: double.infinity,
                                   child: ElevatedButton(
-                                    child: Text(
-                                      "Register",
+                                    child: _isSubmitting
+                                        ? Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: const [
+                                        CircularProgressIndicator(), // Show progress spinner when submitting
+                                        SizedBox(width: 10),
+                                        Text(
+                                          'Registering...',
+                                          style: TextStyle(
+                                            fontSize: 23,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(Constants.COLOR_WHITE),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                        : const Text(
+                                      'Register',
                                       style: TextStyle(
                                         fontSize: 23,
                                         fontWeight: FontWeight.bold,
@@ -486,22 +505,45 @@ class _SignupState extends State<Signup> {
                                       ),
                                     ),
                                     style: ElevatedButton.styleFrom(
-                                      primary: Color(
-                                          Constants.COLOR_DARK_GREEN),
+                                      primary: Color(Constants.COLOR_DARK_GREEN),
                                     ),
-
-                                    onPressed: () {
-                                      // Dismiss the keyboard
-                                      FocusScope.of(context).unfocus();
-
+                                    onPressed: _isSubmitting ? null : () {
                                       validation();
+                                      FocusScope.of(context).unfocus();
                                     },
-                                    // onPressed: () {
-                                    //   validation();
-                                    //
-                                    // },
                                   ),
                                 ),
+
+                                // Container(
+                                //   height: 45,
+                                //   width: double.infinity,
+                                //   child: ElevatedButton(
+                                //
+                                //     child: Text(
+                                //       _isSubmitting
+                                //           ? const CircularProgressIndicator() // Show progress spinner when submitting
+                                //           : const Text('Register'),
+                                //       style: TextStyle(
+                                //         fontSize: 23,
+                                //         fontWeight: FontWeight.bold,
+                                //         color: Color(Constants.COLOR_WHITE),
+                                //       ),
+                                //     ),
+                                //     style: ElevatedButton.styleFrom(
+                                //       primary: Color(
+                                //           Constants.COLOR_DARK_GREEN),
+                                //     ),
+                                //     onPressed: _isSubmitting ? null : () {
+                                //       validation();
+                                //       FocusScope.of(context).unfocus();
+                                //     },
+                                //
+                                //     // onPressed: () {
+                                //     //   validation();
+                                //     //
+                                //     // },
+                                //   ),
+                                // ),
                                 SizedBox(
                                   height: 10,
                                 ),
@@ -557,6 +599,11 @@ class _SignupState extends State<Signup> {
 
   void signUpWithEmail(String email, String password) async {
     try {
+
+      setState(() {
+        _isSubmitting = true;
+      });
+
       await _auth.createUserWithEmailAndPassword(email: email, password: password);
       // User registration successful
       setState(() {
@@ -567,6 +614,16 @@ class _SignupState extends State<Signup> {
 
       String userType = _userTypeController.text.toLowerCase();
       postDetailsToFirestore(userType);
+
+
+      // Reset the form
+      _formKey.currentState?.reset();
+
+      setState(() {
+        _isSubmitting = false;
+        _success = true;
+        _userEmail = email;
+      });
 
     } on FirebaseAuthException catch (error) {
       switch (error.code) {
@@ -593,6 +650,10 @@ class _SignupState extends State<Signup> {
       }
       Fluttertoast.showToast(msg: errorMessage!);
       print(error.code);
+
+      setState(() {
+        _isSubmitting = false;
+      });
     }
   }
 
