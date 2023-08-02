@@ -68,7 +68,9 @@ class _SignupState extends State<Signup> {
       if (_form.validate()) {
         print("YES");
          signUpWithEmail(_emailController.text, _passwordController.text);
-        // _register();
+
+
+
       } else {
         print("NO");
         Fluttertoast.showToast(msg: "Please ensure all the required fills are filled");
@@ -621,15 +623,23 @@ class _SignupState extends State<Signup> {
         .doc(user.uid)
         .set(userModel.toMap());
 
-     _formKey.currentState?.reset();
+
 
     Fluttertoast.showToast(msg: "Account created successfully :) ");
 
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => NavBarRoots(),
-        ));
+     //Clear the form
+    _formKey.currentState?.reset();
+
+    // Use Navigator.pushReplacement to navigate to the new screen
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => NavBarRoots(),
+      ),
+    );
+
+
+
   }
 
 
