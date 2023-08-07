@@ -3,9 +3,12 @@ import 'package:triage_app/screens/login.dart';
 import 'package:triage_app/screens/register.dart';
 import 'package:triage_app/widgets/navbar_roots.dart';
 
+class WelcomeScreen extends StatefulWidget {
+  @override
+  _WelcomeScreenState createState() => _WelcomeScreenState();
+}
 
-
-class WelcomeScreen extends StatelessWidget {
+class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -23,10 +26,11 @@ class WelcomeScreen extends StatelessWidget {
               child: TextButton(
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => NavBarRoots(),
-                      ));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NavBarRoots(),
+                    ),
+                  );
                 },
                 child: Text(
                   "SKIP",
@@ -74,14 +78,14 @@ class WelcomeScreen extends StatelessWidget {
                   child: InkWell(
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Login(),
-                          ));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Login(),
+                        ),
+                      );
                     },
                     child: Container(
-                      padding:
-                      EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                       child: Text(
                         "Log In",
                         style: TextStyle(
@@ -99,14 +103,14 @@ class WelcomeScreen extends StatelessWidget {
                   child: InkWell(
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Signup(),
-                          ));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Signup(),
+                        ),
+                      );
                     },
                     child: Container(
-                      padding:
-                      EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                       child: Text(
                         "Sign Up",
                         style: TextStyle(
@@ -126,4 +130,3 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 }
-

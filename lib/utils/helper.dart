@@ -20,11 +20,18 @@ String generateRandomNumberWithPrefix(String userType) {
 }
 
 
-
+//Saved Data
 void saveDataLocally(String key, String value) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setString(key, value);
 }
+
+//Remove Data
+void removeDataLocally(String key) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.remove(key);
+}
+
 
 Future<String?> getDataLocally(String key) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
