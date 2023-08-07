@@ -30,3 +30,12 @@ Future<String?> getDataLocally(String key) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs.getString(key);
 }
+
+String getInitials(String name) {
+  List<String> names = name.split(' ');
+  if (names.length > 1) {
+    return '${names.first[0]}${names.last[0]}'.toUpperCase();
+  } else {
+    return '${names.first[0]}'.toUpperCase();
+  }
+}

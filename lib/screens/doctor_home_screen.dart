@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:triage_app/screens/appointment_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:triage_app/utils/helper.dart';
+import 'package:triage_app/screens/appointment_screen.dart';
+import 'package:triage_app/utils/Constants.dart';
 
 class DoctorHomeScreen extends StatefulWidget {
   @override
@@ -8,7 +10,8 @@ class DoctorHomeScreen extends StatefulWidget {
 }
 
 class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
-
+  String _userName = '';
+  List<DocumentSnapshot> _patients = [];
   List symptoms = [
     "Temperature",
     "Snuffle",
@@ -24,12 +27,28 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
     "doctor4.jpg",
   ];
 
-  String _userName = '';
-
   @override
   void initState() {
     super.initState();
     getUserNameFromStorage();
+    fetchPatients().then((patients) {
+      setState(() {
+        _patients = patients;
+      });
+    });
+  }
+
+  Future<List<DocumentSnapshot>> fetchPatients() async {
+    try {
+      final QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('userType', isEqualTo: 'Patient')
+          .get();
+      return snapshot.docs;
+    } catch (e) {
+      // Handle any errors if needed
+      return [];
+    }
   }
 
   void getUserNameFromStorage() async {
@@ -53,7 +72,7 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
                 Text(
                   _userName,
                   style: TextStyle(
-                    fontSize: 25,
+                    fontSize: 35,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -71,6 +90,7 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
               InkWell(
                 onTap: () {},
                 child: Container(
+                  // Existing container code...
                   padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     color: Color(0xFF7165D6),
@@ -121,6 +141,7 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
               InkWell(
                 onTap: () {},
                 child: Container(
+                  // Existing container code...
                   padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -187,7 +208,7 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
               crossAxisCount: 2,
               childAspectRatio: 0.8, // Adjust this value to control item aspect ratio
             ),
-            itemCount: 4,
+            itemCount: _patients.length,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
@@ -214,45 +235,83 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
                       ),
                     ],
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      CircleAvatar(
-                        radius: 35,
-                        backgroundImage: AssetImage("images/${imgs[index]}"),
-                      ),
-                      const Text(
-                        "Patient #: MT001",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black54,
+                  child: Container(
+                    padding: EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        CircleAvatar(
+                          radius: 40,
+                          backgroundColor:  Color(
+                            Constants.COLOR_DARK_GREEN,
+                          ),
+                          child: Text(
+                            getInitials(_patients[index]['name'] ?? ''),
+                            style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.width * 0.04, // Adjust the factor as needed
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
-                      ),
-                      Text(
-                        "Therapist",
-                        style: TextStyle(
-                          color: Colors.black45,
+                        SizedBox(height: 10),
+                        Text(
+                          "Patient #: ${_patients[index]['refNumber']}",
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width * 0.03, // Adjust the factor as needed
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black54,
+                          ),
                         ),
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // // Icon(
-                          // //   Icons.star,
-                          // //   color: Colors.amber,
-                          // // ),
-                          // // Text(
-                          // //   "4.9",
-                          // //   style: TextStyle(
-                          // //     color: Colors.black45,
-                          // //   ),
-                          // ),
-                        ],
-                      ),
-                    ],
+                        Text(
+                          "E-mail: ${_patients[index]['email']}",
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width * 0.025, // Adjust the factor as needed
+                            color: Colors.black45,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
+
+
+                  // Column(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //   children: [
+                  //     CircleAvatar(
+                  //       radius: 40,
+                  //       backgroundColor: Colors.blue, // Set the background color of the CircleAvatar
+                  //       child: Text(
+                  //         getInitials(_patients[index]['name'] ?? ''),
+                  //         style: TextStyle(
+                  //           fontSize: 20,
+                  //           color: Colors.white,
+                  //           fontWeight: FontWeight.bold,
+                  //         ),
+                  //       ),
+                  //       // radius: 35,
+                  //       // backgroundImage: AssetImage("images/${imgs[0]}"),
+                  //     ),
+                  //
+                  //     Text(
+                  //       "Patient #: ${_patients[index]['refNumber']}",
+                  //       style: TextStyle(
+                  //         fontSize: 14,
+                  //         fontWeight: FontWeight.w500,
+                  //         color: Colors.black54,
+                  //     ),
+                  //     ),
+                  //
+                  //
+                  //     Text(
+                  //       "E-mail: ${_patients[index]['email']}",
+                  //       style: TextStyle(
+                  //         fontSize: 12,
+                  //         color: Colors.black45,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                 ),
               );
             },
