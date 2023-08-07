@@ -274,44 +274,6 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
                     ),
                   ),
 
-
-                  // Column(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //   children: [
-                  //     CircleAvatar(
-                  //       radius: 40,
-                  //       backgroundColor: Colors.blue, // Set the background color of the CircleAvatar
-                  //       child: Text(
-                  //         getInitials(_patients[index]['name'] ?? ''),
-                  //         style: TextStyle(
-                  //           fontSize: 20,
-                  //           color: Colors.white,
-                  //           fontWeight: FontWeight.bold,
-                  //         ),
-                  //       ),
-                  //       // radius: 35,
-                  //       // backgroundImage: AssetImage("images/${imgs[0]}"),
-                  //     ),
-                  //
-                  //     Text(
-                  //       "Patient #: ${_patients[index]['refNumber']}",
-                  //       style: TextStyle(
-                  //         fontSize: 14,
-                  //         fontWeight: FontWeight.w500,
-                  //         color: Colors.black54,
-                  //     ),
-                  //     ),
-                  //
-                  //
-                  //     Text(
-                  //       "E-mail: ${_patients[index]['email']}",
-                  //       style: TextStyle(
-                  //         fontSize: 12,
-                  //         color: Colors.black45,
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
                 ),
               );
             },

@@ -1,7 +1,65 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:triage_app/utils/helper.dart';
+import 'package:triage_app/utils/Constants.dart';
 
-class SettingScreen extends StatelessWidget {
+class SettingScreen extends StatefulWidget {
+  @override
+  _SettingScreenState createState() => _SettingScreenState();
+}
+
+class _SettingScreenState extends State<SettingScreen> {
+  String _userName = '';
+
+  @override
+  void initState() {
+    super.initState();
+    getUserNameFromStorage();
+  }
+
+
+  void _showLogoutConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Logout"),
+          content: Text("Are you sure you want to log out?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Perform the logout action here
+                _performLogout();
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text("Log Out"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _performLogout() {
+    // Implement your logout logic here
+    // For example, clear local storage or sign out from authentication
+    // After logout, you can navigate to the login screen or wherever appropriate.
+  }
+
+
+  void getUserNameFromStorage() async {
+    String? userName = await getDataLocally("user_name");
+    setState(() {
+      _userName = userName ?? '';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -21,10 +79,22 @@ class SettingScreen extends StatelessWidget {
             ListTile(
               leading: CircleAvatar(
                 radius: 30,
-                backgroundImage: AssetImage("images/doctor1.jpg"),
+                backgroundColor:  Color(
+                  Constants.COLOR_DARK_GREEN,
+                ),
+                child: Text(
+                  getInitials(_userName ?? ''),
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.04, // Adjust the factor as needed
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                // radius: 30,
+                // backgroundImage: AssetImage("images/doctor1.jpg"),
               ),
               title: Text(
-                "Dear Programmer",
+                "${_userName}",
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 25,
@@ -154,7 +224,9 @@ class SettingScreen extends StatelessWidget {
             ),
             Divider(height: 40),
             ListTile(
-              onTap: () {},
+              onTap: () {
+                _showLogoutConfirmationDialog();
+              },
               leading: Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(

@@ -6,38 +6,39 @@ import 'package:triage_app/screens/messages_screen.dart';
 import 'package:triage_app/screens/schedule_screen.dart';
 import 'package:triage_app/screens/settings_screen.dart';
 import 'package:triage_app/utils/helper.dart';
+import 'package:triage_app/screens/welcome_screen.dart';
 
 class NavBarRoots extends StatefulWidget {
   @override
   State<NavBarRoots> createState() => _NavBarRootsState();
 }
 
-
-
-
 class _NavBarRootsState extends State<NavBarRoots> {
   int _selectedIndex = 0;
   List<Widget> _screens = [];
-
   String _userType = '';
 
   @override
   void initState() {
     super.initState();
     getUserTypeFromStorage();
-    _screens = [
-      DoctorHomeScreen(),
-      MessagesScreen(),
-      ScheduleScreen(),
-      SettingScreen(),
-    ];
   }
 
   void getUserTypeFromStorage() async {
     String? userType = await getDataLocally("user_type");
     setState(() {
       _userType = userType ?? '';
+      _screens = _getScreensForUserType(userType);
     });
+  }
+
+  List<Widget> _getScreensForUserType(String? userType) {
+    return [
+      userType != null && userType == 'Patient'  ? DoctorHomeScreen() : PatientHomeScreen(),
+      MessagesScreen(),
+      ScheduleScreen(),
+      SettingScreen(),
+    ];
   }
 
   @override
@@ -49,11 +50,6 @@ class _NavBarRootsState extends State<NavBarRoots> {
           child: CircularProgressIndicator(),
         ),
       );
-    }
-
-    // Conditionally add DoctorHomeScreen based on user_type
-    if (_userType == 'doctor') {
-      _screens.insert(0, DoctorHomeScreen());
     }
 
     return Scaffold(

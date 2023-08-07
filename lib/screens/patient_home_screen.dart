@@ -1,8 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:triage_app/screens/appointment_screen.dart';
 
-class PatientHomeScreen extends StatelessWidget {
+class PatientHomeScreen extends StatefulWidget {
+  @override
+  _PatientHomeScreenState createState() => _PatientHomeScreenState();
+}
+
+class _PatientHomeScreenState extends State<PatientHomeScreen> {
   List symptoms = [
     "Temperature",
     "Snuffle",
@@ -17,6 +23,8 @@ class PatientHomeScreen extends StatelessWidget {
     "doctor3.jpg",
     "doctor4.jpg",
   ];
+
+  Map<String, dynamic> _selectedDoctor = {}; // Store selected doctor information
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +139,7 @@ class PatientHomeScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 30),
                         Text(
-                          "Home Visit Patient",
+                          "Home Visit",
                           style: TextStyle(
                             fontSize: 18,
                             color: Colors.black,
@@ -211,83 +219,103 @@ class PatientHomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-              ),
-              itemCount: 4,
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AppointmentScreen(),
-                        ));
-                  },
-                  child: Container(
-                    margin: EdgeInsets.all(10),
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 4,
-                          spreadRadius: 2,
-                        ),
-                      ],
+            FutureBuilder<List<DocumentSnapshot>>(
+              future: fetchDoctorsAndNurses(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text("Error: ${snapshot.error}");
+                } else if (snapshot.hasData) {
+                  List<DocumentSnapshot> doctorsAndNurses = snapshot.data!;
+                  return GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        CircleAvatar(
-                          radius: 35,
-                          backgroundImage:
-                          AssetImage("images/${imgs[index]}"),
-                        ),
-                        const Text(
-                          "Dr. Doctor Name",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black54,
-                          ),
-                        ),
-                        Text(
-                          "Therapist",
-                          style: TextStyle(
-                            color: Colors.black45,
-                          ),
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.star,
-                              color: Colors.amber,
+                    itemCount: doctorsAndNurses.length,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      var doctor = doctorsAndNurses[index];
+                      return InkWell(
+                        onTap: () {
+                          setState(() {
+                            _selectedDoctor = {
+                              'name': doctor['name'],
+                              'userType': doctor['userType']
+                            };
+                          });
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AppointmentScreen(),
                             ),
-                            Text(
-                              "4.9",
-                              style: TextStyle(
-                                color: Colors.black45,
+                          );
+                        },
+                        child: Container(
+                          margin: EdgeInsets.all(10),
+                          padding: EdgeInsets.symmetric(vertical: 15),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 4,
+                                spreadRadius: 2,
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              CircleAvatar(
+                                radius: 35,
+                                backgroundImage:
+                                AssetImage("images/${imgs[0]}"),
+                              ),
+                              Text(
+                                doctor['name'],
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black54,
+                                ),
+                              ),
+                              Text(
+                                doctor['userType'],
+                                style: TextStyle(
+                                  color: Colors.black45,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
-                  ),
-                );
+                      );
+                    },
+                  );
+                } else {
+                  return Text("No doctors or nurses found.");
+                }
               },
             ),
           ],
         ),
       ),
     );
+  }
+
+  Future<List<DocumentSnapshot>> fetchDoctorsAndNurses() async {
+    try {
+      final QuerySnapshot<Map<String, dynamic>> snapshot =
+      await FirebaseFirestore.instance
+          .collection('users')
+          .where('userType', whereIn: ['Doctor', 'Nurse'])
+          .get();
+      return snapshot.docs;
+    } catch (e) {
+      // Handle any errors if needed
+      return [];
+    }
   }
 }
