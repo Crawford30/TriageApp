@@ -5,24 +5,57 @@ import 'package:triage_app/screens/patient_home_screen.dart';
 import 'package:triage_app/screens/messages_screen.dart';
 import 'package:triage_app/screens/schedule_screen.dart';
 import 'package:triage_app/screens/settings_screen.dart';
+import 'package:triage_app/utils/helper.dart';
 
 class NavBarRoots extends StatefulWidget {
   @override
   State<NavBarRoots> createState() => _NavBarRootsState();
 }
 
+
+
+
 class _NavBarRootsState extends State<NavBarRoots> {
   int _selectedIndex = 0;
-  final _screens = [
-    DoctorHomeScreen(),
-    PatientHomeScreen(),
-    MessagesScreen(),
-    ScheduleScreen(),
-    SettingScreen(),
-  ];
+  List<Widget> _screens = [];
+
+  String _userType = '';
+
+  @override
+  void initState() {
+    super.initState();
+    getUserTypeFromStorage();
+    _screens = [
+      DoctorHomeScreen(),
+      MessagesScreen(),
+      ScheduleScreen(),
+      SettingScreen(),
+    ];
+  }
+
+  void getUserTypeFromStorage() async {
+    String? userType = await getDataLocally("user_type");
+    setState(() {
+      _userType = userType ?? '';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    // Show loading or any other UI while waiting for user_type from storage
+    if (_userType.isEmpty) {
+      return Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
+    // Conditionally add DoctorHomeScreen based on user_type
+    if (_userType == 'doctor') {
+      _screens.insert(0, DoctorHomeScreen());
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: _screens[_selectedIndex],
@@ -45,16 +78,21 @@ class _NavBarRootsState extends State<NavBarRoots> {
           },
           items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.home_filled), label: "Home"),
+              icon: Icon(Icons.home_filled),
+              label: "Home",
+            ),
             BottomNavigationBarItem(
-                icon: Icon(
-                  CupertinoIcons.chat_bubble_text_fill,
-                ),
-                label: "Messages"),
+              icon: Icon(CupertinoIcons.chat_bubble_text_fill),
+              label: "Messages",
+            ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_month_outlined), label: "Schedule"),
+              icon: Icon(Icons.calendar_month_outlined),
+              label: "Schedule",
+            ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.settings), label: "Settings"),
+              icon: Icon(Icons.settings),
+              label: "Settings",
+            ),
           ],
         ),
       ),

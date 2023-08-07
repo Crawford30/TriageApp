@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:triage_app/screens/appointment_screen.dart';
+import 'package:triage_app/utils/helper.dart';
 
-class DoctorHomeScreen extends StatelessWidget {
+class DoctorHomeScreen extends StatefulWidget {
+  @override
+  _DoctorHomeScreenState createState() => _DoctorHomeScreenState();
+}
+
+class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
+
   List symptoms = [
     "Temperature",
     "Snuffle",
@@ -17,6 +24,21 @@ class DoctorHomeScreen extends StatelessWidget {
     "doctor4.jpg",
   ];
 
+  String _userName = '';
+
+  @override
+  void initState() {
+    super.initState();
+    getUserNameFromStorage();
+  }
+
+  void getUserNameFromStorage() async {
+    String? userName = await getDataLocally("user_name");
+    setState(() {
+      _userName = userName ?? '';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -29,9 +51,9 @@ class DoctorHomeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Hello Alex",
+                  _userName,
                   style: TextStyle(
-                    fontSize: 35,
+                    fontSize: 25,
                     fontWeight: FontWeight.w500,
                   ),
                 ),

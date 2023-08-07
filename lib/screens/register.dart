@@ -684,6 +684,21 @@ class _SignupState extends State<Signup> {
         .doc(user.uid)
         .set(userModel.toMap());
 
+  //=====Save Data Locally=====
+    saveDataLocally("user_name", userModel.name ?? '');
+    saveDataLocally("user_type", userModel.userType ?? '');
+    saveDataLocally("user_email", userModel.email ?? '');
+    saveDataLocally("ref_number", userModel.refNumber ?? '');
+    saveDataLocally("user_number", userModel.phoneNumber ?? '');
+    saveDataLocally("user_id", user.uid ?? '');
+
+  //   saveDataLocally("user_name", userModel.name);
+  //   saveDataLocally("user_type", userModel.userType);
+  //   saveDataLocally("user_email", userModel.email);
+  //   saveDataLocally("ref_number", userModel.refNumber);
+  //   saveDataLocally("user_number", userModel.phoneNumber);
+  //   saveDataLocally("user_id", user.uid);
+
 
 
     Fluttertoast.showToast(msg: "Account created successfully :) ");
