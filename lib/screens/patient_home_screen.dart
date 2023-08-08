@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:triage_app/screens/appointment_screen.dart';
+import 'package:triage_app/utils/Constants.dart';
+import 'package:triage_app/utils/helper.dart';
 
 class PatientHomeScreen extends StatefulWidget {
   @override
@@ -9,6 +11,9 @@ class PatientHomeScreen extends StatefulWidget {
 }
 
 class _PatientHomeScreenState extends State<PatientHomeScreen> {
+
+  String _userName = '';
+
   List symptoms = [
     "Temperature",
     "Snuffle",
@@ -27,6 +32,13 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
   Map<String, dynamic> _selectedDoctor = {}; // Store selected doctor information
 
   @override
+  void initState() {
+    super.initState();
+    getUserNameFromStorage();
+
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
@@ -40,9 +52,9 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Hello Alex",
+                    "Hello ${_userName}",
                     style: TextStyle(
-                      fontSize: 35,
+                      fontSize: 20,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -317,5 +329,12 @@ class _PatientHomeScreenState extends State<PatientHomeScreen> {
       // Handle any errors if needed
       return [];
     }
+  }
+
+  void getUserNameFromStorage() async {
+    String? userName = await getDataLocally("user_name");
+    setState(() {
+      _userName = userName ?? '';
+    });
   }
 }
