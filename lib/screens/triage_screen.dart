@@ -8,6 +8,9 @@ class TriageScreen extends StatefulWidget {
 
 class _TriageScreenState extends State<TriageScreen> {
   String selectedLabel = "";
+  String selectedLabelNationality = "";
+  bool isChecked = false;
+
   List<String> imgs = [
     "doctor1.jpg",
     "doctor2.jpg",
@@ -27,6 +30,27 @@ class _TriageScreenState extends State<TriageScreen> {
                 selectedLabel = ""; // Uncheck if already selected
               } else {
                 selectedLabel = label; // Check the selected label
+              }
+            });
+          },
+        ),
+        Text(label),
+      ],
+    );
+  }
+
+  Widget buildNationalityCheckboxWithLabel(String label) {
+    return Row(
+      children: [
+        Checkbox(
+          value: selectedLabelNationality == label,
+          activeColor: Colors.blue,
+          onChanged: (value) {
+            setState(() {
+              if (selectedLabelNationality == label) {
+                selectedLabelNationality = ""; // Uncheck if already selected
+              } else {
+                selectedLabelNationality = label; // Check the selected label
               }
             });
           },
@@ -80,7 +104,7 @@ class _TriageScreenState extends State<TriageScreen> {
                           ),
                           SizedBox(height: 15),
                           Text(
-                            "Dr. Doctor Name",
+                            "Patient Name",
                             style: TextStyle(
                               fontSize: 23,
                               fontWeight: FontWeight.w500,
@@ -89,7 +113,7 @@ class _TriageScreenState extends State<TriageScreen> {
                           ),
                           SizedBox(height: 5),
                           Text(
-                            "Therapist",
+                            "Patient #: 0900000",
                             style: TextStyle(
                               color: Colors.white60,
                               fontWeight: FontWeight.bold,
@@ -99,7 +123,6 @@ class _TriageScreenState extends State<TriageScreen> {
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),
@@ -145,121 +168,732 @@ class _TriageScreenState extends State<TriageScreen> {
                   Align(
                     alignment: Alignment.center,
                     child: Divider(
-                      color: Colors.grey,   // Color of the divider
-                      thickness: 1.0,       // Thickness of the divider
-                      indent: 16.0,         // Indent on the left side
-                      endIndent: 16.0,      // Indent on the right side
+                      color: Colors.grey, // Color of the divider
+                      thickness: 1.0, // Thickness of the divider
+                      indent: 16.0, // Indent on the left side
+                      endIndent: 16.0, // Indent on the right side
                     ),
                   ),
                   SizedBox(height: 10),
 
                   Text(
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-                    style: TextStyle(fontSize: 16, color: Colors.black54),
+                    "PATIENT'S DEMOGRAPHICS",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   ),
+                  SizedBox(height: 5),
+                  Text(
+                    "Nationality: ",
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: 5),
+                  Container(
+                    height: 40,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          buildNationalityCheckboxWithLabel("NATIONAL"),
+                          buildNationalityCheckboxWithLabel("REFUGEE"),
+                          buildNationalityCheckboxWithLabel("FOREIGNER"),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10), // Add space above the divider
+
+                  Align(
+                    alignment: Alignment.center,
+                    child: Divider(
+                      color: Colors.grey, // Color of the divider
+                      thickness: 1.0, // Thickness of the divider
+                      indent: 16.0, // Indent on the left side
+                      endIndent: 16.0, // Indent on the right side
+                    ),
+                  ),
+                  SizedBox(height: 15),
+
+                  Text(
+                    "Address: ",
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: 5),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.42,
+                    child: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Village/Zone:",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            TextFormField(
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please Enter Village/Zone";
+                                }
+                                return null;
+                              },
+                              autofocus: false,
+                              onSaved: (value) {
+                                // Handle saved value
+                              },
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                prefixIcon: Icon(Icons.person),
+                                hintText: "Village/Zone",
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
+                                ),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 10),
+                              ),
+                              textAlignVertical: TextAlignVertical.center,
+                              textInputAction: TextInputAction.next,
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              "Parish:",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            TextFormField(
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please Enter Parish";
+                                }
+                                return null;
+                              },
+                              autofocus: false,
+                              onSaved: (value) {
+                                // Handle saved value
+                              },
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                prefixIcon: Icon(Icons.person),
+                                hintText: "Parish",
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
+                                ),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 10),
+                              ),
+                              textAlignVertical: TextAlignVertical.center,
+                              textInputAction: TextInputAction.next,
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              "Sub-county:",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            TextFormField(
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please Enter Sub-county";
+                                }
+                                return null;
+                              },
+                              autofocus: false,
+                              onSaved: (value) {
+                                // Handle saved value
+                              },
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                prefixIcon: Icon(Icons.person),
+                                hintText: "Sub-county",
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
+                                ),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 10),
+                              ),
+                              textAlignVertical: TextAlignVertical.center,
+                              textInputAction: TextInputAction.next,
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              "District:",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            TextFormField(
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please Enter District";
+                                }
+                                return null;
+                              },
+                              autofocus: false,
+                              onSaved: (value) {
+                                // Handle saved value
+                              },
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                prefixIcon: Icon(Icons.person),
+                                hintText: "District",
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
+                                ),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 10),
+                              ),
+                              textAlignVertical: TextAlignVertical.center,
+                              textInputAction: TextInputAction.next,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(height: 10), // Add space above the divider
+
+                  Align(
+                    alignment: Alignment.center,
+                    child: Divider(
+                      color: Colors.grey, // Color of the divider
+                      thickness: 1.0, // Thickness of the divider
+                      indent: 16.0, // Indent on the left side
+                      endIndent: 16.0, // Indent on the right side
+                    ),
+                  ),
+                  SizedBox(height: 15),
+
+                  Text(
+                    "Bio-data: ",
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: 5),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.34,
+                    child: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Marital Status:",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            TextFormField(
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Marital Status";
+                                }
+                                return null;
+                              },
+                              autofocus: false,
+                              onSaved: (value) {
+                                // Handle saved value
+                              },
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                prefixIcon: Icon(Icons.person),
+                                hintText: "Marital Status",
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
+                                ),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 10),
+                              ),
+                              textAlignVertical: TextAlignVertical.center,
+                              textInputAction: TextInputAction.next,
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              "NIN:",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            TextFormField(
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "NIN";
+                                }
+                                return null;
+                              },
+                              autofocus: false,
+                              onSaved: (value) {
+                                // Handle saved
+                                // value
+                              },
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                prefixIcon: Icon(Icons.person),
+                                hintText: "NIN",
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
+                                ),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 10),
+                              ),
+                              textAlignVertical: TextAlignVertical.center,
+                              textInputAction: TextInputAction.next,
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              "LC1 Chairperson/VHT Contact Person:",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            TextFormField(
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please Enter LC1 Chairperson/VHT Contact Person";
+                                }
+                                return null;
+                              },
+                              autofocus: false,
+                              onSaved: (value) {
+                                // Handle saved value
+                              },
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                prefixIcon: Icon(Icons.person),
+                                hintText: "LC1 Chairperson/VHT Contact Person",
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
+                                ),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 10),
+                              ),
+                              textAlignVertical: TextAlignVertical.center,
+                              textInputAction: TextInputAction.next,
+                            ),
+                            SizedBox(height: 10),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  Align(
+                    alignment: Alignment.center,
+                    child: Divider(
+                      color: Colors.grey, // Color of the divider
+                      thickness: 1.0, // Thickness of the divider
+                      indent: 16.0, // Indent on the left side
+                      endIndent: 16.0, // Indent on the right side
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  Text(
+                    "Relationship: ",
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: 5),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.34,
+                    child: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Next Of Kin:",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            TextFormField(
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Next Of Kin";
+                                }
+                                return null;
+                              },
+                              autofocus: false,
+                              onSaved: (value) {
+                                // Handle saved value
+                              },
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                prefixIcon: Icon(Icons.person),
+                                hintText: "Next Of Kin",
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
+                                ),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 10),
+                              ),
+                              textAlignVertical: TextAlignVertical.center,
+                              textInputAction: TextInputAction.next,
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              "Relationship:",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            TextFormField(
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Relationship";
+                                }
+                                return null;
+                              },
+                              autofocus: false,
+                              onSaved: (value) {
+                                // Handle saved value
+                              },
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                prefixIcon: Icon(Icons.person),
+                                hintText: "Relationship",
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
+                                ),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 10),
+                              ),
+                              textAlignVertical: TextAlignVertical.center,
+                              textInputAction: TextInputAction.next,
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              "Contact:",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            TextFormField(
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Contact";
+                                }
+                                return null;
+                              },
+                              autofocus: false,
+                              onSaved: (value) {
+                                // Handle saved value
+                              },
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                prefixIcon: Icon(Icons.person),
+                                hintText: "Contact",
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
+                                ),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 10),
+                              ),
+                              textAlignVertical: TextAlignVertical.center,
+                              textInputAction: TextInputAction.next,
+                            ),
+                            SizedBox(height: 10),
+
+                            // Add space above the divider
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  Align(
+                    alignment: Alignment.center,
+                    child: Divider(
+                      color: Colors.grey, // Color of the divider
+                      thickness: 1.0, // Thickness of the divider
+                      indent: 16.0, // Indent on the left side
+                      endIndent: 16.0, // Indent on the right side
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  Text(
+                    "Referral: ",
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: 5),
 
                   SizedBox(
-                    height: 160,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.all(10),
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black12,
-                                blurRadius: 4,
-                                spreadRadius: 2,
+                    height: MediaQuery.of(context).size.height * 0.2,
+                    child: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Referral IN:",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
                               ),
-                            ],
-                          ),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width / 0.5,
-                            child: Column(
-                              children: [
-                                ListTile(
-                                  leading: CircleAvatar(
-                                    radius: 25,
-                                    backgroundImage:
-                                    AssetImage("images/${imgs[index]}"),
-                                  ),
-                                  title: Text(
-                                    "Dr. Doctor Name",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  subtitle: Text("1 day ago"),
-                                  trailing: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.star,
-                                        color: Colors.amber,
-                                      ),
-                                      Text(
-                                        "4.9",
-                                        style: TextStyle(
-                                          color: Colors.black54,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: 5),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
-                                  child: Text(
-                                    "Many thanks to Dr. Dear. He is a great and a professional doctor.",
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ],
                             ),
-                          ),
-                        );
-                      },
+                            Container(
+                              height: 40,
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    8.0, 0.0, 8.0, 0.0),
+                                child: ListView(
+                                  scrollDirection: Axis.horizontal,
+                                  children: [
+                                    buildNationalityCheckboxWithLabel("YES"),
+                                    buildNationalityCheckboxWithLabel("NO"),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              "Referring Health Facility:",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            TextFormField(
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Referring Health Facility";
+                                }
+                                return null;
+                              },
+                              autofocus: false,
+                              onSaved: (value) {
+                                // Handle saved value
+                              },
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                prefixIcon: Icon(Icons.person),
+                                hintText: "Referring Health Facility",
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
+                                ),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 10),
+                              ),
+                              textAlignVertical: TextAlignVertical.center,
+                              textInputAction: TextInputAction.next,
+                            ),
+                            SizedBox(height: 10),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                  SizedBox(height: 10),
+
+                  Align(
+                    alignment: Alignment.center,
+                    child: Divider(
+                      color: Colors.grey, // Color of the divider
+                      thickness: 1.0, // Thickness of the divider
+                      indent: 16.0, // Indent on the left side
+                      endIndent: 16.0, // Indent on the right side
+                    ),
+                  ),
+                  SizedBox(height: 15),
                   Text(
-                    "Location",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
+                    "A). Referral Diagnosis: ",
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: 5),
+
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.2,
+                    child: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Referral IN:",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            Container(
+                              height: 40,
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    8.0, 0.0, 8.0, 0.0),
+                                child: ListView(
+                                  scrollDirection: Axis.horizontal,
+                                  children: [
+                                    buildNationalityCheckboxWithLabel("YES"),
+                                    buildNationalityCheckboxWithLabel("NO"),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              "Referring Health Facility:",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            TextFormField(
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Referring Health Facility";
+                                }
+                                return null;
+                              },
+                              autofocus: false,
+                              onSaved: (value) {
+                                // Handle saved value
+                              },
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                prefixIcon: Icon(Icons.person),
+                                hintText: "Referring Health Facility",
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
+                                ),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 10),
+                              ),
+                              textAlignVertical: TextAlignVertical.center,
+                              textInputAction: TextInputAction.next,
+                            ),
+                            SizedBox(height: 10),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                  ListTile(
-                    leading: Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFF0EEFA),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.location_on,
-                        color: Color(0xFF7165D6),
-                        size: 30,
+
+                  Align(
+                    alignment: Alignment.center,
+                    child: Divider(
+                      color: Colors.grey, // Color of the divider
+                      thickness: 1.0, // Thickness of the divider
+                      indent: 16.0, // Indent on the left side
+                      endIndent: 16.0, // Indent on the right side
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  Text(
+                    "B). Principle Reason for Referral: ",
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: 5),
+
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.2,
+                    child: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Referral IN:",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            Container(
+                              height: 40,
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    8.0, 0.0, 8.0, 0.0),
+                                child: ListView(
+                                  scrollDirection: Axis.horizontal,
+                                  children: [
+                                    buildNationalityCheckboxWithLabel("YES"),
+                                    buildNationalityCheckboxWithLabel("NO"),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              "Referring Health Facility:",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            TextFormField(
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Referring Health Facility";
+                                }
+                                return null;
+                              },
+                              autofocus: false,
+                              onSaved: (value) {
+                                // Handle saved value
+                              },
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                prefixIcon: Icon(Icons.person),
+                                hintText: "Referring Health Facility",
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
+                                ),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 10),
+                              ),
+                              textAlignVertical: TextAlignVertical.center,
+                              textInputAction: TextInputAction.next,
+                            ),
+                            SizedBox(height: 10),
+                          ],
+                        ),
                       ),
                     ),
-                    title: Text(
-                      "New York, Medical Center",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    subtitle: Text("address line of the medical center"),
                   ),
                 ],
               ),
@@ -310,4 +944,3 @@ class _TriageScreenState extends State<TriageScreen> {
     );
   }
 }
-
