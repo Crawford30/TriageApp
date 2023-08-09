@@ -2,6 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:triage_app/utils/helper.dart';
 import 'package:triage_app/utils/Constants.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:triage_app/model/user_model.dart';
+import 'package:triage_app/widgets/navbar_roots.dart';
+import 'package:triage_app/utils/helper.dart';
+import 'package:triage_app/screens/login.dart';
+
 
 class SettingScreen extends StatefulWidget {
   @override
@@ -24,21 +30,28 @@ class _SettingScreenState extends State<SettingScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text("Logout"),
-          content: Text("Are you sure you want to log out?"),
+          content: Text("Would you like to logout now?"),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text("Cancel"),
+              child: Text("No, Cancel"),
             ),
             ElevatedButton(
-              onPressed: () {
-                // Perform the logout action here
-                _performLogout();
-                Navigator.of(context).pop(); // Close the dialog
+              onPressed: () async {
+                 removeDataLocally("user_email");
+                print("User email removed from local storage");
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Login(),
+                  ),
+                );
+
+                Fluttertoast.showToast(msg: "Logged Out Successfully");
               },
-              child: Text("Log Out"),
+              child: Text("Yes, Proceed"),
             ),
           ],
         );
@@ -46,11 +59,6 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
-  void _performLogout() {
-    // Implement your logout logic here
-    // For example, clear local storage or sign out from authentication
-    // After logout, you can navigate to the login screen or wherever appropriate.
-  }
 
 
   void getUserNameFromStorage() async {
