@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:triage_app/utils/helper.dart';
 import 'package:triage_app/screens/appointment_screen.dart';
+import 'package:triage_app/screens/triage_screen.dart';
 import 'package:triage_app/utils/Constants.dart';
 
 class DoctorHomeScreen extends StatefulWidget {
@@ -217,7 +218,7 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AppointmentScreen(),
+                      builder: (context) => TriageScreen(),
                     ),
                   );
                 },

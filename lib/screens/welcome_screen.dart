@@ -21,26 +21,26 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             SizedBox(
               height: 15,
             ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => NavBarRoots(),
-                    ),
-                  );
-                },
-                child: Text(
-                  "SKIP",
-                  style: TextStyle(
-                    color: Color(0xFF7165D6),
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-            ),
+            // Align(
+            //   alignment: Alignment.centerRight,
+            //   child: TextButton(
+            //     onPressed: () {
+            //       Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //           builder: (context) => NavBarRoots(),
+            //         ),
+            //       );
+            //     },
+            //     child: Text(
+            //       "SKIP",
+            //       style: TextStyle(
+            //         color: Color(0xFF7165D6),
+            //         fontSize: 20,
+            //       ),
+            //     ),
+            //   ),
+            // ),
             SizedBox(
               height: 50,
             ),

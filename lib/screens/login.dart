@@ -378,54 +378,5 @@ class _LoginState extends State<Login> {
   }
 
 
-// void signUserIn(String email, String password) async {
-  //   if (_formKey.currentState!.validate()) {
-  //     setState(() {
-  //       _isLoading = true; // Show circular progress indicator
-  //     });
-  //
-  //     try {
-  //       await _auth
-  //           .signInWithEmailAndPassword(email: email, password: password)
-  //           .then(
-  //             (uid) {
-  //           Fluttertoast.showToast(msg: "Login Successful");
-  //
-  //
-  //           Navigator.pushReplacement(
-  //             context,
-  //             MaterialPageRoute(
-  //               builder: (context) => NavBarRoots(),
-  //             ),
-  //           );
-  //
-  //         },
-  //       );
-  //     } on FirebaseAuthException catch (error) {
-  //       String errorMessage = "An undefined Error happened.";
-  //
-  //       if (error.code == "invalid-email") {
-  //         errorMessage = "Your email address appears to be malformed.";
-  //       } else if (error.code == "wrong-password") {
-  //         errorMessage = "Your password is wrong.";
-  //       } else if (error.code == "user-not-found") {
-  //         errorMessage = "User with this email doesn't exist.";
-  //       } else if (error.code == "user-disabled") {
-  //         errorMessage = "User with this email has been disabled.";
-  //       } else if (error.code == "too-many-requests") {
-  //         errorMessage = "Too many requests";
-  //       } else if (error.code == "operation-not-allowed") {
-  //         errorMessage =
-  //         "Signing in with Email and Password is not enabled.";
-  //       }
-  //
-  //       Fluttertoast.showToast(msg: errorMessage);
-  //       print("Firebase error code: ${error.code}");
-  //     } finally {
-  //       setState(() {
-  //         _isLoading = false; // Hide circular progress indicator
-  //       });
-  //     }
-  //   }
-  // }
+
 }

@@ -39,7 +39,7 @@ class _SettingScreenState extends State<SettingScreen> {
               child: Text("No, Cancel"),
             ),
             ElevatedButton(
-              onPressed: () async {
+              onPressed: ()  {
                  removeDataLocally("user_email");
                 print("User email removed from local storage");
                 Navigator.pushReplacement(

@@ -34,7 +34,7 @@ class _NavBarRootsState extends State<NavBarRoots> {
 
   List<Widget> _getScreensForUserType(String? userType) {
     return [
-      userType != null && userType == 'Patient'  ? PatientHomeScreen() : DoctorHomeScreen(),
+      userType != null && userType == 'Patient'  ? DoctorHomeScreen() : PatientHomeScreen(),
       MessagesScreen(),
       ScheduleScreen(),
       SettingScreen(),
