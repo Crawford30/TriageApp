@@ -70,33 +70,36 @@ class _TriageScreenState extends State<TriageScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        CircleAvatar(
-                          radius: 35,
-                          backgroundImage: AssetImage("images/doctor1.jpg"),
-                        ),
-                        SizedBox(height: 15),
-                        Text(
-                          "Dr. Doctor Name",
-                          style: TextStyle(
-                            fontSize: 23,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          CircleAvatar(
+                            radius: 35,
+                            backgroundImage: AssetImage("images/doctor1.jpg"),
                           ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          "Therapist",
-                          style: TextStyle(
-                            color: Colors.white60,
-                            fontWeight: FontWeight.bold,
+                          SizedBox(height: 15),
+                          Text(
+                            "Dr. Doctor Name",
+                            style: TextStyle(
+                              fontSize: 23,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),
                           ),
-                        ),
-                      ],
+                          SizedBox(height: 5),
+                          Text(
+                            "Therapist",
+                            style: TextStyle(
+                              color: Colors.white60,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
+
                 ],
               ),
             ),
