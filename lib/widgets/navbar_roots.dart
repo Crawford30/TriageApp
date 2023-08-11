@@ -8,6 +8,8 @@ import 'package:triage_app/screens/settings_screen.dart';
 import 'package:triage_app/utils/helper.dart';
 import 'package:triage_app/screens/welcome_screen.dart';
 import 'package:triage_app/screens/nurse_home_screen.dart';
+import 'package:triage_app/screens/login.dart';
+
 
 class NavBarRoots extends StatefulWidget {
   @override
@@ -65,9 +67,7 @@ class _NavBarRootsState extends State<NavBarRoots> {
     // Show loading or any other UI while waiting for user_type from storage
     if (_userType.isEmpty) {
       return Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
+        body: Login(),
       );
     }
 
