@@ -87,19 +87,7 @@ class _SettingScreenState extends State<SettingScreen> {
             ListTile(
               leading: CircleAvatar(
                 radius: 30,
-                backgroundColor:  Color(
-                  Constants.COLOR_DARK_GREEN,
-                ),
-                child: Text(
-                  getInitials(_userName ?? ''),
-                  style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.04, // Adjust the factor as needed
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                // radius: 30,
-                // backgroundImage: AssetImage("images/doctor1.jpg"),
+                backgroundImage: AssetImage("images/doctor1.jpg"),
               ),
               title: Text(
                 "${_userName}",

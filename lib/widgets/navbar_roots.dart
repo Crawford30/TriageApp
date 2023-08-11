@@ -7,6 +7,7 @@ import 'package:triage_app/screens/schedule_screen.dart';
 import 'package:triage_app/screens/settings_screen.dart';
 import 'package:triage_app/utils/helper.dart';
 import 'package:triage_app/screens/welcome_screen.dart';
+import 'package:triage_app/screens/nurse_home_screen.dart';
 
 class NavBarRoots extends StatefulWidget {
   @override
@@ -32,14 +33,32 @@ class _NavBarRootsState extends State<NavBarRoots> {
     });
   }
 
+
+
+
   List<Widget> _getScreensForUserType(String? userType) {
     return [
-      userType != null && userType == 'Patient'  ? DoctorHomeScreen() : PatientHomeScreen(),
+      if (userType == 'Patient')
+        PatientHomeScreen()
+      else if (userType == 'Doctor')
+        DoctorHomeScreen()
+      else if (userType == 'Nurse')
+          NurseHomeScreen(),
       MessagesScreen(),
       ScheduleScreen(),
       SettingScreen(),
     ];
   }
+
+  // List<Widget> _getScreensForUserType(String? userType) {
+  //
+  //   return [
+  //     userType != null && userType == 'Patient'  ? DoctorHomeScreen() : PatientHomeScreen(),
+  //     MessagesScreen(),
+  //     ScheduleScreen(),
+  //     SettingScreen(),
+  //   ];
+  // }
 
   @override
   Widget build(BuildContext context) {

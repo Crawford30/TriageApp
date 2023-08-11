@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 class TriageScreen extends StatefulWidget {
   @override
@@ -7,9 +8,19 @@ class TriageScreen extends StatefulWidget {
 }
 
 class _TriageScreenState extends State<TriageScreen> {
+  final List<String> userTypeItems = [
+    'Alert',
+    'Verbal',
+    'Pain',
+    'Unresponsive',
+    'Irritable'
+  ];
+
+  final TextEditingController _userTypeController = TextEditingController();
   String selectedLabel = "";
   String selectedLabelNationality = "";
   bool isChecked = false;
+  String? selectedValue;
 
   List<String> imgs = [
     "doctor1.jpg",
@@ -128,7 +139,7 @@ class _TriageScreenState extends State<TriageScreen> {
             ),
             SizedBox(height: 20),
             Container(
-              height: MediaQuery.of(context).size.height / 0.4,
+              height: MediaQuery.of(context).size.height / 0.09,
               width: double.infinity,
               padding: EdgeInsets.only(
                 top: 20,
@@ -739,7 +750,7 @@ class _TriageScreenState extends State<TriageScreen> {
                   SizedBox(height: 5),
 
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.2,
+                    height: MediaQuery.of(context).size.height * 0.21,
                     child: Container(
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
@@ -747,30 +758,7 @@ class _TriageScreenState extends State<TriageScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Referral IN:",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Container(
-                              height: 40,
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    8.0, 0.0, 8.0, 0.0),
-                                child: ListView(
-                                  scrollDirection: Axis.horizontal,
-                                  children: [
-                                    buildNationalityCheckboxWithLabel("YES"),
-                                    buildNationalityCheckboxWithLabel("NO"),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              "Referring Health Facility:",
+                              "Referral Diagnosis Note:",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -781,7 +769,7 @@ class _TriageScreenState extends State<TriageScreen> {
                             TextFormField(
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return "Referring Health Facility";
+                                  return "Referral Diagnosis Note";
                                 }
                                 return null;
                               },
@@ -789,18 +777,24 @@ class _TriageScreenState extends State<TriageScreen> {
                               onSaved: (value) {
                                 // Handle saved value
                               },
+                              minLines: 3,
+                              keyboardType: TextInputType.multiline,
+                              maxLines: 5,
+                              maxLength: 600,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(),
-                                prefixIcon: Icon(Icons.person),
-                                hintText: "Referring Health Facility",
+                                hintText: "Referral Diagnosis Note",
                                 hintStyle: TextStyle(
                                   color: Colors.black,
                                 ),
-                                contentPadding:
-                                    EdgeInsets.symmetric(vertical: 10),
+                                contentPadding: EdgeInsets.symmetric(
+                                  vertical: 15,
+                                  // Adjust the vertical padding as needed
+                                  horizontal:
+                                      10, // Adjust the horizontal padding as needed
+                                ),
                               ),
                               textAlignVertical: TextAlignVertical.center,
-                              textInputAction: TextInputAction.next,
                             ),
                             SizedBox(height: 10),
                           ],
@@ -826,7 +820,7 @@ class _TriageScreenState extends State<TriageScreen> {
                   SizedBox(height: 5),
 
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.2,
+                    height: MediaQuery.of(context).size.height * 0.28,
                     child: Container(
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
@@ -834,30 +828,7 @@ class _TriageScreenState extends State<TriageScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Referral IN:",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Container(
-                              height: 40,
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    8.0, 0.0, 8.0, 0.0),
-                                child: ListView(
-                                  scrollDirection: Axis.horizontal,
-                                  children: [
-                                    buildNationalityCheckboxWithLabel("YES"),
-                                    buildNationalityCheckboxWithLabel("NO"),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              "Referring Health Facility:",
+                              "Principle Reason for Referral:",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -868,7 +839,7 @@ class _TriageScreenState extends State<TriageScreen> {
                             TextFormField(
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return "Referring Health Facility";
+                                  return "Principle Reason for Referral Note";
                                 }
                                 return null;
                               },
@@ -876,25 +847,322 @@ class _TriageScreenState extends State<TriageScreen> {
                               onSaved: (value) {
                                 // Handle saved value
                               },
+                              minLines: 3,
+                              keyboardType: TextInputType.multiline,
+                              maxLines: 5,
+                              maxLength: 600,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(),
-                                prefixIcon: Icon(Icons.person),
-                                hintText: "Referring Health Facility",
+                                hintText: "Principle Reason for Referral Note",
                                 hintStyle: TextStyle(
                                   color: Colors.black,
                                 ),
-                                contentPadding:
-                                    EdgeInsets.symmetric(vertical: 10),
+                                contentPadding: EdgeInsets.symmetric(
+                                  vertical: 15,
+                                  // Adjust the vertical padding as needed
+                                  horizontal:
+                                      10, // Adjust the horizontal padding as needed
+                                ),
                               ),
                               textAlignVertical: TextAlignVertical.center,
-                              textInputAction: TextInputAction.next,
                             ),
-                            SizedBox(height: 10),
+                            SizedBox(height: 5),
+                            Align(
+                              alignment: Alignment.center,
+                              child: Divider(
+                                color: Colors.grey, // Color of the divider
+                                thickness: 1.0, // Thickness of the divider
+                                indent: 16.0, // Indent on the left side
+                                endIndent: 16.0, // Indent on the right side
+                              ),
+                            ),
                           ],
                         ),
                       ),
                     ),
                   ),
+
+                  SizedBox(height: 10),
+                  Text(
+                    "STAFF ON DUTY",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: 5),
+
+                  SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Informed Senior Consultant:",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                Container(
+                                  height: 40,
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        8.0, 0.0, 8.0, 0.0),
+                                    child: Row(
+                                      children: [
+                                        buildNationalityCheckboxWithLabel(
+                                            "YES"),
+                                        SizedBox(width: 10),
+                                        buildNationalityCheckboxWithLabel("NO"),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  "Senior Consultant's Name:",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                TextFormField(
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Senior Consultant's Name";
+                                    }
+                                    return null;
+                                  },
+                                  autofocus: false,
+                                  onSaved: (value) {
+                                    // Handle saved value
+                                  },
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    prefixIcon: Icon(Icons.person),
+                                    hintText: "Senior Consultant's Name",
+                                    hintStyle: TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                    contentPadding:
+                                        EdgeInsets.symmetric(vertical: 10),
+                                  ),
+                                  textAlignVertical: TextAlignVertical.center,
+                                  textInputAction: TextInputAction.next,
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  "Informed Consultant:",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                Container(
+                                  height: 40,
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        8.0, 0.0, 8.0, 0.0),
+                                    child: Row(
+                                      children: [
+                                        buildNationalityCheckboxWithLabel(
+                                            "YES"),
+                                        SizedBox(width: 10),
+                                        buildNationalityCheckboxWithLabel("NO"),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  "Consultant's Name:",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                TextFormField(
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Consultant's Name";
+                                    }
+                                    return null;
+                                  },
+                                  autofocus: false,
+                                  onSaved: (value) {
+                                    // Handle saved value
+                                  },
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    prefixIcon: Icon(Icons.person),
+                                    hintText: "Consultant's Name",
+                                    hintStyle: TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                    contentPadding:
+                                        EdgeInsets.symmetric(vertical: 10),
+                                  ),
+                                  textAlignVertical: TextAlignVertical.center,
+                                  textInputAction: TextInputAction.next,
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  "Informed Medical Officer:",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                Container(
+                                  height: 40,
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        8.0, 0.0, 8.0, 0.0),
+                                    child: Row(
+                                      children: [
+                                        buildNationalityCheckboxWithLabel(
+                                            "YES"),
+                                        SizedBox(width: 10),
+                                        buildNationalityCheckboxWithLabel("NO"),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  "Medical Officer's Name:",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                TextFormField(
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Medical Officer's Name";
+                                    }
+                                    return null;
+                                  },
+                                  autofocus: false,
+                                  onSaved: (value) {
+                                    // Handle saved value
+                                  },
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    prefixIcon: Icon(Icons.person),
+                                    hintText: "Medical Officer's Name",
+                                    hintStyle: TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                    contentPadding:
+                                        EdgeInsets.symmetric(vertical: 10),
+                                  ),
+                                  textAlignVertical: TextAlignVertical.center,
+                                  textInputAction: TextInputAction.next,
+                                ),
+                                SizedBox(height: 10),
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.28,
+                                  child: Container(
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0.0, 0.0, 0.0, 0.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Case summary history, physical findings & final outcome:",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          SizedBox(height: 5),
+                                          TextFormField(
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return "Field is require";
+                                              }
+                                              return null;
+                                            },
+                                            autofocus: false,
+                                            onSaved: (value) {
+                                              // Handle saved value
+                                            },
+                                            minLines: 4,
+                                            keyboardType:
+                                                TextInputType.multiline,
+                                            maxLines: 6,
+                                            maxLength: 800,
+                                            decoration: InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              hintText:
+                                                  "Case summary history, physical findings & final outcome",
+                                              hintStyle: TextStyle(
+                                                color: Colors.black,
+                                              ),
+                                              contentPadding:
+                                                  EdgeInsets.symmetric(
+                                                vertical: 15,
+                                                // Adjust the vertical padding as needed
+                                                horizontal:
+                                                    10, // Adjust the horizontal padding as needed
+                                              ),
+                                            ),
+                                            textAlignVertical:
+                                                TextAlignVertical.center,
+                                          ),
+                                          SizedBox(height: 5),
+                                          Align(
+                                            alignment: Alignment.center,
+                                            child: Divider(
+                                              color: Colors.grey,
+                                              // Color of the divider
+                                              thickness: 1.0,
+                                              // Thickness of the divider
+                                              indent: 16.0,
+                                              // Indent on the left side
+                                              endIndent:
+                                                  16.0, // Indent on the right side
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+
+
+
+
+
+
+
+
                 ],
               ),
             ),

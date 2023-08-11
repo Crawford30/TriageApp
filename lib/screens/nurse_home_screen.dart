@@ -3,15 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:triage_app/utils/helper.dart';
 import 'package:triage_app/screens/appointment_screen.dart';
 import 'package:triage_app/screens/triage_screen.dart';
-import 'package:triage_app/screens/triage_doctor_screen.dart';
 import 'package:triage_app/utils/Constants.dart';
 
-class DoctorHomeScreen extends StatefulWidget {
+class NurseHomeScreen extends StatefulWidget {
   @override
-  _DoctorHomeScreenState createState() => _DoctorHomeScreenState();
+  _NurseHomeScreenState createState() => _NurseHomeScreenState();
 }
 
-class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
+class _NurseHomeScreenState extends State<NurseHomeScreen> {
   String _userName = '';
   List<DocumentSnapshot> _patients = [];
   List symptoms = [
@@ -115,14 +114,14 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
-                          Icons.undo_outlined,
+                          Icons.add,
                           color: Color(0xFF7165D6),
                           size: 35,
                         ),
                       ),
                       SizedBox(height: 30),
                       Text(
-                        "Clinical Visits",
+                        "Clinic Visit",
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.white,
@@ -131,7 +130,7 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        "Referrals",
+                        "Make an appointment",
                         style: TextStyle(
                           color: Colors.white54,
                         ),
@@ -166,14 +165,14 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
-                          Icons.local_hospital_outlined,
+                          Icons.home_filled,
                           color: Color(0xFF7165D6),
                           size: 35,
                         ),
                       ),
                       SizedBox(height: 30),
                       Text(
-                        "Triaged Patients",
+                        "Home Visit",
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.black,
@@ -182,7 +181,7 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        "Triaged Patients",
+                        "Call the doctor home",
                         style: TextStyle(
                           color: Colors.black54,
                         ),
@@ -197,7 +196,7 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
           Padding(
             padding: const EdgeInsets.only(left: 15),
             child: Text(
-              "Triaged Patients",
+              "Patients For Maternity's Triage",
               style: TextStyle(
                 fontSize: 23,
                 fontWeight: FontWeight.w500,
@@ -219,7 +218,7 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => TriageDoctorScreen(),
+                      builder: (context) => TriageScreen(),
                     ),
                   );
                 },
