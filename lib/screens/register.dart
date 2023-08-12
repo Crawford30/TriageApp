@@ -67,17 +67,11 @@ class _SignupState extends State<Signup> {
     final FormState? _form = _formKey.currentState;
     if (_form != null) {
       if (_form.validate()) {
-        print("YES");
          signUpWithEmail(_emailController.text, _passwordController.text);
 
-
-
       } else {
-        print("NO");
         Fluttertoast.showToast(msg: "Please ensure all the required fills are filled");
         return;
-        // _register();
-        //  signUpWithEmail(_emailController.text, _passwordController.text);
       }
     } else {
       Fluttertoast.showToast(msg: "Form is not valid");
@@ -599,7 +593,6 @@ class _SignupState extends State<Signup> {
 
   void signUpWithEmail(String email, String password) async {
     try {
-
       setState(() {
         _isSubmitting = true;
       });
@@ -611,10 +604,8 @@ class _SignupState extends State<Signup> {
         _userEmail = email;
       });
 
-
       String userType = _userTypeController.text.toLowerCase();
       postDetailsToFirestore(userType);
-
 
       // Reset the form
       _formKey.currentState?.reset();
@@ -658,10 +649,6 @@ class _SignupState extends State<Signup> {
   }
 
   postDetailsToFirestore(String userType) async {
-    // calling our firestore
-    // calling our user model
-    // sending these values
-
 
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
@@ -673,6 +660,8 @@ class _SignupState extends State<Signup> {
     userModel.name = _fullNameController.text;
     userModel.userType = _userTypeController.text;
     userModel.phoneNumber = _phoneNumberController.text;
+    userModel.nurseTriaged = "False";
+    userModel.doctorTriaged = "False";
 
     String userType = _userTypeController.text.toLowerCase();
     String randomNumberWithPrefix = generateRandomNumberWithPrefix(userType);
@@ -684,22 +673,13 @@ class _SignupState extends State<Signup> {
         .doc(user.uid)
         .set(userModel.toMap());
 
-  //=====Save Data Locally=====
+    //=====Save Data Locally=====
     saveDataLocally("user_name", userModel.name ?? '');
     saveDataLocally("user_type", userModel.userType ?? '');
     saveDataLocally("user_email", userModel.email ?? '');
     saveDataLocally("ref_number", userModel.refNumber ?? '');
     saveDataLocally("user_number", userModel.phoneNumber ?? '');
     saveDataLocally("user_id", user.uid ?? '');
-
-  //   saveDataLocally("user_name", userModel.name);
-  //   saveDataLocally("user_type", userModel.userType);
-  //   saveDataLocally("user_email", userModel.email);
-  //   saveDataLocally("ref_number", userModel.refNumber);
-  //   saveDataLocally("user_number", userModel.phoneNumber);
-  //   saveDataLocally("user_id", user.uid);
-
-
 
     Fluttertoast.showToast(msg: "Account created successfully :) ");
 
@@ -714,12 +694,7 @@ class _SignupState extends State<Signup> {
       ),
     );
 
-
-
   }
-
-
-
 
 
 }
