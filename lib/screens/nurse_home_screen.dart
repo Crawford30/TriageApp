@@ -42,10 +42,12 @@ class _NurseHomeScreenState extends State<NurseHomeScreen> {
 
   Future<List<DocumentSnapshot>> fetchPatients() async {
     try {
-      final QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
-          .collection('users')
-          .where('userType', isEqualTo: 'Patient')
-          .get();
+      final QuerySnapshot<Map<String, dynamic>> snapshot =
+          await FirebaseFirestore.instance
+              .collection('users')
+              .where('userType', isEqualTo: 'Patient')
+              .where('nurseTriaged', isEqualTo: 'False')
+              .get();
       return snapshot.docs;
     } catch (e) {
       // Handle any errors if needed
@@ -208,27 +210,35 @@ class _NurseHomeScreenState extends State<NurseHomeScreen> {
           GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              childAspectRatio: 0.8, // Adjust this value to control item aspect ratio
+              childAspectRatio:
+                  0.8, // Adjust this value to control item aspect ratio
             ),
             itemCount: _patients.length,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
-              return InkWell(
+              return GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>  TriageScreen(patientId: _patients[index]['uid'], patientNumber: _patients[index]['refNumber']),
-                          // TriageScreen(patientId: _patients[index]['uid'], patientNumber: _patients[index]['refNumber'] ),
-                    ),
-                  );
+                  if (_patients[index]['nurseTriaged'] != "True") {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TriageScreen(
+                          patientId: _patients[index]['uid'],
+                          patientNumber: _patients[index]['refNumber'],
+                        ),
+                      ),
+                    );
+                  }
                 },
                 child: Container(
                   margin: EdgeInsets.all(10),
                   padding: EdgeInsets.symmetric(vertical: 15),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: _patients[index]['nurseTriaged'] == "True"
+                        ? Colors.grey
+                            .withOpacity(0.6) // Semi-transparent grey color
+                        : Colors.white,
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
@@ -245,13 +255,14 @@ class _NurseHomeScreenState extends State<NurseHomeScreen> {
                       children: [
                         CircleAvatar(
                           radius: 40,
-                          backgroundColor:  Color(
+                          backgroundColor: Color(
                             Constants.COLOR_DARK_GREEN,
                           ),
                           child: Text(
                             getInitials(_patients[index]['name'] ?? ''),
                             style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width * 0.04, // Adjust the factor as needed
+                              fontSize: MediaQuery.of(context).size.width *
+                                  0.04, // Adjust the factor as needed
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),
@@ -261,7 +272,8 @@ class _NurseHomeScreenState extends State<NurseHomeScreen> {
                         Text(
                           "Patient #: ${_patients[index]['refNumber']}",
                           style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width * 0.03, // Adjust the factor as needed
+                            fontSize: MediaQuery.of(context).size.width *
+                                0.03, // Adjust the factor as needed
                             fontWeight: FontWeight.w500,
                             color: Colors.black54,
                           ),
@@ -269,14 +281,25 @@ class _NurseHomeScreenState extends State<NurseHomeScreen> {
                         Text(
                           "E-mail: ${_patients[index]['email']}",
                           style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width * 0.025, // Adjust the factor as needed
+                            fontSize: MediaQuery.of(context).size.width *
+                                0.025, // Adjust the factor as needed
                             color: Colors.black45,
+                          ),
+                        ),
+                        Text(
+                          "Status: ${_patients[index]['nurseTriaged'] == "True" ? "Triaged" : "In Queue"}",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: _patients[index]['nurseTriaged'] == "True"
+                                ? Colors.green
+                                : Colors.red,
+                            fontSize: MediaQuery.of(context).size.width *
+                                0.025, // Adjust the factor as needed
                           ),
                         ),
                       ],
                     ),
                   ),
-
                 ),
               );
             },

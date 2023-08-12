@@ -45,6 +45,7 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
       final QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
           .collection('users')
           .where('userType', isEqualTo: 'Patient')
+          .where('nurseTriaged', isEqualTo: 'True')
           .get();
       return snapshot.docs;
     } catch (e) {
