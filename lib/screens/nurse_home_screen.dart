@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:triage_app/utils/helper.dart';
 import 'package:triage_app/screens/appointment_screen.dart';
 import 'package:triage_app/screens/triage_screen.dart';
+import 'package:triage_app/screens/triage_doctor_screen.dart';
 import 'package:triage_app/utils/Constants.dart';
 
 class NurseHomeScreen extends StatefulWidget {
@@ -218,7 +219,8 @@ class _NurseHomeScreenState extends State<NurseHomeScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => TriageScreen(),
+                      builder: (context) =>  TriageScreen(patientId: _patients[index]['uid'], patientNumber: _patients[index]['refNumber']),
+                          // TriageScreen(patientId: _patients[index]['uid'], patientNumber: _patients[index]['refNumber'] ),
                     ),
                   );
                 },

@@ -5,15 +5,30 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:triage_app/model/triage_form_nurse_model.dart';
+import 'package:triage_app/model/user_model.dart';
+
 
 class TriageScreen extends StatefulWidget {
+  final String? patientId;
+  final String? patientNumber;
+
+  TriageScreen({this.patientId, this.patientNumber});
+
   @override
   _TriageScreenState createState() => _TriageScreenState();
 }
 
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+FirebaseAuth _auth = FirebaseAuth.instance;
+
+
 
 class _TriageScreenState extends State<TriageScreen> {
+
+  // final String patientId = ModalRoute.of(context)!.patientId.arguments as String;
+  // final String patientNumber = ModalRoute.of(context)!.patientNumber.arguments as String;
+
   final List<String> userTypeItems = [
     'Alert',
     'Verbal',
@@ -28,26 +43,26 @@ class _TriageScreenState extends State<TriageScreen> {
   final TextEditingController _userTypeController = TextEditingController();
   final TextEditingController _districtController = TextEditingController();
   final TextEditingController _maritalStatusController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController _nationalIDController = TextEditingController();
   final TextEditingController _localChairPersonController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController _nOKNameController = TextEditingController();
   final TextEditingController _nOKRelationshipController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController _nOKContactController = TextEditingController();
   final TextEditingController _referringHealthFacilityController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController _referralDiagnosisNoteController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController _referralReasonController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController _seniorConsultantNameController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController _consultantNameController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController _medicalOfficerNameController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController _caseSummaryController = TextEditingController();
 
   String selectedTriageCategoryLabel = "";
@@ -60,6 +75,7 @@ class _TriageScreenState extends State<TriageScreen> {
 
   bool isChecked = false;
   String? selectedValue;
+  String? patientNumberReturned;
 
   List<String> imgs = [
     "doctor1.jpg",
@@ -72,7 +88,8 @@ class _TriageScreenState extends State<TriageScreen> {
     final FormState? _form = _formKey.currentState;
     if (_form != null) {
       if (_form.validate()) {
-        /// signUpWithEmail(_emailController.text, _passwordController.text);
+        postDetailsToFirestore();
+
       } else {
         Fluttertoast.showToast(
             msg: "Please ensure all the required fills are filled");
@@ -144,6 +161,7 @@ class _TriageScreenState extends State<TriageScreen> {
           value: selectedReferralInLabel == label,
           activeColor: Colors.blue,
           onChanged: (value) {
+
             setState(() {
               if (selectedReferralInLabel == label) {
                 selectedReferralInLabel = ""; // Uncheck if already selected
@@ -151,12 +169,15 @@ class _TriageScreenState extends State<TriageScreen> {
                 selectedReferralInLabel = label; // Check the selected label
               }
             });
+
+            print("SELECTED: ${selectedReferralInLabel}");
           },
         ),
         Text(label),
       ],
     );
   }
+
 
   Widget buildInformedSeniorConsultantCheckboxWithLabel(String label) {
     return Row(
@@ -168,7 +189,7 @@ class _TriageScreenState extends State<TriageScreen> {
             setState(() {
               if (selectedInformedSeniorConsultantLabel == label) {
                 selectedInformedSeniorConsultantLabel =
-                    ""; // Uncheck if already selected
+                ""; // Uncheck if already selected
               } else {
                 selectedInformedSeniorConsultantLabel =
                     label; // Check the selected label
@@ -191,7 +212,7 @@ class _TriageScreenState extends State<TriageScreen> {
             setState(() {
               if (selectedInformedConsultantLabel == label) {
                 selectedInformedConsultantLabel =
-                    ""; // Uncheck if already selected
+                ""; // Uncheck if already selected
               } else {
                 selectedInformedConsultantLabel =
                     label; // Check the selected label
@@ -214,7 +235,7 @@ class _TriageScreenState extends State<TriageScreen> {
             setState(() {
               if (selectedInformedMedicalOfficerLabel == label) {
                 selectedInformedMedicalOfficerLabel =
-                    ""; // Uncheck if already selected
+                ""; // Uncheck if already selected
               } else {
                 selectedInformedMedicalOfficerLabel =
                     label; // Check the selected label
@@ -273,7 +294,7 @@ class _TriageScreenState extends State<TriageScreen> {
                             ),
                             SizedBox(height: 15),
                             Text(
-                              "Patient Name",
+                              "Patient #:  ${widget.patientNumber}",
                               style: TextStyle(
                                 fontSize: 23,
                                 fontWeight: FontWeight.w500,
@@ -281,13 +302,7 @@ class _TriageScreenState extends State<TriageScreen> {
                               ),
                             ),
                             SizedBox(height: 5),
-                            Text(
-                              "Patient #: 0900000",
-                              style: TextStyle(
-                                color: Colors.white60,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+
                           ],
                         ),
                       ),
@@ -297,7 +312,10 @@ class _TriageScreenState extends State<TriageScreen> {
               ),
               SizedBox(height: 20),
               Container(
-                height: MediaQuery.of(context).size.height / 0.09,
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height / 0.09,
                 width: double.infinity,
                 padding: EdgeInsets.only(
                   top: 20,
@@ -317,7 +335,7 @@ class _TriageScreenState extends State<TriageScreen> {
                     Text(
                       "TRIAGE LEVEL/CATEGORY:",
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
                     Container(
@@ -352,13 +370,13 @@ class _TriageScreenState extends State<TriageScreen> {
                     Text(
                       "PATIENT'S DEMOGRAPHICS",
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
                     Text(
                       "Nationality: ",
                       style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                      TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
                     Container(
@@ -391,15 +409,18 @@ class _TriageScreenState extends State<TriageScreen> {
                     Text(
                       "Address: ",
                       style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                      TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.6,
+                      height: MediaQuery
+                          .of(context)
+                          .size
+                          .height * 0.6,
                       child: Container(
                         child: Padding(
                           padding:
-                              const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                          const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -419,6 +440,10 @@ class _TriageScreenState extends State<TriageScreen> {
                                   }
                                   return null;
                                 },
+
+                                onChanged: (value) {
+                                  _villageZoneController.text = value!;
+                                },
                                 autofocus: false,
                                 onSaved: (value) {
                                   // Handle saved value
@@ -431,7 +456,7 @@ class _TriageScreenState extends State<TriageScreen> {
                                     color: Colors.black,
                                   ),
                                   contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                  EdgeInsets.symmetric(vertical: 10),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 textInputAction: TextInputAction.next,
@@ -468,7 +493,7 @@ class _TriageScreenState extends State<TriageScreen> {
                                     color: Colors.black,
                                   ),
                                   contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                  EdgeInsets.symmetric(vertical: 10),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 textInputAction: TextInputAction.next,
@@ -505,7 +530,7 @@ class _TriageScreenState extends State<TriageScreen> {
                                     color: Colors.black,
                                   ),
                                   contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                  EdgeInsets.symmetric(vertical: 10),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 textInputAction: TextInputAction.next,
@@ -542,7 +567,7 @@ class _TriageScreenState extends State<TriageScreen> {
                                     color: Colors.black,
                                   ),
                                   contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                  EdgeInsets.symmetric(vertical: 10),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 textInputAction: TextInputAction.next,
@@ -571,15 +596,18 @@ class _TriageScreenState extends State<TriageScreen> {
                     Text(
                       "Bio-data: ",
                       style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                      TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.45,
+                      height: MediaQuery
+                          .of(context)
+                          .size
+                          .height * 0.45,
                       child: Container(
                         child: Padding(
                           padding:
-                              const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                          const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -614,7 +642,7 @@ class _TriageScreenState extends State<TriageScreen> {
                                     color: Colors.black,
                                   ),
                                   contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                  EdgeInsets.symmetric(vertical: 10),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 textInputAction: TextInputAction.next,
@@ -652,7 +680,7 @@ class _TriageScreenState extends State<TriageScreen> {
                                     color: Colors.black,
                                   ),
                                   contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                  EdgeInsets.symmetric(vertical: 10),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 textInputAction: TextInputAction.next,
@@ -685,12 +713,12 @@ class _TriageScreenState extends State<TriageScreen> {
                                   border: OutlineInputBorder(),
                                   prefixIcon: Icon(Icons.person),
                                   hintText:
-                                      "LC1 Chairperson/VHT Contact Person",
+                                  "LC1 Chairperson/VHT Contact Person",
                                   hintStyle: TextStyle(
                                     color: Colors.black,
                                   ),
                                   contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                  EdgeInsets.symmetric(vertical: 10),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 textInputAction: TextInputAction.next,
@@ -715,20 +743,23 @@ class _TriageScreenState extends State<TriageScreen> {
                     Text(
                       "Relationship: ",
                       style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                      TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.45,
+                      height: MediaQuery
+                          .of(context)
+                          .size
+                          .height * 0.45,
                       child: Container(
                         child: Padding(
                           padding:
-                              const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                          const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Next Of Kin:",
+                                "Next Of Kin Name:",
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -739,7 +770,7 @@ class _TriageScreenState extends State<TriageScreen> {
                               TextFormField(
                                 validator: (value) {
                                   if (value!.isEmpty) {
-                                    return "Next Of Kin";
+                                    return "Next Of Kin Name";
                                   }
                                   return null;
                                 },
@@ -748,17 +779,17 @@ class _TriageScreenState extends State<TriageScreen> {
                                   // Handle saved value
                                 },
                                 onChanged: (value) {
-                                  _nOKRelationshipController.text = value!;
+                                  _nOKNameController.text = value!;
                                 },
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(),
                                   prefixIcon: Icon(Icons.person),
-                                  hintText: "Next Of Kin",
+                                  hintText: "Next Of Kin Name",
                                   hintStyle: TextStyle(
                                     color: Colors.black,
                                   ),
                                   contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                  EdgeInsets.symmetric(vertical: 10),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 textInputAction: TextInputAction.next,
@@ -795,7 +826,7 @@ class _TriageScreenState extends State<TriageScreen> {
                                     color: Colors.black,
                                   ),
                                   contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                  EdgeInsets.symmetric(vertical: 10),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 textInputAction: TextInputAction.next,
@@ -832,10 +863,11 @@ class _TriageScreenState extends State<TriageScreen> {
                                     color: Colors.black,
                                   ),
                                   contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                  EdgeInsets.symmetric(vertical: 10),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 textInputAction: TextInputAction.next,
+                                keyboardType: TextInputType.number,
                               ),
                               SizedBox(height: 20),
                               Align(
@@ -856,16 +888,19 @@ class _TriageScreenState extends State<TriageScreen> {
                     Text(
                       "Referral: ",
                       style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                      TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
 
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.3,
+                      height: MediaQuery
+                          .of(context)
+                          .size
+                          .height * 0.3,
                       child: Container(
                         child: Padding(
                           padding:
-                              const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                          const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -903,14 +938,17 @@ class _TriageScreenState extends State<TriageScreen> {
                               SizedBox(height: 5),
                               TextFormField(
                                 validator: (value) {
-                                  if (selectedReferralInLabel == "YES") {
-                                    return "Referring Health Facility";
+                                  if (selectedReferralInLabel == "YES" && value!.isEmpty) {
+                                    return "Referring Health Facility is required";
                                   }
                                   return null;
                                 },
                                 onChanged: (value) {
-                                  _referringHealthFacilityController.text =
-                                      value!;
+                                  if (selectedReferralInLabel == "YES") {
+                                    setState(() {
+                                      _referringHealthFacilityController.text = value;
+                                    });
+                                  }
                                 },
                                 autofocus: false,
                                 onSaved: (value) {
@@ -924,7 +962,7 @@ class _TriageScreenState extends State<TriageScreen> {
                                     color: Colors.black,
                                   ),
                                   contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                  EdgeInsets.symmetric(vertical: 10),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 textInputAction: TextInputAction.next,
@@ -948,16 +986,19 @@ class _TriageScreenState extends State<TriageScreen> {
                     Text(
                       "A). Referral Diagnosis: ",
                       style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                      TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
 
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.21,
+                      height: MediaQuery
+                          .of(context)
+                          .size
+                          .height * 0.21,
                       child: Container(
                         child: Padding(
                           padding:
-                              const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                          const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -971,16 +1012,21 @@ class _TriageScreenState extends State<TriageScreen> {
                               ),
                               SizedBox(height: 5),
                               TextFormField(
+
                                 validator: (value) {
-                                  if (selectedReferralInLabel == "YES") {
-                                    return "Referral Diagnosis Note";
+                                  if (selectedReferralInLabel == "YES" && value!.isEmpty) {
+                                    return "Referral Diagnosis Note is required";
                                   }
                                   return null;
                                 },
                                 onChanged: (value) {
-                                  _referralDiagnosisNoteController.text =
-                                      value!;
+                                  if (selectedReferralInLabel == "YES") {
+                                    setState(() {
+                                      _referralDiagnosisNoteController.text = value;
+                                    });
+                                  }
                                 },
+
                                 autofocus: false,
                                 onSaved: (value) {
                                   // Handle saved value
@@ -999,7 +1045,7 @@ class _TriageScreenState extends State<TriageScreen> {
                                     vertical: 15,
                                     // Adjust the vertical padding as needed
                                     horizontal:
-                                        10, // Adjust the horizontal padding as needed
+                                    10, // Adjust the horizontal padding as needed
                                   ),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
@@ -1024,16 +1070,19 @@ class _TriageScreenState extends State<TriageScreen> {
                     Text(
                       "B). Principle Reason for Referral: ",
                       style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                      TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
 
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.28,
+                      height: MediaQuery
+                          .of(context)
+                          .size
+                          .height * 0.28,
                       child: Container(
                         child: Padding(
                           padding:
-                              const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                          const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -1048,14 +1097,19 @@ class _TriageScreenState extends State<TriageScreen> {
                               SizedBox(height: 5),
                               TextFormField(
                                 validator: (value) {
-                                  if (selectedReferralInLabel == "YES") {
-                                    return "Principle Reason for Referral Note";
+                                  if (selectedReferralInLabel == "YES" && value!.isEmpty) {
+                                    return "Principle Reason for Referral Note is required";
                                   }
                                   return null;
                                 },
                                 onChanged: (value) {
-                                  _referralReasonController.text = value!;
+                                  if (selectedReferralInLabel == "YES") {
+                                    setState(() {
+                                      _referralReasonController.text = value;
+                                    });
+                                  }
                                 },
+
                                 autofocus: false,
                                 onSaved: (value) {
                                   // Handle saved value
@@ -1067,7 +1121,7 @@ class _TriageScreenState extends State<TriageScreen> {
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(),
                                   hintText:
-                                      "Principle Reason for Referral Note",
+                                  "Principle Reason for Referral Note",
                                   hintStyle: TextStyle(
                                     color: Colors.black,
                                   ),
@@ -1075,7 +1129,7 @@ class _TriageScreenState extends State<TriageScreen> {
                                     vertical: 15,
                                     // Adjust the vertical padding as needed
                                     horizontal:
-                                        10, // Adjust the horizontal padding as needed
+                                    10, // Adjust the horizontal padding as needed
                                   ),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
@@ -1100,7 +1154,7 @@ class _TriageScreenState extends State<TriageScreen> {
                     Text(
                       "STAFF ON DUTY",
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
 
@@ -1111,7 +1165,7 @@ class _TriageScreenState extends State<TriageScreen> {
                           Container(
                             child: Padding(
                               padding:
-                                  const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                              const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -1150,17 +1204,32 @@ class _TriageScreenState extends State<TriageScreen> {
                                   ),
                                   SizedBox(height: 5),
                                   TextFormField(
+
                                     validator: (value) {
-                                      if (selectedInformedSeniorConsultantLabel ==
-                                          "YES") {
-                                        return "Senior Consultant's Name Required";
+                                      if (selectedInformedSeniorConsultantLabel == "YES" && value!.isEmpty) {
+                                        return "Senior Consultant's Name is required";
                                       }
                                       return null;
                                     },
                                     onChanged: (value) {
-                                      _seniorConsultantNameController.text =
-                                          value!;
+                                      if (selectedInformedSeniorConsultantLabel == "YES") {
+                                        setState(() {
+                                          _seniorConsultantNameController.text = value;
+                                        });
+                                      }
                                     },
+
+                                    // validator: (value) {
+                                    //   if (selectedInformedSeniorConsultantLabel ==
+                                    //       "YES") {
+                                    //     return "Senior Consultant's Name Required";
+                                    //   }
+                                    //   return null;
+                                    // },
+                                    // onChanged: (value) {
+                                    //   _seniorConsultantNameController.text =
+                                    //   value!;
+                                    // },
                                     autofocus: false,
                                     onSaved: (value) {
                                       // Handle saved value
@@ -1173,7 +1242,7 @@ class _TriageScreenState extends State<TriageScreen> {
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                          EdgeInsets.symmetric(vertical: 10),
+                                      EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
@@ -1214,16 +1283,30 @@ class _TriageScreenState extends State<TriageScreen> {
                                   ),
                                   SizedBox(height: 5),
                                   TextFormField(
+
                                     validator: (value) {
-                                      if (selectedInformedConsultantLabel ==
-                                          "YES") {
-                                        return "Consultant's Name Required";
+                                      if (selectedInformedConsultantLabel == "YES" && value!.isEmpty) {
+                                        return "Consultant's Name is required";
                                       }
                                       return null;
                                     },
                                     onChanged: (value) {
-                                      _consultantNameController.text = value!;
+                                      if (selectedInformedConsultantLabel == "YES") {
+                                        setState(() {
+                                          _consultantNameController.text = value;
+                                        });
+                                      }
                                     },
+                                    // validator: (value) {
+                                    //   if (selectedInformedConsultantLabel ==
+                                    //       "YES") {
+                                    //     return "Consultant's Name Required";
+                                    //   }
+                                    //   return null;
+                                    // },
+                                    // onChanged: (value) {
+                                    //   _consultantNameController.text = value!;
+                                    // },
                                     autofocus: false,
                                     onSaved: (value) {
                                       // Handle saved value
@@ -1236,7 +1319,7 @@ class _TriageScreenState extends State<TriageScreen> {
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                          EdgeInsets.symmetric(vertical: 10),
+                                      EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
@@ -1277,17 +1360,31 @@ class _TriageScreenState extends State<TriageScreen> {
                                   ),
                                   SizedBox(height: 5),
                                   TextFormField(
+
                                     validator: (value) {
-                                      if (selectedInformedMedicalOfficerLabel ==
-                                          "YES") {
-                                        return "Medical Officer's Name Required";
+                                      if (selectedInformedMedicalOfficerLabel == "YES" && value!.isEmpty) {
+                                        return "Medical Officer's Name is required";
                                       }
                                       return null;
                                     },
                                     onChanged: (value) {
-                                      _medicalOfficerNameController.text =
-                                          value!;
+                                      if (selectedInformedMedicalOfficerLabel == "YES") {
+                                        setState(() {
+                                          _medicalOfficerNameController.text = value;
+                                        });
+                                      }
                                     },
+                                    // validator: (value) {
+                                    //   if (selectedInformedMedicalOfficerLabel ==
+                                    //       "YES") {
+                                    //     return "Medical Officer's Name Required";
+                                    //   }
+                                    //   return null;
+                                    // },
+                                    // onChanged: (value) {
+                                    //   _medicalOfficerNameController.text =
+                                    //   value!;
+                                    // },
                                     autofocus: false,
                                     onSaved: (value) {
                                       // Handle saved value
@@ -1300,14 +1397,17 @@ class _TriageScreenState extends State<TriageScreen> {
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                          EdgeInsets.symmetric(vertical: 10),
+                                      EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
                                   ),
                                   SizedBox(height: 10),
                                   SizedBox(
-                                    height: MediaQuery.of(context).size.height *
+                                    height: MediaQuery
+                                        .of(context)
+                                        .size
+                                        .height *
                                         0.28,
                                     child: Container(
                                       child: Padding(
@@ -1315,7 +1415,7 @@ class _TriageScreenState extends State<TriageScreen> {
                                             0.0, 0.0, 0.0, 0.0),
                                         child: Column(
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               "Case summary history, physical findings & final outcome:",
@@ -1335,7 +1435,7 @@ class _TriageScreenState extends State<TriageScreen> {
                                               },
                                               onChanged: (value) {
                                                 _caseSummaryController.text =
-                                                    value!;
+                                                value!;
                                               },
                                               autofocus: false,
                                               onSaved: (value) {
@@ -1343,26 +1443,26 @@ class _TriageScreenState extends State<TriageScreen> {
                                               },
                                               minLines: 4,
                                               keyboardType:
-                                                  TextInputType.multiline,
+                                              TextInputType.multiline,
                                               maxLines: 6,
                                               maxLength: 800,
                                               decoration: InputDecoration(
                                                 border: OutlineInputBorder(),
                                                 hintText:
-                                                    "Case summary history, physical findings & final outcome",
+                                                "Case summary history, physical findings & final outcome",
                                                 hintStyle: TextStyle(
                                                   color: Colors.black,
                                                 ),
                                                 contentPadding:
-                                                    EdgeInsets.symmetric(
+                                                EdgeInsets.symmetric(
                                                   vertical: 15,
                                                   // Adjust the vertical padding as needed
                                                   horizontal:
-                                                      10, // Adjust the horizontal padding as needed
+                                                  10, // Adjust the horizontal padding as needed
                                                 ),
                                               ),
                                               textAlignVertical:
-                                                  TextAlignVertical.center,
+                                              TextAlignVertical.center,
                                             ),
                                             SizedBox(height: 5),
                                             Align(
@@ -1375,7 +1475,7 @@ class _TriageScreenState extends State<TriageScreen> {
                                                 indent: 16.0,
                                                 // Indent on the left side
                                                 endIndent:
-                                                    16.0, // Indent on the right side
+                                                16.0, // Indent on the right side
                                               ),
                                             ),
                                           ],
@@ -1420,16 +1520,17 @@ class _TriageScreenState extends State<TriageScreen> {
                       msg: "Please select a triage Level/Category");
                   return;
                 }
-
                 if (selectedLabelNationality.isEmpty) {
                   Fluttertoast.showToast(msg: "Please select Nationality");
                   return;
                 }
-
                 validation();
               },
               child: Container(
-                width: MediaQuery.of(context).size.width,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width,
                 padding: EdgeInsets.symmetric(vertical: 18),
                 decoration: BoxDecoration(
                   color: Color(0xFF7165D6),
@@ -1452,4 +1553,86 @@ class _TriageScreenState extends State<TriageScreen> {
       ),
     );
   }
+
+  Future<String> getCurrentUserName(String uid) async {
+    DocumentSnapshot userSnapshot =
+    await FirebaseFirestore.instance.collection('users').doc(uid).get();
+
+    if (userSnapshot.exists) {
+      Map<String, dynamic> userData = userSnapshot.data() as Map<String, dynamic>;
+      UserModel userModel = UserModel.fromMap(userData);
+      return userModel.name ?? 'Unknown';
+    } else {
+      return 'User not found';
+    }
+  }
+
+
+
+
+
+  Future<void> postDetailsToFirestore() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+    DateTime currentDate = DateTime.now();
+    String currentUserUid = user?.uid ?? '';
+    String triagedBy = await getCurrentUserName(currentUserUid);
+
+    TriageFormNurseModel triageData = TriageFormNurseModel(
+      uid: user?.uid,
+      patientId: widget.patientId,
+      patientNumber: widget.patientNumber,
+      triageCategory: selectedTriageCategoryLabel,
+      patientNationality: selectedLabelNationality,
+      patientVillage: _villageZoneController.text,
+      patientParish: _parishController.text,
+      patientSubCounty: _subCountyController.text,
+      patientDistrict: _districtController.text,
+      patientMaritalStatus: _maritalStatusController.text,
+      patientNIN: _nationalIDController.text,
+      patientLCName: _localChairPersonController.text,
+      patientNOKName: _nOKNameController.text,
+      patientNOKRelationship: _nOKRelationshipController.text,
+      patientNOKContact: _nOKContactController.text,
+      patientReferralIn: selectedReferralInLabel.isEmpty
+          ? "NO"
+          : selectedReferralInLabel,
+      patientReferringHealFacility: _referringHealthFacilityController.text,
+      patientReferralDiagnosis: _referralDiagnosisNoteController.text,
+      patientReasonForReferral: _referralReasonController.text,
+      patientInformedSeniorConsultant: selectedInformedSeniorConsultantLabel
+          .isEmpty ? "NO" : selectedInformedSeniorConsultantLabel,
+      patientSeniorConsultantName: _seniorConsultantNameController.text,
+      patientInformedConsultant: selectedInformedConsultantLabel.isEmpty
+          ? "NO"
+          : selectedInformedConsultantLabel,
+      patientConsultantName: _consultantNameController.text,
+      patientInformedMedicalOfficer: selectedInformedMedicalOfficerLabel.isEmpty
+          ? "NO"
+          : selectedInformedMedicalOfficerLabel,
+      patientMedicalOfficerName: _medicalOfficerNameController.text,
+      patientCaseSummary: _caseSummaryController.text,
+      patientTriagedBy:  triagedBy,
+      patientTriagedAt: currentDate.toLocal().toString(),
+    );
+
+    try {
+      await firebaseFirestore
+          .collection("nurseTriageFormData")
+          .doc(widget.patientId)
+          .set(triageData.toMap());
+
+      Fluttertoast.showToast(msg: "Triage data saved successfully!");
+
+      // Update nurseTriaged to "True"
+      await firebaseFirestore
+          .collection("users")
+          .doc(widget.patientId)
+          .update({'nurseTriaged': "True"});
+    } catch (error) {
+      Fluttertoast.showToast(msg: "An error occurred: $error");
+    }
+  }
+
 }
+
