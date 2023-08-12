@@ -78,6 +78,16 @@ class _TriageScreenState extends State<TriageScreen> {
             msg: "Please ensure all the required fills are filled");
         return;
       }
+
+      if (selectedInformedSeniorConsultantLabel.isNotEmpty ||
+          selectedInformedConsultantLabel.isNotEmpty ||
+          selectedInformedMedicalOfficerLabel.isNotEmpty) {
+        // At least one field is filled, no validation required
+        // FocusScope.of(context).unfocus();
+      } else {
+        Fluttertoast.showToast(msg: "Please select a person informed");
+        return;
+      }
     } else {
       Fluttertoast.showToast(msg: "Form is not valid");
       return;
@@ -1143,7 +1153,7 @@ class _TriageScreenState extends State<TriageScreen> {
                                     validator: (value) {
                                       if (selectedInformedSeniorConsultantLabel ==
                                           "YES") {
-                                        return "Senior Consultant's Name";
+                                        return "Senior Consultant's Name Required";
                                       }
                                       return null;
                                     },
@@ -1207,7 +1217,7 @@ class _TriageScreenState extends State<TriageScreen> {
                                     validator: (value) {
                                       if (selectedInformedConsultantLabel ==
                                           "YES") {
-                                        return "Consultant's Name";
+                                        return "Consultant's Name Required";
                                       }
                                       return null;
                                     },
@@ -1270,7 +1280,7 @@ class _TriageScreenState extends State<TriageScreen> {
                                     validator: (value) {
                                       if (selectedInformedMedicalOfficerLabel ==
                                           "YES") {
-                                        return "Medical Officer's Name";
+                                        return "Medical Officer's Name Required";
                                       }
                                       return null;
                                     },
@@ -1319,7 +1329,7 @@ class _TriageScreenState extends State<TriageScreen> {
                                             TextFormField(
                                               validator: (value) {
                                                 if (value!.isEmpty) {
-                                                  return "Field is require";
+                                                  return "Field is required";
                                                 }
                                                 return null;
                                               },
@@ -1405,19 +1415,18 @@ class _TriageScreenState extends State<TriageScreen> {
             SizedBox(height: 15),
             InkWell(
               onTap: () {
-                if (selectedTriageCategoryLabel == "") {
+                if (selectedTriageCategoryLabel.isEmpty) {
                   Fluttertoast.showToast(
                       msg: "Please select a triage Level/Category");
                   return;
                 }
 
-                if (selectedLabelNationality == "") {
+                if (selectedLabelNationality.isEmpty) {
                   Fluttertoast.showToast(msg: "Please select Nationality");
                   return;
                 }
 
                 validation();
-                // FocusScope.of(context).unfocus();
               },
               child: Container(
                 width: MediaQuery.of(context).size.width,
