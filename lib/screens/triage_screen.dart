@@ -1405,6 +1405,17 @@ class _TriageScreenState extends State<TriageScreen> {
             SizedBox(height: 15),
             InkWell(
               onTap: () {
+                if (selectedTriageCategoryLabel == "") {
+                  Fluttertoast.showToast(
+                      msg: "Please select a triage Level/Category");
+                  return;
+                }
+
+                if (selectedLabelNationality == "") {
+                  Fluttertoast.showToast(msg: "Please select Nationality");
+                  return;
+                }
+
                 validation();
                 // FocusScope.of(context).unfocus();
               },
