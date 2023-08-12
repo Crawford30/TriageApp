@@ -46,7 +46,7 @@ class _NurseHomeScreenState extends State<NurseHomeScreen> {
           await FirebaseFirestore.instance
               .collection('users')
               .where('userType', isEqualTo: 'Patient')
-              .where('nurseTriaged', isEqualTo: 'False')
+              // .where('nurseTriaged', isEqualTo: 'False')
               .get();
       return snapshot.docs;
     } catch (e) {
