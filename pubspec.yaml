@@ -31,6 +31,7 @@ dependencies:
     sdk: flutter
   dropdown_button2: ^2.3.7
   fluttertoast: ^8.0.8
+  intl: ^0.17.0
 
 
 

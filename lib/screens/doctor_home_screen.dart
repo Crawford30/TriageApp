@@ -13,6 +13,9 @@ class DoctorHomeScreen extends StatefulWidget {
 
 class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
   String _userName = '';
+
+
+
   List<DocumentSnapshot> _patients = [];
   List symptoms = [
     "Temperature",
@@ -220,7 +223,10 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => TriageDoctorScreen(),
+                      builder: (context) => TriageDoctorScreen(
+                        patientId: _patients[index]['uid'],
+                        patientNumber: _patients[index]['refNumber'],
+                      ),
                     ),
                   );
                 },
