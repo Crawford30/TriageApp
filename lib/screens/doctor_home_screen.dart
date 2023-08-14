@@ -13,22 +13,7 @@ class DoctorHomeScreen extends StatefulWidget {
 
 class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
   String _userName = '';
-
   List<DocumentSnapshot> _patients = [];
-  List symptoms = [
-    "Temperature",
-    "Snuffle",
-    "Fever",
-    "Cough",
-    "Cold",
-  ];
-
-  List imgs = [
-    "doctor1.jpg",
-    "doctor2.jpg",
-    "doctor3.jpg",
-    "doctor4.jpg",
-  ];
 
   @override
   void initState() {
