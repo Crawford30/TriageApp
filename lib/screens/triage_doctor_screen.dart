@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:triage_app/model/triage_form_nurse_model.dart';
 import 'package:triage_app/model/user_model.dart';
+import 'package:triage_app/model/triage_form_doctor_model.dart';
 import 'package:intl/intl.dart';
 
 class TriageDoctorScreen extends StatefulWidget {
@@ -281,7 +282,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
       backgroundColor: Color(0xFF7165D6),
       body: Form(
         key: _formKey,
-        child:  SingleChildScrollView(
+        child: SingleChildScrollView(
           child: Column(
             children: [
               SizedBox(height: 50),
@@ -364,7 +365,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                   children: [
                     Text(
                       "TRIAGE LEVEL/CATEGORY:",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
                     Container(
@@ -395,12 +397,14 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
 
                     Text(
                       "PATIENT'S DEMOGRAPHICS",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
                     Text(
                       "Nationality: ",
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
                     Container(
@@ -432,14 +436,16 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
 
                     Text(
                       "Address: ",
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.42,
                       child: Container(
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                          padding:
+                              const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -467,7 +473,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     color: Colors.black,
                                   ),
                                   contentPadding:
-                                  EdgeInsets.symmetric(vertical: 10),
+                                      EdgeInsets.symmetric(vertical: 10),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 textInputAction: TextInputAction.next,
@@ -497,7 +503,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     color: Colors.black,
                                   ),
                                   contentPadding:
-                                  EdgeInsets.symmetric(vertical: 10),
+                                      EdgeInsets.symmetric(vertical: 10),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 textInputAction: TextInputAction.next,
@@ -527,7 +533,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     color: Colors.black,
                                   ),
                                   contentPadding:
-                                  EdgeInsets.symmetric(vertical: 10),
+                                      EdgeInsets.symmetric(vertical: 10),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 textInputAction: TextInputAction.next,
@@ -557,7 +563,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     color: Colors.black,
                                   ),
                                   contentPadding:
-                                  EdgeInsets.symmetric(vertical: 10),
+                                      EdgeInsets.symmetric(vertical: 10),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 textInputAction: TextInputAction.next,
@@ -583,14 +589,16 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
 
                     Text(
                       "Bio-data: ",
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.34,
                       child: Container(
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                          padding:
+                              const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -618,7 +626,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     color: Colors.black,
                                   ),
                                   contentPadding:
-                                  EdgeInsets.symmetric(vertical: 10),
+                                      EdgeInsets.symmetric(vertical: 10),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 textInputAction: TextInputAction.next,
@@ -649,7 +657,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     color: Colors.black,
                                   ),
                                   contentPadding:
-                                  EdgeInsets.symmetric(vertical: 10),
+                                      EdgeInsets.symmetric(vertical: 10),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 textInputAction: TextInputAction.next,
@@ -674,12 +682,13 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(),
                                   prefixIcon: Icon(Icons.person),
-                                  hintText: "LC1 Chairperson/VHT Contact Person",
+                                  hintText:
+                                      "LC1 Chairperson/VHT Contact Person",
                                   hintStyle: TextStyle(
                                     color: Colors.black,
                                   ),
                                   contentPadding:
-                                  EdgeInsets.symmetric(vertical: 10),
+                                      EdgeInsets.symmetric(vertical: 10),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 textInputAction: TextInputAction.next,
@@ -703,14 +712,16 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                     SizedBox(height: 15),
                     Text(
                       "Relationship: ",
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.34,
                       child: Container(
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                          padding:
+                              const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -738,7 +749,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     color: Colors.black,
                                   ),
                                   contentPadding:
-                                  EdgeInsets.symmetric(vertical: 10),
+                                      EdgeInsets.symmetric(vertical: 10),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 textInputAction: TextInputAction.next,
@@ -768,7 +779,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     color: Colors.black,
                                   ),
                                   contentPadding:
-                                  EdgeInsets.symmetric(vertical: 10),
+                                      EdgeInsets.symmetric(vertical: 10),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 textInputAction: TextInputAction.next,
@@ -798,7 +809,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     color: Colors.black,
                                   ),
                                   contentPadding:
-                                  EdgeInsets.symmetric(vertical: 10),
+                                      EdgeInsets.symmetric(vertical: 10),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 textInputAction: TextInputAction.next,
@@ -824,7 +835,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                     SizedBox(height: 15),
                     Text(
                       "Referral: ",
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
 
@@ -832,7 +844,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                       height: MediaQuery.of(context).size.height * 0.2,
                       child: Container(
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                          padding:
+                              const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -883,7 +896,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     color: Colors.black,
                                   ),
                                   contentPadding:
-                                  EdgeInsets.symmetric(vertical: 10),
+                                      EdgeInsets.symmetric(vertical: 10),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
                                 textInputAction: TextInputAction.next,
@@ -907,7 +920,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                     SizedBox(height: 15),
                     Text(
                       "A). Referral Diagnosis: ",
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
 
@@ -915,7 +929,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                       height: MediaQuery.of(context).size.height * 0.21,
                       child: Container(
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                          padding:
+                              const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -949,7 +964,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     vertical: 15,
                                     // Adjust the vertical padding as needed
                                     horizontal:
-                                    10, // Adjust the horizontal padding as needed
+                                        10, // Adjust the horizontal padding as needed
                                   ),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
@@ -973,7 +988,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                     SizedBox(height: 15),
                     Text(
                       "B). Principle Reason for Referral: ",
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
 
@@ -981,7 +997,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                       height: MediaQuery.of(context).size.height * 0.28,
                       child: Container(
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                          padding:
+                              const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -1007,7 +1024,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                 maxLength: 600,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(),
-                                  hintText: "Principle Reason for Referral Note",
+                                  hintText:
+                                      "Principle Reason for Referral Note",
                                   hintStyle: TextStyle(
                                     color: Colors.black,
                                   ),
@@ -1015,7 +1033,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     vertical: 15,
                                     // Adjust the vertical padding as needed
                                     horizontal:
-                                    10, // Adjust the horizontal padding as needed
+                                        10, // Adjust the horizontal padding as needed
                                   ),
                                 ),
                                 textAlignVertical: TextAlignVertical.center,
@@ -1039,7 +1057,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                     SizedBox(height: 10),
                     Text(
                       "STAFF ON DUTY",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
 
@@ -1050,7 +1069,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                           Container(
                             child: Padding(
                               padding:
-                              const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                                  const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -1103,7 +1122,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                          EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
@@ -1158,7 +1177,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                          EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
@@ -1213,22 +1232,22 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                          EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
                                   ),
                                   SizedBox(height: 10),
                                   SizedBox(
-                                    height:
-                                    MediaQuery.of(context).size.height * 0.38,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.38,
                                     child: Container(
                                       child: Padding(
                                         padding: const EdgeInsets.fromLTRB(
                                             0.0, 0.0, 0.0, 0.0),
                                         child: Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               "Case summary history, physical findings & final outcome:",
@@ -1240,7 +1259,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                             ),
                                             SizedBox(height: 5),
                                             TextFormField(
-                                              controller: _caseSummaryController,
+                                              controller:
+                                                  _caseSummaryController,
                                               enabled: false,
                                               autofocus: false,
                                               onSaved: (value) {
@@ -1248,26 +1268,26 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                               },
                                               minLines: 4,
                                               keyboardType:
-                                              TextInputType.multiline,
+                                                  TextInputType.multiline,
                                               maxLines: 6,
                                               maxLength: 800,
                                               decoration: InputDecoration(
                                                 border: OutlineInputBorder(),
                                                 hintText:
-                                                "Case summary history, physical findings & final outcome",
+                                                    "Case summary history, physical findings & final outcome",
                                                 hintStyle: TextStyle(
                                                   color: Colors.black,
                                                 ),
                                                 contentPadding:
-                                                EdgeInsets.symmetric(
+                                                    EdgeInsets.symmetric(
                                                   vertical: 15,
                                                   // Adjust the vertical padding as needed
                                                   horizontal:
-                                                  10, // Adjust the horizontal padding as needed
+                                                      10, // Adjust the horizontal padding as needed
                                                 ),
                                               ),
                                               textAlignVertical:
-                                              TextAlignVertical.center,
+                                                  TextAlignVertical.center,
                                             ),
                                             SizedBox(height: 5),
                                             Align(
@@ -1280,7 +1300,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                                 indent: 16.0,
                                                 // Indent on the left side
                                                 endIndent:
-                                                16.0, // Indent on the right side
+                                                    16.0, // Indent on the right side
                                               ),
                                             ),
                                             SizedBox(height: 5),
@@ -1312,7 +1332,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                                 indent: 16.0,
                                                 // Indent on the left side
                                                 endIndent:
-                                                16.0, // Indent on the right side
+                                                    16.0, // Indent on the right side
                                               ),
                                             ),
                                           ],
@@ -1331,12 +1351,14 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                     SizedBox(height: 10),
                     Text(
                       "***DOCTOR'S ASSESSMENT***",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 15),
                     Text(
                       "Relevant History: ",
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
                     SingleChildScrollView(
@@ -1346,7 +1368,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                           Container(
                             child: Padding(
                               padding:
-                              const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                                  const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -1368,7 +1390,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     },
                                     onChanged: (value) {
                                       _patientVaginalBleedingController.text =
-                                      value!;
+                                          value!;
                                     },
                                     autofocus: false,
                                     onSaved: (value) {
@@ -1382,7 +1404,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                          EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
@@ -1406,7 +1428,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     },
                                     onChanged: (value) {
                                       _patientBlurringVisionController.text =
-                                      value!;
+                                          value!;
                                     },
                                     autofocus: false,
                                     onSaved: (value) {
@@ -1420,7 +1442,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                          EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
@@ -1444,7 +1466,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     },
                                     onChanged: (value) {
                                       _patientEpigastricPainController.text =
-                                      value!;
+                                          value!;
                                     },
                                     autofocus: false,
                                     onSaved: (value) {
@@ -1458,7 +1480,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                          EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
@@ -1482,7 +1504,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     },
                                     onChanged: (value) {
                                       _patientDrainingOfLiquorController.text =
-                                      value!;
+                                          value!;
                                     },
                                     autofocus: false,
                                     onSaved: (value) {
@@ -1496,7 +1518,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                          EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
@@ -1520,7 +1542,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     },
                                     onChanged: (value) {
                                       _patientSwellingOfLegsController.text =
-                                      value!;
+                                          value!;
                                     },
                                     autofocus: false,
                                     onSaved: (value) {
@@ -1534,7 +1556,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                          EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
@@ -1571,7 +1593,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                          EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
@@ -1608,7 +1630,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                          EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
@@ -1645,7 +1667,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                          EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
@@ -1669,7 +1691,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     },
                                     onChanged: (value) {
                                       _patientStartOfLabourController.text =
-                                      value!;
+                                          value!;
                                     },
                                     autofocus: false,
                                     onSaved: (value) {
@@ -1678,28 +1700,28 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(),
                                       prefixIcon:
-                                      Icon(Icons.calendar_month_outlined),
+                                          Icon(Icons.calendar_month_outlined),
                                       hintText: "When did labor start?",
                                       hintStyle: TextStyle(
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                          EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
                                   ),
                                   SizedBox(height: 10),
                                   SizedBox(
-                                    height:
-                                    MediaQuery.of(context).size.height * 0.28,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.28,
                                     child: Container(
                                       child: Padding(
                                         padding: const EdgeInsets.fromLTRB(
                                             0.0, 0.0, 0.0, 0.0),
                                         child: Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               "Other Presenting Complaints or Symptoms:",
@@ -1721,26 +1743,26 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                               },
                                               minLines: 3,
                                               keyboardType:
-                                              TextInputType.multiline,
+                                                  TextInputType.multiline,
                                               maxLines: 5,
                                               maxLength: 600,
                                               decoration: InputDecoration(
                                                 border: OutlineInputBorder(),
                                                 hintText:
-                                                "Other Presenting Complaints or Symptoms",
+                                                    "Other Presenting Complaints or Symptoms",
                                                 hintStyle: TextStyle(
                                                   color: Colors.black,
                                                 ),
                                                 contentPadding:
-                                                EdgeInsets.symmetric(
+                                                    EdgeInsets.symmetric(
                                                   vertical: 15,
                                                   // Adjust the vertical padding as needed
                                                   horizontal:
-                                                  10, // Adjust the horizontal padding as needed
+                                                      10, // Adjust the horizontal padding as needed
                                                 ),
                                               ),
                                               textAlignVertical:
-                                              TextAlignVertical.center,
+                                                  TextAlignVertical.center,
                                             ),
                                             SizedBox(height: 5),
                                             Align(
@@ -1753,7 +1775,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                                 indent: 16.0,
                                                 // Indent on the left side
                                                 endIndent:
-                                                16.0, // Indent on the right side
+                                                    16.0, // Indent on the right side
                                               ),
                                             ),
                                           ],
@@ -1772,13 +1794,15 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                     SizedBox(height: 10),
                     Text(
                       "***PHYSICAL EXAMINATIONS:***",
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 15),
 
                     Text(
                       "a). General Examination: ",
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
                     SingleChildScrollView(
@@ -1788,7 +1812,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                           Container(
                             child: Padding(
                               padding:
-                              const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                                  const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -1807,8 +1831,9 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                       prefixIcon: Icon(Icons.person_pin_circle),
                                       // Add Horizontal padding using menuItemStyleData.padding so it matches
                                       // the menu padding when button's width is not specified.
-                                      contentPadding: const EdgeInsets.symmetric(
-                                          vertical: 16),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              vertical: 16),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(4),
                                       ),
@@ -1821,14 +1846,14 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     ),
                                     items: userTypeItems
                                         .map((item) => DropdownMenuItem<String>(
-                                      value: item,
-                                      child: Text(
-                                        item,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ))
+                                              value: item,
+                                              child: Text(
+                                                item,
+                                                style: const TextStyle(
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                            ))
                                         .toList(),
                                     validator: (value) {
                                       if (value == null) {
@@ -1839,7 +1864,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     onChanged: (value) {
                                       //Do something when selected item is changed.
                                       _patientDisabilityLevelController.text =
-                                      value!;
+                                          value!;
                                     },
                                     onSaved: (value) {
                                       selectedValue = value.toString();
@@ -1861,7 +1886,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     ),
                                     menuItemStyleData: const MenuItemStyleData(
                                       padding:
-                                      EdgeInsets.symmetric(horizontal: 16),
+                                          EdgeInsets.symmetric(horizontal: 16),
                                     ),
                                   ),
                                   SizedBox(height: 15),
@@ -1890,7 +1915,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     },
                                     onChanged: (value) {
                                       _patientEyesObservationController.text =
-                                      value!;
+                                          value!;
                                     },
                                     autofocus: false,
                                     onSaved: (value) {
@@ -1904,7 +1929,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                          EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
@@ -1936,7 +1961,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     },
                                     onChanged: (value) {
                                       _patientSkinObservationController.text =
-                                      value!;
+                                          value!;
                                     },
                                     autofocus: false,
                                     onSaved: (value) {
@@ -1950,7 +1975,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                          EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
@@ -1982,7 +2007,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     },
                                     onChanged: (value) {
                                       _patientHairObservationController.text =
-                                      value!;
+                                          value!;
                                     },
                                     autofocus: false,
                                     onSaved: (value) {
@@ -1996,7 +2021,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                          EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
@@ -2028,7 +2053,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     },
                                     onChanged: (value) {
                                       _patientNailsObservationController.text =
-                                      value!;
+                                          value!;
                                     },
                                     autofocus: false,
                                     onSaved: (value) {
@@ -2042,7 +2067,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                          EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
@@ -2074,7 +2099,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     },
                                     onChanged: (value) {
                                       _patientHandsObservationController.text =
-                                      value!;
+                                          value!;
                                     },
                                     autofocus: false,
                                     onSaved: (value) {
@@ -2088,7 +2113,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                          EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
@@ -2097,10 +2122,14 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                   Align(
                                     alignment: Alignment.center,
                                     child: Divider(
-                                      color: Colors.grey, // Color of the divider
-                                      thickness: 1.0, // Thickness of the divider
-                                      indent: 16.0, // Indent on the left side
-                                      endIndent: 16.0, // Indent on the right side
+                                      color: Colors.grey,
+                                      // Color of the divider
+                                      thickness: 1.0,
+                                      // Thickness of the divider
+                                      indent: 16.0,
+                                      // Indent on the left side
+                                      endIndent:
+                                          16.0, // Indent on the right side
                                     ),
                                   ),
                                   SizedBox(height: 10),
@@ -2115,7 +2144,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
 
                     Text(
                       "b). Abdominal Examinations: ",
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                     ),
                     SingleChildScrollView(
                       child: Column(
@@ -2124,7 +2154,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                           Container(
                             child: Padding(
                               padding:
-                              const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                                  const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -2153,8 +2183,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                       return null;
                                     },
                                     onChanged: (value) {
-                                      _patientAbdomenObservationController.text =
-                                      value!;
+                                      _patientAbdomenObservationController
+                                          .text = value!;
                                     },
                                     autofocus: false,
                                     onSaved: (value) {
@@ -2164,12 +2194,12 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                       border: OutlineInputBorder(),
                                       prefixIcon: Icon(Icons.note),
                                       hintText:
-                                      "Observational Assessment(Abdomen)",
+                                          "Observational Assessment(Abdomen)",
                                       hintStyle: TextStyle(
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                          EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
@@ -2214,12 +2244,13 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                          EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
-                                    keyboardType: TextInputType.numberWithOptions(
-                                        decimal: true),
+                                    keyboardType:
+                                        TextInputType.numberWithOptions(
+                                            decimal: true),
                                   ),
                                   SizedBox(height: 10),
                                   SizedBox(height: 15),
@@ -2248,7 +2279,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     },
                                     onChanged: (value) {
                                       _patientAuscultationController.text =
-                                      value!;
+                                          value!;
                                     },
                                     autofocus: false,
                                     onSaved: (value) {
@@ -2262,7 +2293,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                          EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
@@ -2293,8 +2324,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                       return null;
                                     },
                                     onChanged: (value) {
-                                      _patientHyperHypoResonanceController.text =
-                                      value!;
+                                      _patientHyperHypoResonanceController
+                                          .text = value!;
                                     },
                                     autofocus: false,
                                     onSaved: (value) {
@@ -2304,27 +2335,27 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                       border: OutlineInputBorder(),
                                       prefixIcon: Icon(Icons.note),
                                       hintText:
-                                      "Palpation Resonance (Hyper/Hypo resonance)",
+                                          "Palpation Resonance (Hyper/Hypo resonance)",
                                       hintStyle: TextStyle(
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                          EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
                                   ),
                                   SizedBox(height: 10),
                                   SizedBox(
-                                    height:
-                                    MediaQuery.of(context).size.height * 0.28,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.28,
                                     child: Container(
                                       child: Padding(
                                         padding: const EdgeInsets.fromLTRB(
                                             0.0, 0.0, 0.0, 0.0),
                                         child: Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               "Other Presenting Complaints or Symptoms:",
@@ -2346,26 +2377,26 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                               },
                                               minLines: 3,
                                               keyboardType:
-                                              TextInputType.multiline,
+                                                  TextInputType.multiline,
                                               maxLines: 5,
                                               maxLength: 600,
                                               decoration: InputDecoration(
                                                 border: OutlineInputBorder(),
                                                 hintText:
-                                                "Other Presenting Complaints or Symptoms",
+                                                    "Other Presenting Complaints or Symptoms",
                                                 hintStyle: TextStyle(
                                                   color: Colors.black,
                                                 ),
                                                 contentPadding:
-                                                EdgeInsets.symmetric(
+                                                    EdgeInsets.symmetric(
                                                   vertical: 15,
                                                   // Adjust the vertical padding as needed
                                                   horizontal:
-                                                  10, // Adjust the horizontal padding as needed
+                                                      10, // Adjust the horizontal padding as needed
                                                 ),
                                               ),
                                               textAlignVertical:
-                                              TextAlignVertical.center,
+                                                  TextAlignVertical.center,
                                             ),
                                             SizedBox(height: 5),
                                             Align(
@@ -2378,7 +2409,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                                 indent: 16.0,
                                                 // Indent on the left side
                                                 endIndent:
-                                                16.0, // Indent on the right side
+                                                    16.0, // Indent on the right side
                                               ),
                                             ),
                                           ],
@@ -2396,7 +2427,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                     SizedBox(height: 15),
                     Text(
                       "c) Pelvic Examinations (Vaginal Exams):",
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
                     Text(
@@ -2416,20 +2448,20 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                           Container(
                             child: Padding(
                               padding:
-                              const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                                  const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(
-                                    height:
-                                    MediaQuery.of(context).size.height * 0.28,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.28,
                                     child: Container(
                                       child: Padding(
                                         padding: const EdgeInsets.fromLTRB(
                                             0.0, 0.0, 0.0, 0.0),
                                         child: Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               "Vaginal exam, observation, the external genitalia (swellings, wounds, irritant, inflamed, discharge, bleeding)",
@@ -2455,26 +2487,26 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                               },
                                               minLines: 4,
                                               keyboardType:
-                                              TextInputType.multiline,
+                                                  TextInputType.multiline,
                                               maxLines: 6,
                                               maxLength: 1000,
                                               decoration: InputDecoration(
                                                 border: OutlineInputBorder(),
                                                 hintText:
-                                                "Observational Assessment(Vagina)",
+                                                    "Observational Assessment(Vagina)",
                                                 hintStyle: TextStyle(
                                                   color: Colors.black,
                                                 ),
                                                 contentPadding:
-                                                EdgeInsets.symmetric(
+                                                    EdgeInsets.symmetric(
                                                   vertical: 15,
                                                   // Adjust the vertical padding as needed
                                                   horizontal:
-                                                  10, // Adjust the horizontal padding as needed
+                                                      10, // Adjust the horizontal padding as needed
                                                 ),
                                               ),
                                               textAlignVertical:
-                                              TextAlignVertical.center,
+                                                  TextAlignVertical.center,
                                             ),
                                             SizedBox(height: 5),
                                             Align(
@@ -2487,7 +2519,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                                 indent: 16.0,
                                                 // Indent on the left side
                                                 endIndent:
-                                                16.0, // Indent on the right side
+                                                    16.0, // Indent on the right side
                                               ),
                                             ),
                                           ],
@@ -2506,13 +2538,15 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
 
                     Text(
                       "***SPECIFIC EXAMINATIONS:***",
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 15),
 
                     Text(
                       "a). Heart & Lung Examinations: ",
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 5),
                     SingleChildScrollView(
@@ -2522,7 +2556,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                           Container(
                             child: Padding(
                               padding:
-                              const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                                  const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -2544,7 +2578,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     },
                                     onChanged: (value) {
                                       _patientSignsOfPregnancyController.text =
-                                      value!;
+                                          value!;
                                     },
                                     autofocus: false,
                                     onSaved: (value) {
@@ -2558,7 +2592,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                         color: Colors.black,
                                       ),
                                       contentPadding:
-                                      EdgeInsets.symmetric(vertical: 10),
+                                          EdgeInsets.symmetric(vertical: 10),
                                     ),
                                     textAlignVertical: TextAlignVertical.center,
                                     textInputAction: TextInputAction.next,
@@ -2578,7 +2612,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                   SingleChildScrollView(
                                     child: Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Container(
                                           child: Padding(
@@ -2586,30 +2620,30 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                                 0.0, 0.0, 0.0, 0.0),
                                             child: Column(
                                               crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 SizedBox(
                                                   height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
+                                                          .size
+                                                          .height *
                                                       0.32,
                                                   child: Container(
                                                     child: Padding(
                                                       padding: const EdgeInsets
-                                                          .fromLTRB(
+                                                              .fromLTRB(
                                                           0.0, 0.0, 0.0, 0.0),
                                                       child: Column(
                                                         crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                                                            CrossAxisAlignment
+                                                                .start,
                                                         children: [
                                                           Text(
                                                             "Fetal movement and heart rate, Superficial palpation, Fetal presentation)",
                                                             style: TextStyle(
                                                                 fontSize: 12,
                                                                 fontWeight:
-                                                                FontWeight
-                                                                    .w500),
+                                                                    FontWeight
+                                                                        .w500),
                                                           ),
                                                           SizedBox(height: 5),
                                                           TextFormField(
@@ -2626,51 +2660,53 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                                             },
                                                             onChanged: (value) {
                                                               _patientFetalExamController
-                                                                  .text = value!;
+                                                                      .text =
+                                                                  value!;
                                                             },
                                                             minLines: 6,
                                                             keyboardType:
-                                                            TextInputType
-                                                                .multiline,
+                                                                TextInputType
+                                                                    .multiline,
                                                             maxLines: 8,
                                                             maxLength: 1200,
                                                             decoration:
-                                                            InputDecoration(
+                                                                InputDecoration(
                                                               border:
-                                                              OutlineInputBorder(),
+                                                                  OutlineInputBorder(),
                                                               hintText:
-                                                              "Fetal movement and heart rate, Superficial palpation, Fetal presentation)",
+                                                                  "Fetal movement and heart rate, Superficial palpation, Fetal presentation)",
                                                               hintStyle:
-                                                              TextStyle(
-                                                                color:
-                                                                Colors.black,
+                                                                  TextStyle(
+                                                                color: Colors
+                                                                    .black,
                                                               ),
                                                               contentPadding:
-                                                              EdgeInsets
-                                                                  .symmetric(
+                                                                  EdgeInsets
+                                                                      .symmetric(
                                                                 vertical: 15,
                                                                 // Adjust the vertical padding as needed
                                                                 horizontal:
-                                                                10, // Adjust the horizontal padding as needed
+                                                                    10, // Adjust the horizontal padding as needed
                                                               ),
                                                             ),
                                                             textAlignVertical:
-                                                            TextAlignVertical
-                                                                .center,
+                                                                TextAlignVertical
+                                                                    .center,
                                                           ),
                                                           SizedBox(height: 5),
                                                           Align(
-                                                            alignment:
-                                                            Alignment.center,
+                                                            alignment: Alignment
+                                                                .center,
                                                             child: Divider(
-                                                              color: Colors.grey,
+                                                              color:
+                                                                  Colors.grey,
                                                               // Color of the divider
                                                               thickness: 1.0,
                                                               // Thickness of the divider
                                                               indent: 16.0,
                                                               // Indent on the left side
                                                               endIndent:
-                                                              16.0, // Indent on the right side
+                                                                  16.0, // Indent on the right side
                                                             ),
                                                           ),
                                                         ],
@@ -2701,8 +2737,6 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
           ),
         ),
       ),
-
-
       bottomNavigationBar: Container(
         padding: EdgeInsets.all(15),
         height: 110,
@@ -2720,7 +2754,28 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
           children: [
             SizedBox(height: 15),
             InkWell(
-              onTap: () {},
+              onTap: () async {
+                if (!_formKey.currentState!.validate()) {
+                  return; // Stop the submission if the form is not valid
+                }
+
+                setState(() {
+                  _isSubmitting = true; // Show "Submitting..." message
+                });
+
+                try {
+                  await postDetailsToFirestore();
+                  setState(() {
+                    _isSubmitting = false;
+                  });
+                  // Rest of your code for success or error handling
+                } catch (error) {
+                  setState(() {
+                    _isSubmitting = false; // Hide "Submitting..." message
+                  });
+                  Fluttertoast.showToast(msg: "An error occurred: $error");
+                }
+              },
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.symmetric(vertical: 18),
@@ -2730,7 +2785,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                 ),
                 child: Center(
                   child: Text(
-                    "Submit Form",
+                    _isSubmitting ? "Submitting..." : "Submit  Form",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -2744,6 +2799,84 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
         ),
       ),
     );
+  }
+
+  Future<String> getCurrentUserName(String uid) async {
+    DocumentSnapshot userSnapshot =
+        await FirebaseFirestore.instance.collection('users').doc(uid).get();
+
+    if (userSnapshot.exists) {
+      Map<String, dynamic> userData =
+          userSnapshot.data() as Map<String, dynamic>;
+      UserModel userModel = UserModel.fromMap(userData);
+      return userModel.name ?? 'Unknown';
+    } else {
+      return 'User not found';
+    }
+  }
+
+  Future<void> postDetailsToFirestore() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+    DateTime currentDate = DateTime.now();
+    String currentUserUid = user?.uid ?? '';
+    String triagedBy = await getCurrentUserName(currentUserUid);
+
+    TriageFormDoctorModel triageData = TriageFormDoctorModel(
+      uid: user?.uid,
+      patientId: widget.patientId,
+      patientNumber: widget.patientNumber,
+      triageFormNurseId: nurseTriageData?["uid"],
+      patientVaginalBleeding: _patientVaginalBleedingController.text,
+      patientBlurringVision: _patientBlurringVisionController.text,
+      patientEpigastricPain: _patientEpigastricPainController.text,
+      patientDrainingOfLiquor: _patientDrainingOfLiquorController.text,
+      patientSwellingOfLegs: _patientSwellingOfLegsController.text,
+      patientVomiting: _patientVomitingController.text,
+      patientFever: _patientFeverController.text,
+      patientHeadache: _patientHeadacheController.text,
+      patientStartOfLabour: _patientStartOfLabourController.text,
+      patientPresentingComplaints: _patientOtherPresentingComplaintsAbdomenController.text,
+      patientDisabilityLevel: _patientDisabilityLevelController.text,
+      patientEyesObservation: _patientEyesObservationController.text,
+      patientSkinObservation: _patientSkinObservationController.text,
+      patientHairObservation: _patientHairObservationController.text,
+      patientNailsObservation: _patientNailsObservationController.text,
+      patientAbdomenObservation: _patientAbdomenObservationController.text,
+      patientPalpation: _patientPalpationController.text,
+      patientAuscultation: _patientAuscultationController.text,
+      patientHyperHypoResonance: _patientHyperHypoResonanceController.text,
+      patientOtherPresentingComplaints:
+          _patientOtherPresentingComplaintsController.text,
+      patientVaginaObservation: _patientVaginaObservationController.text,
+      patientSignsOfPregnancy: _patientSignsOfPregnancyController.text,
+      patientFetalExam: _patientFetalExamController.text,
+      patientExaminedBy: triagedBy,
+      patientExaminedAt: currentDate.toLocal().toString(),
+    );
+
+    try {
+      await firebaseFirestore
+          .collection("doctorTriageFormData")
+          .doc(widget.patientId)
+          .set(triageData.toMap());
+
+      Fluttertoast.showToast(msg: "Triage data saved successfully!");
+
+      // Update nurseTriaged to "True"
+      await firebaseFirestore
+          .collection("users")
+          .doc(widget.patientId)
+          .update({'doctorTriaged': "True"});
+
+      // Clear the form
+      _formKey.currentState?.reset();
+
+      // Route back to the previous page
+      Navigator.pop(context);
+    } catch (error) {
+      Fluttertoast.showToast(msg: "An error occurred: $error");
+    }
   }
 
   Future<void> fetchData() async {

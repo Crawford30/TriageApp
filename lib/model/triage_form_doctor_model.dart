@@ -29,7 +29,7 @@ class TriageFormDoctorModel {
   String? patientExaminedBy;
   String? patientExaminedAt;
 
-  TriageFormNurseModel({
+  TriageFormDoctorModel({
     this.patientId,
     this.triageFormNurseId,
     this.patientNumber,
