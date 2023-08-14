@@ -43,13 +43,19 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
   TextEditingController? _medicalOfficerNameController;
   TextEditingController? _caseSummaryController;
 
+
+  //====Doctors Screen====
+  TextEditingController? _patientVaginalBleedingController;
+  TextEditingController? _patientBlurringVisionController;
+
+
   final TextEditingController _userTypeController = TextEditingController();
   bool _isSubmitting = false;
 
-  final TextEditingController _patientVaginalBleedingController =
-      TextEditingController();
-  final TextEditingController _patientBlurringVisionController =
-      TextEditingController();
+  // final TextEditingController _patientVaginalBleedingController =
+  //     TextEditingController();
+  // final TextEditingController _patientBlurringVisionController =
+  //     TextEditingController();
   final TextEditingController _patientEpigastricPainController =
       TextEditingController();
   final TextEditingController _patientDrainingOfLiquorController =
@@ -98,12 +104,17 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
       TextEditingController();
 
   Map<String, dynamic>? nurseTriageData;
+  Map<String, dynamic>? doctorTriageData;
+
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   void initState() {
     super.initState();
     fetchData();
+
+
+
   }
 
   final List<String> userTypeItems = [
@@ -1383,6 +1394,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                   ),
                                   SizedBox(height: 5),
                                   TextFormField(
+                                    controller: _patientVaginalBleedingController,
                                     validator: (value) {
                                       if (value!.isEmpty) {
                                         return "Vaginal Bleeding required";
@@ -1390,8 +1402,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                       return null;
                                     },
                                     onChanged: (value) {
-                                      _patientVaginalBleedingController.text =
-                                          value!;
+                                      _patientVaginalBleedingController?.text = value;
                                     },
                                     autofocus: false,
                                     onSaved: (value) {
@@ -1421,6 +1432,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                   ),
                                   SizedBox(height: 5),
                                   TextFormField(
+                                    controller: _patientBlurringVisionController,
                                     validator: (value) {
                                       if (value!.isEmpty) {
                                         return "Blurring Vision required";
@@ -1428,7 +1440,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                       return null;
                                     },
                                     onChanged: (value) {
-                                      _patientBlurringVisionController.text =
+                                      _patientBlurringVisionController?.text =
                                           value!;
                                     },
                                     autofocus: false,
@@ -2875,8 +2887,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
       patientId: widget.patientId,
       patientNumber: widget.patientNumber,
       triageFormNurseId: nurseTriageData?["uid"],
-      patientVaginalBleeding: _patientVaginalBleedingController.text,
-      patientBlurringVision: _patientBlurringVisionController.text,
+      patientVaginalBleeding: _patientVaginalBleedingController?.text ?? '',
+      patientBlurringVision: _patientBlurringVisionController?.text ?? '',
       patientEpigastricPain: _patientEpigastricPainController.text,
       patientDrainingOfLiquor: _patientDrainingOfLiquorController.text,
       patientSwellingOfLegs: _patientSwellingOfLegsController.text,
@@ -2929,6 +2941,9 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
 
   Future<void> fetchData() async {
     await fetchNurseTriageData();
+    await fetchDoctorTriageData();
+
+
     // Assuming nurseTriageData is used to build the UI, you might need to trigger a rebuild
     setState(() {
       _villageZoneController =
@@ -2976,6 +2991,16 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
           (nurseTriageData?['patientInformedConsultant'] ?? "NO");
       selectedInformedMedicalOfficerLabel =
           (nurseTriageData?['patientInformedMedicalOfficer'] ?? "NO");
+
+
+      _patientVaginalBleedingController = TextEditingController(
+        text: doctorTriageData?['patientVaginalBleeding'] ?? '',
+      );
+      _patientBlurringVisionController = TextEditingController(
+        text: doctorTriageData?['patientBlurringVision'] ?? '',
+      );
+
+
     });
   }
 
@@ -2996,4 +3021,24 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
       print("Error fetching nurseTriageData: $error");
     }
   }
+  Future<void> fetchDoctorTriageData() async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await _firestore
+          .collection('doctorTriageFormData')
+          .doc(widget.patientId)
+          .get();
+      if (snapshot.exists) {
+        setState(() {
+          doctorTriageData = snapshot.data()!;
+        });
+
+        print("doctorTriageData: $doctorTriageData");
+      }
+    } catch (error) {
+      print("Error fetching doctorTriageData: $error");
+    }
+  }
+
 }
+
+
