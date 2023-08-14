@@ -2860,6 +2860,9 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
     }
   }
 
+
+
+
   Future<void> postDetailsToFirestore() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
