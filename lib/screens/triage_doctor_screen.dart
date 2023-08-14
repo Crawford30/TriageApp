@@ -2969,7 +2969,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
       selectedLabelNationality = (nurseTriageData?['patientNationality'] ?? '');
       selectedTriageCategoryLabel = (nurseTriageData?['triageCategory'] ?? '');
       selectedReferralInLabel =
-          (nurseTriageData?['patientReferringHealFacility'] ?? "NO");
+          (nurseTriageData?['patientReferralIn'] ?? "NO");
       selectedInformedSeniorConsultantLabel =
           (nurseTriageData?['patientInformedSeniorConsultant'] ?? "NO");
       selectedInformedConsultantLabel =
