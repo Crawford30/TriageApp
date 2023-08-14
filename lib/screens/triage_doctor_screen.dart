@@ -60,8 +60,6 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
   void initState() {
     super.initState();
     fetchData();
-
-
   }
 
   final List<String> userTypeItems = [
@@ -180,15 +178,15 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
           value: selectedInformedSeniorConsultantLabel == label,
           activeColor: Colors.blue,
           onChanged: (value) {
-            setState(() {
-              if (selectedInformedSeniorConsultantLabel == label) {
-                selectedInformedSeniorConsultantLabel =
-                ""; // Uncheck if already selected
-              } else {
-                selectedInformedSeniorConsultantLabel =
-                    label; // Check the selected label
-              }
-            });
+            // setState(() {
+            //   if (selectedInformedSeniorConsultantLabel == label) {
+            //     selectedInformedSeniorConsultantLabel =
+            //     ""; // Uncheck if already selected
+            //   } else {
+            //     selectedInformedSeniorConsultantLabel =
+            //         label; // Check the selected label
+            //   }
+            // });
           },
         ),
         Text(label),
@@ -203,15 +201,15 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
           value: selectedInformedConsultantLabel == label,
           activeColor: Colors.blue,
           onChanged: (value) {
-            setState(() {
-              if (selectedInformedConsultantLabel == label) {
-                selectedInformedConsultantLabel =
-                ""; // Uncheck if already selected
-              } else {
-                selectedInformedConsultantLabel =
-                    label; // Check the selected label
-              }
-            });
+            // setState(() {
+            //   if (selectedInformedConsultantLabel == label) {
+            //     selectedInformedConsultantLabel =
+            //     ""; // Uncheck if already selected
+            //   } else {
+            //     selectedInformedConsultantLabel =
+            //         label; // Check the selected label
+            //   }
+            // });
           },
         ),
         Text(label),
@@ -226,15 +224,15 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
           value: selectedInformedMedicalOfficerLabel == label,
           activeColor: Colors.blue,
           onChanged: (value) {
-            setState(() {
-              if (selectedInformedMedicalOfficerLabel == label) {
-                selectedInformedMedicalOfficerLabel =
-                ""; // Uncheck if already selected
-              } else {
-                selectedInformedMedicalOfficerLabel =
-                    label; // Check the selected label
-              }
-            });
+            // setState(() {
+            //   if (selectedInformedMedicalOfficerLabel == label) {
+            //     selectedInformedMedicalOfficerLabel =
+            //     ""; // Uncheck if already selected
+            //   } else {
+            //     selectedInformedMedicalOfficerLabel =
+            //         label; // Check the selected label
+            //   }
+            // });
           },
         ),
         Text(label),
@@ -419,12 +417,6 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                             SizedBox(height: 5),
                             TextFormField(
                               controller: _villageZoneController,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Please Enter Village/Zone";
-                                }
-                                return null;
-                              },
                               autofocus: false,
                               enabled: false,
                               onSaved: (value) {
@@ -454,12 +446,6 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                             ),
                             SizedBox(height: 5),
                             TextFormField(
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Please Enter Parish";
-                                }
-                                return null;
-                              },
                               controller: _parishController,
                               enabled: false,
                               autofocus: false,
@@ -490,12 +476,6 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                             ),
                             SizedBox(height: 5),
                             TextFormField(
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Please Enter Sub-county";
-                                }
-                                return null;
-                              },
                               controller: _subCountyController,
                               enabled: false,
                               autofocus: false,
@@ -528,12 +508,6 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                             TextFormField(
                               controller: _districtController,
                               enabled: false,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Please Enter District";
-                                }
-                                return null;
-                              },
                               autofocus: false,
                               onSaved: (value) {
                                 // Handle saved value
@@ -593,12 +567,6 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                             ),
                             SizedBox(height: 5),
                             TextFormField(
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Marital Status";
-                                }
-                                return null;
-                              },
                               controller: _maritalStatusController,
                               enabled: false,
                               autofocus: false,
@@ -629,12 +597,6 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                             ),
                             SizedBox(height: 5),
                             TextFormField(
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "NIN";
-                                }
-                                return null;
-                              },
                               controller: _nationalIDController,
                               enabled: false,
                               autofocus: false,
@@ -666,12 +628,6 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                             ),
                             SizedBox(height: 5),
                             TextFormField(
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Please Enter LC1 Chairperson/VHT Contact Person";
-                                }
-                                return null;
-                              },
                               controller: _localChairPersonController,
                               enabled: false,
                               autofocus: false,
@@ -731,12 +687,6 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                             ),
                             SizedBox(height: 5),
                             TextFormField(
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Next Of Kin";
-                                }
-                                return null;
-                              },
                               controller: _nOKNameController,
                               enabled: false,
                               autofocus: false,
@@ -767,12 +717,6 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                             ),
                             SizedBox(height: 5),
                             TextFormField(
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Relationship";
-                                }
-                                return null;
-                              },
                               controller: _nOKRelationshipController,
                               enabled: false,
                               autofocus: false,
@@ -803,12 +747,6 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                             ),
                             SizedBox(height: 5),
                             TextFormField(
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Contact";
-                                }
-                                return null;
-                              },
                               controller: _nOKContactController,
                               enabled: false,
                               autofocus: false,
@@ -954,12 +892,6 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                             ),
                             SizedBox(height: 5),
                             TextFormField(
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Referral Diagnosis Note";
-                                }
-                                return null;
-                              },
                               controller: _referralDiagnosisNoteController,
                               enabled: false,
                               autofocus: false,
@@ -1026,12 +958,6 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                             ),
                             SizedBox(height: 5),
                             TextFormField(
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return "Principle Reason for Referral Note";
-                                }
-                                return null;
-                              },
                               controller: _referralReasonController,
                               enabled: false,
                               autofocus: false,
@@ -1125,12 +1051,6 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                 ),
                                 SizedBox(height: 5),
                                 TextFormField(
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return "Senior Consultant's Name";
-                                    }
-                                    return null;
-                                  },
                                   controller: _seniorConsultantNameController,
                                   enabled: false,
                                   autofocus: false,
@@ -1185,12 +1105,6 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                 ),
                                 SizedBox(height: 5),
                                 TextFormField(
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return "Consultant's Name";
-                                    }
-                                    return null;
-                                  },
                                   controller: _consultantNameController,
                                   enabled: false,
                                   autofocus: false,
@@ -1245,12 +1159,6 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                 ),
                                 SizedBox(height: 5),
                                 TextFormField(
-                                  validator: (value) {
-                                    if (value!.isEmpty) {
-                                      return "Medical Officer's Name";
-                                    }
-                                    return null;
-                                  },
                                   controller: _medicalOfficerNameController,
                                   enabled: false,
                                   autofocus: false,
@@ -1292,12 +1200,6 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                           ),
                                           SizedBox(height: 5),
                                           TextFormField(
-                                            validator: (value) {
-                                              if (value!.isEmpty) {
-                                                return "Field is require";
-                                              }
-                                              return null;
-                                            },
                                             controller: _caseSummaryController,
                                             enabled: false,
                                             autofocus: false,
