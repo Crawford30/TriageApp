@@ -1404,6 +1404,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     onChanged: (value) {
                                       _patientVaginalBleedingController?.text = value;
                                     },
+                                    enabled: widget.status == 'True' ? false : true,
                                     autofocus: false,
                                     onSaved: (value) {
                                       // Handle saved value
@@ -1439,10 +1440,12 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                       }
                                       return null;
                                     },
+
                                     onChanged: (value) {
                                       _patientBlurringVisionController?.text =
                                           value!;
                                     },
+                                    enabled: widget.status == 'True' ? false : true,
                                     autofocus: false,
                                     onSaved: (value) {
                                       // Handle saved value
