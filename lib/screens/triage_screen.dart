@@ -80,27 +80,6 @@ class _TriageScreenState extends State<TriageScreen> {
     "doctor4.jpg",
   ];
 
-  void validation() {
-    final FormState? _form = _formKey.currentState;
-    if (_form != null) {
-      if (_form.validate()) {
-        // Check if at least one of the fields is filled
-        if (selectedInformedSeniorConsultantLabel.isNotEmpty ||
-            selectedInformedConsultantLabel.isNotEmpty ||
-            selectedInformedMedicalOfficerLabel.isNotEmpty) {
-          postDetailsToFirestore(); // Call the submission function
-        } else {
-          Fluttertoast.showToast(msg: "Please select a person informed");
-        }
-      } else {
-        Fluttertoast.showToast(
-            msg: "Please ensure all the required fields are filled");
-      }
-    } else {
-      Fluttertoast.showToast(msg: "Form is not valid");
-      print("Form is not ready.");
-    }
-  }
 
   Widget buildCheckboxWithLabelForTriage(String label, Color color) {
     return Row(
