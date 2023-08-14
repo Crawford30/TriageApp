@@ -13,7 +13,6 @@ class TriageDoctorScreen extends StatefulWidget {
   final String? patientId;
   final String? patientNumber;
 
-
   TriageDoctorScreen({this.patientId, this.patientNumber});
 
   @override
@@ -21,7 +20,6 @@ class TriageDoctorScreen extends StatefulWidget {
 }
 
 class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
-
   TextEditingController? _villageZoneController;
   TextEditingController? _parishController;
   TextEditingController? _subCountyController;
@@ -40,18 +38,59 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
   TextEditingController? _medicalOfficerNameController;
   TextEditingController? _caseSummaryController;
 
-
-
-
-
-
-
   final TextEditingController _userTypeController = TextEditingController();
+  bool _isSubmitting = false;
 
-
-
-
-
+  final TextEditingController _patientVaginalBleedingController =
+      TextEditingController();
+  final TextEditingController _patientBlurringVisionController =
+      TextEditingController();
+  final TextEditingController _patientEpigastricPainController =
+      TextEditingController();
+  final TextEditingController _patientDrainingOfLiquorController =
+      TextEditingController();
+  final TextEditingController _patientSwellingOfLegsController =
+      TextEditingController();
+  final TextEditingController _patientVomitingController =
+      TextEditingController();
+  final TextEditingController _patientFeverController = TextEditingController();
+  final TextEditingController _patientHeadacheController =
+      TextEditingController();
+  final TextEditingController _patientStartOfLabourController =
+      TextEditingController();
+  final TextEditingController _patientPresentingComplaintsController =
+      TextEditingController();
+  final TextEditingController _patientDisabilityLevelController =
+      TextEditingController();
+  final TextEditingController _patientEyesObservationController =
+      TextEditingController();
+  final TextEditingController _patientSkinObservationController =
+      TextEditingController();
+  final TextEditingController _patientHairObservationController =
+      TextEditingController();
+  final TextEditingController _patientNailsObservationController =
+      TextEditingController();
+  final TextEditingController _patientHandsObservationController =
+      TextEditingController();
+  final TextEditingController _patientAbdomenObservationController =
+      TextEditingController();
+  final TextEditingController _patientPalpationController =
+      TextEditingController();
+  final TextEditingController _patientAuscultationController =
+      TextEditingController();
+  final TextEditingController _patientHyperHypoResonanceController =
+      TextEditingController();
+  final TextEditingController _patientOtherPresentingComplaintsController =
+      TextEditingController();
+  final TextEditingController
+      _patientOtherPresentingComplaintsAbdomenController =
+      TextEditingController();
+  final TextEditingController _patientVaginaObservationController =
+      TextEditingController();
+  final TextEditingController _patientSignsOfPregnancyController =
+      TextEditingController();
+  final TextEditingController _patientFetalExamController =
+      TextEditingController();
 
   Map<String, dynamic>? nurseTriageData;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -70,18 +109,12 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
     'Irritable'
   ];
 
-
-
   bool isChecked = false;
   String? selectedValue;
-
-
-
 
   String selectedTriageCategoryLabel = "";
   String selectedLabelNationality = "";
   String selectedLabel = "";
-
 
   String selectedReferralInLabel = "";
   String selectedInformedSeniorConsultantLabel = "";
@@ -95,15 +128,14 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
     "doctor4.jpg",
   ];
 
-
-
   String formatDateTime(String? inputDateTime) {
     if (inputDateTime == null) {
       return 'N/A';
     }
     DateTime parsedDateTime = DateTime.parse(inputDateTime);
     String formattedDate = DateFormat('dd-MMM-yyyy').format(parsedDateTime);
-    String formattedTime = DateFormat('hh:mma').format(parsedDateTime).toLowerCase();
+    String formattedTime =
+        DateFormat('hh:mma').format(parsedDateTime).toLowerCase();
     String formattedDateTime = '$formattedDate at $formattedTime';
     return formattedDateTime;
   }
@@ -1035,7 +1067,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                         buildInformedSeniorConsultantCheckboxWithLabel(
                                             "YES"),
                                         SizedBox(width: 10),
-                                        buildInformedSeniorConsultantCheckboxWithLabel("NO"),
+                                        buildInformedSeniorConsultantCheckboxWithLabel(
+                                            "NO"),
                                       ],
                                     ),
                                   ),
@@ -1089,7 +1122,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                         buildInformedConsultantCheckboxWithLabel(
                                             "YES"),
                                         SizedBox(width: 10),
-                                        buildInformedConsultantCheckboxWithLabel("NO"),
+                                        buildInformedConsultantCheckboxWithLabel(
+                                            "NO"),
                                       ],
                                     ),
                                   ),
@@ -1143,7 +1177,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                         buildInformedMedicalOfficerCheckboxWithLabel(
                                             "YES"),
                                         SizedBox(width: 10),
-                                        buildInformedMedicalOfficerCheckboxWithLabel("NO"),
+                                        buildInformedMedicalOfficerCheckboxWithLabel(
+                                            "NO"),
                                       ],
                                     ),
                                   ),
@@ -1240,7 +1275,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                               indent: 16.0,
                                               // Indent on the left side
                                               endIndent:
-                                              16.0, // Indent on the right side
+                                                  16.0, // Indent on the right side
                                             ),
                                           ),
                                           SizedBox(height: 5),
@@ -1326,6 +1361,10 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     }
                                     return null;
                                   },
+                                  onChanged: (value) {
+                                    _patientVaginalBleedingController.text =
+                                        value!;
+                                  },
                                   autofocus: false,
                                   onSaved: (value) {
                                     // Handle saved value
@@ -1359,6 +1398,10 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                       return "Blurring Vision required";
                                     }
                                     return null;
+                                  },
+                                  onChanged: (value) {
+                                    _patientBlurringVisionController.text =
+                                        value!;
                                   },
                                   autofocus: false,
                                   onSaved: (value) {
@@ -1394,6 +1437,10 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     }
                                     return null;
                                   },
+                                  onChanged: (value) {
+                                    _patientEpigastricPainController.text =
+                                        value!;
+                                  },
                                   autofocus: false,
                                   onSaved: (value) {
                                     // Handle saved value
@@ -1427,6 +1474,10 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                       return "Draining Of Liquor required";
                                     }
                                     return null;
+                                  },
+                                  onChanged: (value) {
+                                    _patientDrainingOfLiquorController.text =
+                                        value!;
                                   },
                                   autofocus: false,
                                   onSaved: (value) {
@@ -1462,6 +1513,10 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     }
                                     return null;
                                   },
+                                  onChanged: (value) {
+                                    _patientSwellingOfLegsController.text =
+                                        value!;
+                                  },
                                   autofocus: false,
                                   onSaved: (value) {
                                     // Handle saved value
@@ -1495,6 +1550,9 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                       return "Vomiting required";
                                     }
                                     return null;
+                                  },
+                                  onChanged: (value) {
+                                    _patientVomitingController.text = value!;
                                   },
                                   autofocus: false,
                                   onSaved: (value) {
@@ -1530,6 +1588,9 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     }
                                     return null;
                                   },
+                                  onChanged: (value) {
+                                    _patientFeverController.text = value!;
+                                  },
                                   autofocus: false,
                                   onSaved: (value) {
                                     // Handle saved value
@@ -1564,6 +1625,9 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     }
                                     return null;
                                   },
+                                  onChanged: (value) {
+                                    _patientHeadacheController.text = value!;
+                                  },
                                   autofocus: false,
                                   onSaved: (value) {
                                     // Handle saved value
@@ -1597,6 +1661,10 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                       return "When did labour start required";
                                     }
                                     return null;
+                                  },
+                                  onChanged: (value) {
+                                    _patientStartOfLabourController.text =
+                                        value!;
                                   },
                                   autofocus: false,
                                   onSaved: (value) {
@@ -1641,6 +1709,10 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                             autofocus: false,
                                             onSaved: (value) {
                                               // Handle saved value
+                                            },
+                                            onChanged: (value) {
+                                              _patientOtherPresentingComplaintsController
+                                                  .text = value!;
                                             },
                                             minLines: 3,
                                             keyboardType:
@@ -1755,13 +1827,14 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                       .toList(),
                                   validator: (value) {
                                     if (value == null) {
-                                      return 'Please select user type.';
+                                      return 'Please select Disability Level.';
                                     }
                                     return null;
                                   },
                                   onChanged: (value) {
                                     //Do something when selected item is changed.
-                                    _userTypeController.text = value!;
+                                    _patientDisabilityLevelController.text =
+                                        value!;
                                   },
                                   onSaved: (value) {
                                     selectedValue = value.toString();
@@ -1810,6 +1883,10 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     }
                                     return null;
                                   },
+                                  onChanged: (value) {
+                                    _patientEyesObservationController.text =
+                                        value!;
+                                  },
                                   autofocus: false,
                                   onSaved: (value) {
                                     // Handle saved value
@@ -1851,6 +1928,10 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                       return "Required";
                                     }
                                     return null;
+                                  },
+                                  onChanged: (value) {
+                                    _patientSkinObservationController.text =
+                                        value!;
                                   },
                                   autofocus: false,
                                   onSaved: (value) {
@@ -1894,6 +1975,10 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     }
                                     return null;
                                   },
+                                  onChanged: (value) {
+                                    _patientHairObservationController.text =
+                                        value!;
+                                  },
                                   autofocus: false,
                                   onSaved: (value) {
                                     // Handle saved value
@@ -1936,6 +2021,10 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     }
                                     return null;
                                   },
+                                  onChanged: (value) {
+                                    _patientNailsObservationController.text =
+                                        value!;
+                                  },
                                   autofocus: false,
                                   onSaved: (value) {
                                     // Handle saved value
@@ -1977,6 +2066,10 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                       return "Required";
                                     }
                                     return null;
+                                  },
+                                  onChanged: (value) {
+                                    _patientHandsObservationController.text =
+                                        value!;
                                   },
                                   autofocus: false,
                                   onSaved: (value) {
@@ -2054,6 +2147,10 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     }
                                     return null;
                                   },
+                                  onChanged: (value) {
+                                    _patientAbdomenObservationController.text =
+                                        value!;
+                                  },
                                   autofocus: false,
                                   onSaved: (value) {
                                     // Handle saved value
@@ -2096,6 +2193,9 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                       return "Required";
                                     }
                                     return null;
+                                  },
+                                  onChanged: (value) {
+                                    _patientPalpationController.text = value!;
                                   },
                                   autofocus: false,
                                   onSaved: (value) {
@@ -2141,6 +2241,10 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     }
                                     return null;
                                   },
+                                  onChanged: (value) {
+                                    _patientAuscultationController.text =
+                                        value!;
+                                  },
                                   autofocus: false,
                                   onSaved: (value) {
                                     // Handle saved value
@@ -2183,6 +2287,10 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     }
                                     return null;
                                   },
+                                  onChanged: (value) {
+                                    _patientHyperHypoResonanceController.text =
+                                        value!;
+                                  },
                                   autofocus: false,
                                   onSaved: (value) {
                                     // Handle saved value
@@ -2223,11 +2331,13 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                           ),
                                           SizedBox(height: 5),
                                           TextFormField(
-
-                                            enabled: false,
                                             autofocus: false,
                                             onSaved: (value) {
                                               // Handle saved value
+                                            },
+                                            onChanged: (value) {
+                                              _patientOtherPresentingComplaintsAbdomenController
+                                                  .text = value!;
                                             },
                                             minLines: 3,
                                             keyboardType:
@@ -2328,6 +2438,16 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                             onSaved: (value) {
                                               // Handle saved value
                                             },
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return "Required";
+                                              }
+                                              return null;
+                                            },
+                                            onChanged: (value) {
+                                              _patientVaginaObservationController
+                                                  .text = value!;
+                                            },
                                             minLines: 4,
                                             keyboardType:
                                                 TextInputType.multiline,
@@ -2417,6 +2537,10 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     }
                                     return null;
                                   },
+                                  onChanged: (value) {
+                                    _patientSignsOfPregnancyController.text =
+                                        value!;
+                                  },
                                   autofocus: false,
                                   onSaved: (value) {
                                     // Handle saved value
@@ -2487,6 +2611,17 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                                           autofocus: false,
                                                           onSaved: (value) {
                                                             // Handle saved value
+                                                          },
+                                                          validator: (value) {
+                                                            if (value!
+                                                                .isEmpty) {
+                                                              return "Required";
+                                                            }
+                                                            return null;
+                                                          },
+                                                          onChanged: (value) {
+                                                            _patientFetalExamController
+                                                                .text = value!;
                                                           },
                                                           minLines: 6,
                                                           keyboardType:
@@ -2611,45 +2746,47 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
           TextEditingController(text: nurseTriageData?['patientVillage'] ?? '');
       _parishController =
           TextEditingController(text: nurseTriageData?['patientParish'] ?? '');
-      _subCountyController =
-          TextEditingController(text: nurseTriageData?['patientSubCounty'] ?? '');
-      _districtController =
-          TextEditingController(text: nurseTriageData?['patientDistrict'] ?? '');
-      _maritalStatusController =
-          TextEditingController(text: nurseTriageData?['patientMaritalStatus'] ?? '');
+      _subCountyController = TextEditingController(
+          text: nurseTriageData?['patientSubCounty'] ?? '');
+      _districtController = TextEditingController(
+          text: nurseTriageData?['patientDistrict'] ?? '');
+      _maritalStatusController = TextEditingController(
+          text: nurseTriageData?['patientMaritalStatus'] ?? '');
       _nationalIDController =
           TextEditingController(text: nurseTriageData?['patientNIN'] ?? '');
       _localChairPersonController =
           TextEditingController(text: nurseTriageData?['patientLCName'] ?? '');
       _nOKNameController =
           TextEditingController(text: nurseTriageData?['patientNOKName'] ?? '');
-      _nOKRelationshipController =
-          TextEditingController(text: nurseTriageData?['patientNOKRelationship'] ?? '');
-      _nOKContactController =
-          TextEditingController(text: nurseTriageData?['patientNOKContact'] ?? '');
-      _referringHealthFacilityController =
-          TextEditingController(text: nurseTriageData?['patientReferringHealFacility'] ?? '');
-      _referralDiagnosisNoteController =
-          TextEditingController(text: nurseTriageData?['patientReferralDiagnosis'] ?? '');
-      _referralReasonController =
-          TextEditingController(text: nurseTriageData?['patientReasonForReferral'] ?? '');
-      _seniorConsultantNameController =
-          TextEditingController(text: nurseTriageData?['patientSeniorConsultantName'] ?? '');
-      _consultantNameController =
-          TextEditingController(text: nurseTriageData?['patientConsultantName'] ?? '');
-      _medicalOfficerNameController =
-          TextEditingController(text: nurseTriageData?['patientMedicalOfficerName'] ?? '');
-      _caseSummaryController =
-          TextEditingController(text: nurseTriageData?['patientCaseSummary'] ?? '');
+      _nOKRelationshipController = TextEditingController(
+          text: nurseTriageData?['patientNOKRelationship'] ?? '');
+      _nOKContactController = TextEditingController(
+          text: nurseTriageData?['patientNOKContact'] ?? '');
+      _referringHealthFacilityController = TextEditingController(
+          text: nurseTriageData?['patientReferringHealFacility'] ?? '');
+      _referralDiagnosisNoteController = TextEditingController(
+          text: nurseTriageData?['patientReferralDiagnosis'] ?? '');
+      _referralReasonController = TextEditingController(
+          text: nurseTriageData?['patientReasonForReferral'] ?? '');
+      _seniorConsultantNameController = TextEditingController(
+          text: nurseTriageData?['patientSeniorConsultantName'] ?? '');
+      _consultantNameController = TextEditingController(
+          text: nurseTriageData?['patientConsultantName'] ?? '');
+      _medicalOfficerNameController = TextEditingController(
+          text: nurseTriageData?['patientMedicalOfficerName'] ?? '');
+      _caseSummaryController = TextEditingController(
+          text: nurseTriageData?['patientCaseSummary'] ?? '');
 
-      selectedLabelNationality =  (nurseTriageData?['patientNationality'] ?? '');
-      selectedTriageCategoryLabel =  (nurseTriageData?['triageCategory'] ?? '');
-      selectedReferralInLabel  =  (nurseTriageData?['patientReferringHealFacility'] ?? "NO");
-      selectedInformedSeniorConsultantLabel =  (nurseTriageData?['patientInformedSeniorConsultant'] ?? "NO");
-      selectedInformedConsultantLabel =  (nurseTriageData?['patientInformedConsultant'] ?? "NO");
-      selectedInformedMedicalOfficerLabel =  (nurseTriageData?['patientInformedMedicalOfficer'] ?? "NO");
-
-
+      selectedLabelNationality = (nurseTriageData?['patientNationality'] ?? '');
+      selectedTriageCategoryLabel = (nurseTriageData?['triageCategory'] ?? '');
+      selectedReferralInLabel =
+          (nurseTriageData?['patientReferringHealFacility'] ?? "NO");
+      selectedInformedSeniorConsultantLabel =
+          (nurseTriageData?['patientInformedSeniorConsultant'] ?? "NO");
+      selectedInformedConsultantLabel =
+          (nurseTriageData?['patientInformedConsultant'] ?? "NO");
+      selectedInformedMedicalOfficerLabel =
+          (nurseTriageData?['patientInformedMedicalOfficer'] ?? "NO");
     });
   }
 
