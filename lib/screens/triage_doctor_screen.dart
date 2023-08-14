@@ -1892,72 +1892,193 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     ),
                                   ),
                                   SizedBox(height: 5),
-                                  DropdownButtonFormField2<String>(
-                                    isExpanded: true,
-                                    decoration: InputDecoration(
-                                      prefixIcon: Icon(Icons.person_pin_circle),
-                                      // Add Horizontal padding using menuItemStyleData.padding so it matches
-                                      // the menu padding when button's width is not specified.
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              vertical: 16),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                      // Add more decoration..
-                                    ),
-                                    hint: const Text(
-                                      'Select Disability Level',
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 16),
-                                    ),
-                                    items: userTypeItems
-                                        .map((item) => DropdownMenuItem<String>(
-                                              value: item,
-                                              child: Text(
-                                                item,
-                                                style: const TextStyle(
-                                                  fontSize: 14,
-                                                ),
-                                              ),
-                                            ))
-                                        .toList(),
-                                    validator: (value) {
-                                      if (value == null) {
-                                        return 'Please select Disability Level.';
-                                      }
-                                      return null;
-                                    },
-                                    onChanged: widget.status == 'True'
-                                        ? null
-                                        : (value) {
+
+                                  Column(
+                                    children: [
+                                      if (widget.status == 'False')
+                                        DropdownButtonFormField2<String>(
+                                          isExpanded: true,
+                                          decoration: InputDecoration(
+                                            prefixIcon:
+                                                Icon(Icons.person_pin_circle),
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                    vertical: 16),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(4),
+                                            ),
+                                            hintText: 'Select Disability Level',
+                                            hintStyle: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 16),
+                                          ),
+                                          items: userTypeItems
+                                              .map((item) =>
+                                                  DropdownMenuItem<String>(
+                                                    value: item,
+                                                    child: Text(
+                                                      item,
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                  ))
+                                              .toList(),
+                                          value: selectedValue,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              selectedValue = value;
+                                            });
+                                          },
+                                          validator: (value) {
+                                            if (value == null) {
+                                              return 'Please select Disability Level.';
+                                            }
+                                            return null;
+                                          },
+                                        )
+                                      else
+                                        TextFormField(
+                                          controller:
+                                              _patientDisabilityLevelController,
+                                          onChanged: (value) {
                                             _patientDisabilityLevelController
                                                 ?.text = value!;
                                           },
-                                    value: selectedValue,
-                                    onSaved: (value) {
-                                      selectedValue = value.toString();
-                                    },
-                                    buttonStyleData: const ButtonStyleData(
-                                      padding: EdgeInsets.only(right: 8),
-                                    ),
-                                    iconStyleData: const IconStyleData(
-                                      icon: Icon(
-                                        Icons.arrow_drop_down,
-                                        color: Colors.black45,
-                                      ),
-                                      iconSize: 24,
-                                    ),
-                                    dropdownStyleData: DropdownStyleData(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                    ),
-                                    menuItemStyleData: const MenuItemStyleData(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 16),
-                                    ),
+                                          autofocus: false,
+                                          enabled: widget.status == 'True'
+                                              ? false
+                                              : true,
+                                          onSaved: (value) {
+                                            // Handle saved value
+                                          },
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(),
+                                            prefixIcon: Icon(Icons.note),
+                                            hintText: "Disability Level",
+                                            hintStyle: TextStyle(
+                                              color: Colors.black,
+                                            ),
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    vertical: 10),
+                                          ),
+                                          textAlignVertical:
+                                              TextAlignVertical.center,
+                                          textInputAction: TextInputAction.next,
+                                        ),
+                                    ],
                                   ),
+
+                                  // DropdownButtonFormField2<String>(
+                                  //   isExpanded: true,
+                                  //   decoration: InputDecoration(
+                                  //     prefixIcon: Icon(Icons.person_pin_circle),
+                                  //     contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                                  //     border: OutlineInputBorder(
+                                  //       borderRadius: BorderRadius.circular(4),
+                                  //     ),
+                                  //     hintText: 'Select Disability Level',
+                                  //     hintStyle: TextStyle(color: Colors.black, fontSize: 16),
+                                  //   ),
+                                  //   items: userTypeItems
+                                  //       .map((item) => DropdownMenuItem<String>(
+                                  //     value: item,
+                                  //     child: Text(
+                                  //       item,
+                                  //       style: TextStyle(
+                                  //         fontSize: 14,
+                                  //       ),
+                                  //     ),
+                                  //   ))
+                                  //       .toList(),
+                                  //   value: selectedValue,
+                                  //   onChanged: (value) {
+                                  //     setState(() {
+                                  //       selectedValue = value;
+                                  //     });
+                                  //   },
+                                  //   validator: (value) {
+                                  //     if (value == null) {
+                                  //       return 'Please select Disability Level.';
+                                  //     }
+                                  //     return null;
+                                  //   },
+                                  // ),
+
+
+                                  // DropdownButtonFormField2<String>(
+                                  //   isExpanded: true,
+                                  //   decoration: InputDecoration(
+                                  //     prefixIcon: Icon(Icons.person_pin_circle),
+                                  //     // Add Horizontal padding using menuItemStyleData.padding so it matches
+                                  //     // the menu padding when button's width is not specified.
+                                  //     contentPadding:
+                                  //         const EdgeInsets.symmetric(
+                                  //             vertical: 16),
+                                  //     border: OutlineInputBorder(
+                                  //       borderRadius: BorderRadius.circular(4),
+                                  //     ),
+                                  //     // Add more decoration..
+                                  //   ),
+                                  //   hint: const Text(
+                                  //     'Select Disability Level',
+                                  //     style: TextStyle(
+                                  //         color: Colors.black, fontSize: 16),
+                                  //   ),
+                                  //   items: userTypeItems
+                                  //       .map((item) => DropdownMenuItem<String>(
+                                  //             value: item,
+                                  //             child: Text(
+                                  //               item,
+                                  //               style: const TextStyle(
+                                  //                 fontSize: 14,
+                                  //               ),
+                                  //             ),
+                                  //           ))
+                                  //       .toList(),
+                                  //   validator: (value) {
+                                  //     if (value == null) {
+                                  //       return 'Please select Disability Level.';
+                                  //     }
+                                  //     return null;
+                                  //   },
+                                  //
+                                  //   onChanged: (value) {
+                                  //     _patientDisabilityLevelController?.text =
+                                  //         value!;
+                                  //   },
+                                  //   // onChanged: widget.status == 'True'
+                                  //   //     ? null
+                                  //   //     : (value) {
+                                  //   //         _patientDisabilityLevelController
+                                  //   //             ?.text = value!;
+                                  //   //       },
+                                  //   value: selectedValue,
+                                  //   onSaved: (value) {
+                                  //     selectedValue = value.toString();
+                                  //   },
+                                  //   buttonStyleData: const ButtonStyleData(
+                                  //     padding: EdgeInsets.only(right: 8),
+                                  //   ),
+                                  //   iconStyleData: const IconStyleData(
+                                  //     icon: Icon(
+                                  //       Icons.arrow_drop_down,
+                                  //       color: Colors.black45,
+                                  //     ),
+                                  //     iconSize: 24,
+                                  //   ),
+                                  //   dropdownStyleData: DropdownStyleData(
+                                  //     decoration: BoxDecoration(
+                                  //       borderRadius: BorderRadius.circular(4),
+                                  //     ),
+                                  //   ),
+                                  //   menuItemStyleData: const MenuItemStyleData(
+                                  //     padding:
+                                  //         EdgeInsets.symmetric(horizontal: 16),
+                                  //   ),
+                                  // ),
                                   SizedBox(height: 15),
                                   Text(
                                     "EYES",
@@ -2035,10 +2156,11 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                       return null;
                                     },
                                     onChanged: (value) {
-                                      _patientSkinObservationController?.text = value!;
+                                      _patientSkinObservationController?.text =
+                                          value!;
                                     },
                                     enabled:
-                                    widget.status == 'True' ? false : true,
+                                        widget.status == 'True' ? false : true,
                                     autofocus: false,
                                     onSaved: (value) {
                                       // Handle saved value
@@ -2084,11 +2206,12 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                       return null;
                                     },
                                     onChanged: (value) {
-                                      _patientHairObservationController?.text = value!;
+                                      _patientHairObservationController?.text =
+                                          value!;
                                     },
                                     autofocus: false,
                                     enabled:
-                                    widget.status == 'True' ? false : true,
+                                        widget.status == 'True' ? false : true,
                                     onSaved: (value) {
                                       // Handle saved value
                                     },
@@ -2138,7 +2261,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                     },
                                     autofocus: false,
                                     enabled:
-                                    widget.status == 'True' ? false : true,
+                                        widget.status == 'True' ? false : true,
                                     onSaved: (value) {
                                       // Handle saved value
                                     },
@@ -2187,7 +2310,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                           value!;
                                     },
                                     autofocus: false,
-                                    enabled: widget.status == 'True' ? false : true,
+                                    enabled:
+                                        widget.status == 'True' ? false : true,
                                     onSaved: (value) {
                                       // Handle saved value
                                     },
@@ -2275,7 +2399,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                           ?.text = value!;
                                     },
                                     autofocus: false,
-                                    enabled: widget.status == 'True' ? false : true,
+                                    enabled:
+                                        widget.status == 'True' ? false : true,
                                     onSaved: (value) {
                                       // Handle saved value
                                     },
@@ -2324,7 +2449,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                           value!;
                                     },
                                     autofocus: false,
-                                    enabled: widget.status == 'True' ? false : true,
+                                    enabled:
+                                        widget.status == 'True' ? false : true,
                                     onSaved: (value) {
                                       // Handle saved value
                                     },
@@ -2375,7 +2501,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                           value!;
                                     },
                                     autofocus: false,
-                                    enabled: widget.status == 'True' ? false : true,
+                                    enabled:
+                                        widget.status == 'True' ? false : true,
                                     onSaved: (value) {
                                       // Handle saved value
                                     },
@@ -2424,7 +2551,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                           ?.text = value!;
                                     },
                                     autofocus: false,
-                                    enabled: widget.status == 'True' ? false : true,
+                                    enabled:
+                                        widget.status == 'True' ? false : true,
                                     onSaved: (value) {
                                       // Handle saved value
                                     },
@@ -2467,7 +2595,9 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                               controller:
                                                   _patientOtherPresentingComplaintsAbdomenController,
                                               autofocus: false,
-                                              enabled: widget.status == 'True' ? false : true,
+                                              enabled: widget.status == 'True'
+                                                  ? false
+                                                  : true,
                                               onSaved: (value) {
                                                 // Handle saved value
                                               },
@@ -2574,7 +2704,9 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                               controller:
                                                   _patientVaginaObservationController,
                                               autofocus: false,
-                                              enabled: widget.status == 'True' ? false : true,
+                                              enabled: widget.status == 'True'
+                                                  ? false
+                                                  : true,
                                               onSaved: (value) {
                                                 // Handle saved value
                                               },
@@ -2686,7 +2818,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                           value!;
                                     },
                                     autofocus: false,
-                                    enabled: widget.status == 'True' ? false : true,
+                                    enabled:
+                                        widget.status == 'True' ? false : true,
                                     onSaved: (value) {
                                       // Handle saved value
                                     },
@@ -2732,7 +2865,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                                   height: MediaQuery.of(context)
                                                           .size
                                                           .height *
-                                                      0.32,
+                                                      0.44,
                                                   child: Container(
                                                     child: Padding(
                                                       padding: const EdgeInsets
@@ -2756,7 +2889,11 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                                             controller:
                                                                 _patientFetalExamController,
                                                             autofocus: false,
-                                                            enabled: widget.status == 'True' ? false : true,
+                                                            enabled:
+                                                                widget.status ==
+                                                                        'True'
+                                                                    ? false
+                                                                    : true,
                                                             onSaved: (value) {
                                                               // Handle saved value
                                                             },
@@ -2818,6 +2955,105 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                                                                   16.0, // Indent on the right side
                                                             ),
                                                           ),
+                                                          SizedBox(height: 10),
+                                                          Visibility(
+                                                            visible:
+                                                                widget.status ==
+                                                                    'True',
+                                                            // Set this to the condition you have
+                                                            child: Column(
+                                                              children: [
+                                                                SizedBox(
+                                                                    height: 10),
+                                                                Text(
+                                                                  "Examined By: ${doctorTriageData?['patientExaminedBy']}",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Colors
+                                                                        .black,
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                    height: 8),
+                                                                Text(
+                                                                  "Examined At: ${formatDateTime(doctorTriageData?['patientExaminedAt'])}",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Colors
+                                                                        .black,
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                    height: 10),
+                                                                Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child:
+                                                                      Divider(
+                                                                    color: Colors
+                                                                        .grey,
+                                                                    thickness:
+                                                                        1.0,
+                                                                    indent:
+                                                                        16.0,
+                                                                    endIndent:
+                                                                        16.0,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+
+                                                          // Text(
+                                                          //   "Examined By: ${doctorTriageData?['patientExaminedBy']}",
+                                                          //   style: TextStyle(
+                                                          //     fontSize: 16,
+                                                          //     fontWeight:
+                                                          //         FontWeight
+                                                          //             .bold,
+                                                          //     color:
+                                                          //         Colors.black,
+                                                          //   ),
+                                                          // ),
+                                                          // SizedBox(height: 8),
+                                                          // Text(
+                                                          //   "Examined At: ${formatDateTime(doctorTriageData?['patientExaminedAt'])}",
+                                                          //   style: TextStyle(
+                                                          //     fontSize: 16,
+                                                          //     fontWeight:
+                                                          //         FontWeight
+                                                          //             .bold,
+                                                          //     color:
+                                                          //         Colors.black,
+                                                          //   ),
+                                                          // ),
+                                                          // SizedBox(height: 10),
+                                                          // Align(
+                                                          //   alignment: Alignment
+                                                          //       .center,
+                                                          //   child: Divider(
+                                                          //     color:
+                                                          //         Colors.grey,
+                                                          //     // Color of the divider
+                                                          //     thickness: 1.0,
+                                                          //     // Thickness of the divider
+                                                          //     indent: 16.0,
+                                                          //     // Indent on the left side
+                                                          //     endIndent:
+                                                          //         16.0, // Indent on the right side
+                                                          //   ),
+                                                          // ),
                                                         ],
                                                       ),
                                                     ),
@@ -3131,7 +3367,8 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
         text: doctorTriageData?['patientOtherPresentingComplaints'] ?? '',
       );
 
-      selectedValue = doctorTriageData?['patientDisabilityLevel'] ?? '';
+      _patientDisabilityLevelController =
+          doctorTriageData?['patientDisabilityLevel'] ?? '';
 
       _patientEyesObservationController = TextEditingController(
         text: doctorTriageData?['patientEyesObservation'] ?? '',
@@ -3140,8 +3377,6 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
       _patientSkinObservationController = TextEditingController(
         text: doctorTriageData?['patientSkinObservation'] ?? '',
       );
-
-
 
       _patientHairObservationController = TextEditingController(
         text: doctorTriageData?['patientHairObservation'] ?? '',
@@ -3188,11 +3423,6 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
       _patientFetalExamController = TextEditingController(
         text: doctorTriageData?['patientFetalExam'] ?? '',
       );
-
-
-
-
-
     });
   }
 
