@@ -226,6 +226,7 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
                       builder: (context) => TriageDoctorScreen(
                         patientId: _patients[index]['uid'],
                         patientNumber: _patients[index]['refNumber'],
+                        status: _patients[index]['doctorTriaged'],
                       ),
                     ),
                   );

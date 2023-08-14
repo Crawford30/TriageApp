@@ -13,8 +13,9 @@ import 'package:intl/intl.dart';
 class TriageDoctorScreen extends StatefulWidget {
   final String? patientId;
   final String? patientNumber;
+  final String? status;
 
-  TriageDoctorScreen({this.patientId, this.patientNumber});
+  TriageDoctorScreen({this.patientId, this.patientNumber, this.status});
 
   @override
   _TriageDoctorScreenState createState() => _TriageDoctorScreenState();
@@ -322,7 +323,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                             ),
                             SizedBox(height: 15),
                             Text(
-                              "Patient Name",
+                              "Patient #:  ${widget.patientNumber}",
                               style: TextStyle(
                                 fontSize: 23,
                                 fontWeight: FontWeight.w500,
@@ -330,13 +331,13 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                               ),
                             ),
                             SizedBox(height: 5),
-                            Text(
-                              "Patient #: 0900000",
-                              style: TextStyle(
-                                color: Colors.white60,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            // Text(
+                            //   "Patient #: 0900000",
+                            //   style: TextStyle(
+                            //     color: Colors.white60,
+                            //     fontWeight: FontWeight.bold,
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
@@ -2754,7 +2755,7 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
           children: [
             SizedBox(height: 15),
             InkWell(
-              onTap: () async {
+              onTap: _isSubmitting || widget.status == 'True' ? null : () async {
                 if (!_formKey.currentState!.validate()) {
                   return; // Stop the submission if the form is not valid
                 }
@@ -2780,12 +2781,13 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                 width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.symmetric(vertical: 18),
                 decoration: BoxDecoration(
-                  color: Color(0xFF7165D6),
+                  color: _isSubmitting || widget.status == 'True' ? Colors.grey : Color(0xFF7165D6),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Center(
                   child: Text(
-                    _isSubmitting ? "Submitting..." : "Submit  Form",
+                    _isSubmitting ? "Submitting..." : widget.status == 'True' ? "Patient Serviced Already" : "Submit Form",
+                    // _isSubmitting ? "Submitting..." : "Submit Form",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -2794,7 +2796,50 @@ class _TriageDoctorScreenState extends State<TriageDoctorScreen> {
                   ),
                 ),
               ),
-            ),
+            )
+
+            // InkWell(
+            //   onTap: () async {
+            //     if (!_formKey.currentState!.validate()) {
+            //       return; // Stop the submission if the form is not valid
+            //     }
+            //
+            //     setState(() {
+            //       _isSubmitting = true; // Show "Submitting..." message
+            //     });
+            //
+            //     try {
+            //       await postDetailsToFirestore();
+            //       setState(() {
+            //         _isSubmitting = false;
+            //       });
+            //       // Rest of your code for success or error handling
+            //     } catch (error) {
+            //       setState(() {
+            //         _isSubmitting = false; // Hide "Submitting..." message
+            //       });
+            //       Fluttertoast.showToast(msg: "An error occurred: $error");
+            //     }
+            //   },
+            //   child: Container(
+            //     width: MediaQuery.of(context).size.width,
+            //     padding: EdgeInsets.symmetric(vertical: 18),
+            //     decoration: BoxDecoration(
+            //       color: Color(0xFF7165D6),
+            //       borderRadius: BorderRadius.circular(10),
+            //     ),
+            //     child: Center(
+            //       child: Text(
+            //         _isSubmitting ? "Submitting..." : "Submit  Form",
+            //         style: TextStyle(
+            //           color: Colors.white,
+            //           fontSize: 18,
+            //           fontWeight: FontWeight.w500,
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
